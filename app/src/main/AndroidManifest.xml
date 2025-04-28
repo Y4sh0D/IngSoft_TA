@@ -46,6 +46,10 @@
             android:name=".activitidades.AdminHomeActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".activitidades.ServiciosActivity"
+            android:exported="true">
+        </activity>
 
 
     </application>

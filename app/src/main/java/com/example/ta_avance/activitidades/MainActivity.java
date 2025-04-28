@@ -71,13 +71,19 @@ public class MainActivity extends AppCompatActivity {
                     // Decodificamos el JWT
                     JWT jwt = new JWT(token);
 
+                    String nombre = jwt.getClaim("nombre").asString();
+                    String apellido = jwt.getClaim("apellido").asString();
+
                     // Extraemos el rol del token
                     String role = jwt.getClaim("role").asString();
 
                     // Verificar si el rol es ADMIN
                     if ("ADMIN".equals(role)) {
-                        Toast.makeText(MainActivity.this, "Login exitoso", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Sesion iniciada", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, AdminHomeActivity.class);
+                        // Agregamos el nombre y apellido al Intent
+                        intent.putExtra("nombre", nombre);
+                        intent.putExtra("apellido", apellido);
                         startActivity(intent);
                         finish();
                     } else {

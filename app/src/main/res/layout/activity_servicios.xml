@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".activitidades.RegistroUsuarioActivity">
+    tools:context=".activitidades.ServiciosActivity">
 
     <TextView
-        android:id="@+id/tituloRegistroUsuario"
+        android:id="@+id/tituloRegistroServicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Registrar Usuario"
+        android:text="REGISTRAR SERVICIO"
         android:textAlignment="center"
         android:textColor="#2C3E50"
         android:textSize="24sp"
@@ -22,63 +22,32 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <EditText
-        android:id="@+id/usuarioInput"
+        android:id="@+id/servicioInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginHorizontal="24dp"
         android:background="@drawable/edit_text_background"
-        android:hint="Usuario"
+        android:hint="SERVICIO"
         android:padding="16dp"
         android:textColor="#2C3E50"
         android:textColorHint="#BDC3C7"
-        app:layout_constraintTop_toBottomOf="@id/tituloRegistroUsuario"
+        app:layout_constraintTop_toBottomOf="@id/tituloRegistroServicio"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/contraseñaInput"
+        android:id="@+id/precioInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginHorizontal="24dp"
         android:background="@drawable/edit_text_background"
-        android:hint="Contraseña"
-        android:inputType="textPassword"
+        android:hint="PRECIO"
         android:padding="16dp"
         android:textColor="#2C3E50"
         android:textColorHint="#BDC3C7"
-        app:layout_constraintTop_toBottomOf="@id/usuarioInput"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <EditText
-        android:id="@+id/nombreInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="24dp"
-        android:background="@drawable/edit_text_background"
-        android:hint="Nombre"
-        android:padding="16dp"
-        android:textColor="#2C3E50"
-        android:textColorHint="#BDC3C7"
-        app:layout_constraintTop_toBottomOf="@id/contraseñaInput"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <EditText
-        android:id="@+id/apellidoInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="24dp"
-        android:background="@drawable/edit_text_background"
-        android:hint="Apellido"
-        android:padding="16dp"
-        android:textColor="#2C3E50"
-        android:textColorHint="#BDC3C7"
-        app:layout_constraintTop_toBottomOf="@id/nombreInput"
+        app:layout_constraintTop_toBottomOf="@id/servicioInput"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -89,12 +58,12 @@
         android:layout_marginTop="32dp"
         android:layout_marginHorizontal="24dp"
         android:backgroundTint="#1E1E1E"
-        android:text="Registrar nuevo usuario"
+        android:text="REGISTRAR"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         android:padding="16dp"
         app:cornerRadius="50dp"
-        app:layout_constraintTop_toBottomOf="@id/apellidoInput"
+        app:layout_constraintTop_toBottomOf="@id/precioInput"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

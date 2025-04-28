@@ -2,8 +2,11 @@ package com.example.ta_avance.activitidades;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+
 import com.example.ta_avance.R;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +33,15 @@ public class ReservasPorConfirmarActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Mostrar el AlertDialog con la información de la reserva
                 showReservationDetails("11:00 - 11:30", "Laura", "Afeitado", "S/ 20");
+            }
+        });
+        Button btnVolverHome = findViewById(R.id.volverButton);
+        btnVolverHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Crear un Intent para redirigir a la actividad de Reservas
+                Intent intent = new Intent(ReservasPorConfirmarActivity.this, AdminHomeActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -65,4 +77,5 @@ public class ReservasPorConfirmarActivity extends AppCompatActivity {
         // Mostrar el AlertDialog
         builder.create().show();
     }
+
 }
