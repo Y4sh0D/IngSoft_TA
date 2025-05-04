@@ -1,6 +1,7 @@
 package com.example.ta_avance.activitidades;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Crear Retrofit
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080/api/") // Aquí sigue siendo tu base URL
+                .baseUrl("http://localhost:8080/api/") // Aquí sigue siendo tu base URL
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -71,11 +72,16 @@ public class MainActivity extends AppCompatActivity {
                     // Decodificamos el JWT
                     JWT jwt = new JWT(token);
 
+                    SharedPreferences prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("token", token);
+                    editor.apply();
+
                     String nombre = jwt.getClaim("nombre").asString();
                     String apellido = jwt.getClaim("apellido").asString();
 
                     // Extraemos el rol del token
-                    String role = jwt.getClaim("role").asString();
+                    String role = jwt.getClaim("rol").asString();
 
                     // Verificar si el rol es ADMIN
                     if ("ADMIN".equals(role)) {

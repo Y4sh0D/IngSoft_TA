@@ -1,6 +1,8 @@
 package com.example.ta_avance.activitidades;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -9,8 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ta_avance.R;
 import com.example.ta_avance.api.AuthApiService;
+import com.example.ta_avance.api.AuthInterceptor;
 import com.example.ta_avance.modelo.LoginRequest;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,15 +38,32 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
         apellidoInput = findViewById(R.id.apellidoInput);
         registrarButton = findViewById(R.id.registrarButton);
 
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(new AuthInterceptor(this))
+                .build();
+
         // Crear Retrofit
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080/api/") // misma base URL que login
+                .baseUrl("http://localhost:8080/api/") // misma base URL que login
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         authApiService = retrofit.create(AuthApiService.class);
 
         registrarButton.setOnClickListener(v -> registrarUsuario());
+
+        Button btnVolverHome = findViewById(R.id.volverButton);
+        btnVolverHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Volver a AdminHomeActivity y cerrar la actual
+                Intent intent = new Intent(RegistroUsuarioActivity.this, AdminHomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void registrarUsuario() {
@@ -57,7 +78,9 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
         }
 
         // Crear un objeto LoginRequest para el registro
-        LoginRequest request = new LoginRequest(username, password);
+        LoginRequest request = new LoginRequest(username, password,nombre,apellido);
+        request.setUsername(username);
+        request.setPassword(password);
         request.setNombre(nombre);
         request.setApellido(apellido);
 

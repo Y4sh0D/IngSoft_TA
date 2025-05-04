@@ -41,7 +41,9 @@ public class ReservasPorConfirmarActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Crear un Intent para redirigir a la actividad de Reservas
                 Intent intent = new Intent(ReservasPorConfirmarActivity.this, AdminHomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -77,5 +79,4 @@ public class ReservasPorConfirmarActivity extends AppCompatActivity {
         // Mostrar el AlertDialog
         builder.create().show();
     }
-
 }

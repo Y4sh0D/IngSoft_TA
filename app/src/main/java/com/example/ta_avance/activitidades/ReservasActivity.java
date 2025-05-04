@@ -1,6 +1,7 @@
 package com.example.ta_avance.activitidades;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +15,19 @@ public class ReservasActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reservas);  // Asegúrate de tener el layout reservas.xml
+        setContentView(R.layout.activity_reservas);
+
+        Button btnVolverHome = findViewById(R.id.volverButton);
+        btnVolverHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Volver a AdminHomeActivity y cerrar la actual
+                Intent intent = new Intent(ReservasActivity.this, AdminHomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });// Asegúrate de tener el layout reservas.xml
     }
 
     // Método para mostrar los detalles de los barberos que tienen citas a la hora seleccionada

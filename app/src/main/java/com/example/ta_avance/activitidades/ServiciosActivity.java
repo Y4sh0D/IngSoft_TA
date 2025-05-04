@@ -1,16 +1,19 @@
 package com.example.ta_avance.activitidades;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ta_avance.R;
 import com.example.ta_avance.api.AuthApiService;
+import com.example.ta_avance.api.AuthInterceptor;
 import com.example.ta_avance.modelo.ServiciosRequest;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,8 +37,13 @@ public class ServiciosActivity extends AppCompatActivity {
         registrarButton = findViewById(R.id.registrarButton);
 
         // Crear Retrofit
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(new AuthInterceptor(this))
+                .build();
+
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080/api/") // Asegúrate de usar la base URL correcta
+                .baseUrl("http://localhost:8080/api/") // Asegúrate de usar la base URL correcta
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -43,6 +51,18 @@ public class ServiciosActivity extends AppCompatActivity {
 
         // Configurar botón para registrar el servicio
         registrarButton.setOnClickListener(v -> registrarServicio());
+
+        Button btnVolverHome = findViewById(R.id.volverButton);
+        btnVolverHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Volver a AdminHomeActivity y cerrar la actual
+                Intent intent = new Intent(ServiciosActivity.this, AdminHomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void registrarServicio() {
@@ -80,5 +100,4 @@ public class ServiciosActivity extends AppCompatActivity {
             Toast.makeText(this, "Por favor ingresa un precio válido", Toast.LENGTH_SHORT).show();
         }
     }
-
 }

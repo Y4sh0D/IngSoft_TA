@@ -6,12 +6,20 @@ public class LoginRequest {
     private String nombre;
     private String apellido;
 
-    public LoginRequest(String username, String password) {
+
+    public LoginRequest(String username, String password, String nombre, String apellido) {
         this.username = username;
         this.password = password;
         this.nombre = nombre;
         this.apellido = apellido;
     }
+
+    public LoginRequest(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+
 
     // Getters y Setters (opcional si quieres usarlos después)
     public String getUsername() {
