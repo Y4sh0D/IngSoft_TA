@@ -1,7 +1,9 @@
+// com.example.ta_avance.api.AuthInterceptor.java
 package com.example.ta_avance.api;
 
 import android.content.Context;
-import android.content.SharedPreferences;
+
+import com.example.ta_avance.util.PreferenciasHelper;
 
 import java.io.IOException;
 
@@ -11,25 +13,45 @@ import okhttp3.Response;
 
 public class AuthInterceptor implements Interceptor {
 
-    private Context context;
+    private final PreferenciasHelper preferenciasHelper;
+    private final Context context;
 
     public AuthInterceptor(Context context) {
         this.context = context;
+        this.preferenciasHelper = new PreferenciasHelper(context);
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        SharedPreferences prefs = context.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
-        String token = prefs.getString("token", null);
-
+        String token = preferenciasHelper.obtenerToken();
         Request originalRequest = chain.request();
-        Request.Builder builder = originalRequest.newBuilder();
 
+        Request requestWithToken = originalRequest;
         if (token != null) {
-            builder.header("Authorization", "Bearer " + token);
+            requestWithToken = originalRequest.newBuilder()
+                    .header("Authorization", "Bearer " + token)
+                    .build();
         }
 
-        Request newRequest = builder.build();
-        return chain.proceed(newRequest);
+        Response response = chain.proceed(requestWithToken);
+
+        if (response.code() == 401) {
+            response.close(); // Cerramos respuesta anterior
+
+            // Intentar renovar el token
+            TokenManager tokenManager = new TokenManager(context);
+            String newToken = tokenManager.refreshToken();
+
+            if (newToken != null) {
+                // Reintentar la petición con el nuevo token
+                Request newRequest = originalRequest.newBuilder()
+                        .header("Authorization", "Bearer " + newToken)
+                        .build();
+
+                return chain.proceed(newRequest);
+            }
+        }
+
+        return response;
     }
 }

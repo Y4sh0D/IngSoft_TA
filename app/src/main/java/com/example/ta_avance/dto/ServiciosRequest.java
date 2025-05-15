@@ -1,4 +1,4 @@
-package com.example.ta_avance.modelo;
+package com.example.ta_avance.dto;
 
 public class ServiciosRequest {
     private String nombre;

@@ -50,7 +50,11 @@
             android:name=".activitidades.ServiciosActivity"
             android:exported="true">
         </activity>
-
+        <!-- Actividad para Recuperar Contraseña -->
+        <activity
+            android:name=".activitidades.RecuperarContraActivity"
+            android:exported="true">
+        </activity>
 
     </application>
 

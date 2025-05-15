@@ -1,113 +1,85 @@
 package com.example.ta_avance.activitidades;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.EditText;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ta_avance.R;
-import com.example.ta_avance.api.AuthApiService;
-import com.example.ta_avance.modelo.LoginRequest;
-import com.example.ta_avance.modelo.LoginResponse;
 
-import com.auth0.android.jwt.JWT;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import androidx.lifecycle.ViewModelProvider;
+import com.example.ta_avance.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText campoUsuario, campoContraseña;
-    private Button btnIngresarApp;
-    private AuthApiService authApiService;
+    private Button btnIngresarApp, btnOlvideContrasena;
+    private MainViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); // Tu layout se llama activity_main.xml
+        setContentView(R.layout.activity_main);
 
         campoUsuario = findViewById(R.id.campoUsuario);
         campoContraseña = findViewById(R.id.campoContraseña);
         btnIngresarApp = findViewById(R.id.btnIngresarApp);
+        btnOlvideContrasena = findViewById(R.id.btnOlvideContrasena);
 
-        // Crear Retrofit
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://localhost:8080/api/") // Aquí sigue siendo tu base URL
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-        authApiService = retrofit.create(AuthApiService.class);
+        Animation shakeAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in);
 
-        // Acciones al presionar el botón
         btnIngresarApp.setOnClickListener(v -> {
             String usuario = campoUsuario.getText().toString();
             String contraseña = campoContraseña.getText().toString();
 
             if (usuario.isEmpty() || contraseña.isEmpty()) {
-                Toast.makeText(MainActivity.this, "Completa todos los campos", Toast.LENGTH_SHORT).show();
-                return;
+                Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show();
+                if (usuario.isEmpty()) campoUsuario.startAnimation(shakeAnimation);
+                if (contraseña.isEmpty()) campoContraseña.startAnimation(shakeAnimation);
+            } else {
+                mainViewModel.login(usuario, contraseña);
             }
-
-            login(usuario, contraseña);
         });
-    }
 
-    private void login(String usuario, String contraseña) {
-        LoginRequest request = new LoginRequest(usuario, contraseña);
-        Call<LoginResponse> call = authApiService.login(request);
+        btnOlvideContrasena.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, RecuperarContraActivity.class);
+            startActivity(intent);
+        });
 
-        call.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    LoginResponse loginResponse = response.body();
-                    String token = loginResponse.getData().getToken();
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
 
-                    // Decodificamos el JWT
-                    JWT jwt = new JWT(token);
+        // Anima el logo, los campos y botones
+        findViewById(R.id.diamondLogo).startAnimation(fadeIn);
+        findViewById(R.id.layoutUsuario).startAnimation(fadeIn); // si usas TextInputLayout
+        findViewById(R.id.layoutContraseña).startAnimation(fadeIn);
+        btnIngresarApp.startAnimation(fadeIn);
+        btnOlvideContrasena.startAnimation(fadeIn);
 
-                    SharedPreferences prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString("token", token);
-                    editor.apply();
-
-                    String nombre = jwt.getClaim("nombre").asString();
-                    String apellido = jwt.getClaim("apellido").asString();
-
-                    // Extraemos el rol del token
-                    String role = jwt.getClaim("rol").asString();
-
-                    // Verificar si el rol es ADMIN
-                    if ("ADMIN".equals(role)) {
-                        Toast.makeText(MainActivity.this, "Sesion iniciada", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MainActivity.this, AdminHomeActivity.class);
-                        // Agregamos el nombre y apellido al Intent
-                        intent.putExtra("nombre", nombre);
-                        intent.putExtra("apellido", apellido);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(MainActivity.this, "Rol no autorizado para esta aplicación", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    if (response.code() == 401) {
-                        Toast.makeText(MainActivity.this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(MainActivity.this, "Error al iniciar sesión: " + response.code(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+        mainViewModel.loginStatus.observe(this, status -> {
+            switch (status) {
+                case "SUCCESS":
+                    Intent intent = new Intent(this, AdminHomeActivity.class);
+                    intent.putExtra("nombre", mainViewModel.nombre.getValue());
+                    intent.putExtra("apellido", mainViewModel.apellido.getValue());
+                    startActivity(intent);
+                    finish();
+                    break;
+                case "NO_ADMIN":
+                    Toast.makeText(this, "Rol no autorizado", Toast.LENGTH_SHORT).show();
+                    break;
+                case "INVALID":
+                    Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    Toast.makeText(this, "Error: " + status, Toast.LENGTH_SHORT).show();
+                    break;
             }
         });
     }

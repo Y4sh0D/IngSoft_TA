@@ -6,69 +6,46 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import com.example.ta_avance.R;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.ta_avance.R;
+import com.example.ta_avance.viewmodel.ReservasViewModel;
 
 public class ReservasActivity extends AppCompatActivity {
+
+    private ReservasViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservas);
 
+        viewModel = new ViewModelProvider(this).get(ReservasViewModel.class);
+
         Button btnVolverHome = findViewById(R.id.volverButton);
-        btnVolverHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Volver a AdminHomeActivity y cerrar la actual
-                Intent intent = new Intent(ReservasActivity.this, AdminHomeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-                finish();
-            }
-        });// Asegúrate de tener el layout reservas.xml
+        btnVolverHome.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AdminHomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+        });
     }
 
-    // Método para mostrar los detalles de los barberos que tienen citas a la hora seleccionada
     public void showBarbersAtTime(View view) {
-        String timeSlot = ((Button)view).getText().toString();  // Obtiene el rango horario
+        String timeSlot = ((Button)view).getText().toString();
+        String message = viewModel.obtenerReservasPorHorario(timeSlot);
 
-        // Simulación de reservas en el rango horario
-        String message = "";
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("Detalles de las Reservas")
+                .setMessage(message)
+                .setPositiveButton("Confirmar", (dialog, which) ->
+                        Toast.makeText(this, "Reserva confirmada.", Toast.LENGTH_SHORT).show())
+                .setNegativeButton("Cancelar", (dialog, which) ->
+                        Toast.makeText(this, "Reserva cancelada.", Toast.LENGTH_SHORT).show());
 
-        // Aquí puedes verificar qué barberos están ocupados en ese horario
-        if (timeSlot.equals("9:00 - 9:30")) {
-            message = "Reserva 1\nBarbera: Diego\nCliente: Cliente X\nServicio: Corte de cabello\nCosto: S/ 30\n\n";
-            message += "Reserva 2\nBarbera: Laura\nCliente: Cliente Y\nServicio: Afeitado\nCosto: S/ 20";
-        } else if (timeSlot.equals("9:30 - 10:00")) {
-            message = "Reserva 1\nBarbera: Diego\nCliente: Cliente Z\nServicio: Afeitado\nCosto: S/ 20\n\n";
-            message += "Reserva 2\nBarbera: Carlos\nCliente: Cliente W\nServicio: Corte de cabello\nCosto: S/ 30";
-        } else {
-            message = "No hay reservas en este horario.";
-        }
-
-        // Crear un AlertDialog para mostrar los detalles
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Detalles de las Reservas");
-
-        builder.setMessage(message);
-
-        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(ReservasActivity.this, "Reserva confirmada.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(ReservasActivity.this, "Reserva cancelada.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Mostrar el Dialog
         builder.create().show();
     }
 }

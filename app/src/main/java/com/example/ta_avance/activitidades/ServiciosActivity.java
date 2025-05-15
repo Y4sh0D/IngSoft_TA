@@ -1,103 +1,55 @@
 package com.example.ta_avance.activitidades;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.content.Intent;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ta_avance.R;
-import com.example.ta_avance.api.AuthApiService;
-import com.example.ta_avance.api.AuthInterceptor;
-import com.example.ta_avance.modelo.ServiciosRequest;
-
-import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import com.example.ta_avance.viewmodel.ServiciosViewModel;
 
 public class ServiciosActivity extends AppCompatActivity {
 
     private EditText nombreInput, precioInput;
     private Button registrarButton;
-    private AuthApiService authApiService;
+    private ServiciosViewModel serviciosViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_servicios);
 
-        // Enlazar elementos del layout
-        nombreInput = findViewById(R.id.servicioInput);  // Cambié el nombre del EditText
+        nombreInput = findViewById(R.id.servicioInput);
         precioInput = findViewById(R.id.precioInput);
         registrarButton = findViewById(R.id.registrarButton);
-
-        // Crear Retrofit
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(new AuthInterceptor(this))
-                .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://localhost:8080/api/") // Asegúrate de usar la base URL correcta
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        authApiService = retrofit.create(AuthApiService.class);
-
-        // Configurar botón para registrar el servicio
-        registrarButton.setOnClickListener(v -> registrarServicio());
-
         Button btnVolverHome = findViewById(R.id.volverButton);
-        btnVolverHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Volver a AdminHomeActivity y cerrar la actual
-                Intent intent = new Intent(ServiciosActivity.this, AdminHomeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-                finish();
+
+        serviciosViewModel = new ViewModelProvider(this).get(ServiciosViewModel.class);
+
+        registrarButton.setOnClickListener(v -> {
+            String nombre = nombreInput.getText().toString().trim();
+            String precio = precioInput.getText().toString().trim();
+            serviciosViewModel.registrarServicio(nombre, precio);
+        });
+
+        serviciosViewModel.getMensaje().observe(this, mensaje -> {
+            if (mensaje != null && !mensaje.isEmpty()) {
+                Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+                if (mensaje.contains("exitosamente")) {
+                    finish(); // cerrar solo si fue exitoso
+                }
             }
         });
-    }
 
-    private void registrarServicio() {
-        String nombre = nombreInput.getText().toString().trim();
-        String precioString = precioInput.getText().toString().trim();
-
-        if (nombre.isEmpty() || precioString.isEmpty()) {
-            Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        try {
-            int precio = Integer.parseInt(precioString); // Asumiendo que el precio es un entero
-            ServiciosRequest request = new ServiciosRequest(nombre, precio);
-
-            Call<Void> call = authApiService.crear(request);
-            call.enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    if (response.isSuccessful()) {
-                        Toast.makeText(ServiciosActivity.this, "Servicio registrado exitosamente", Toast.LENGTH_SHORT).show();
-                        finish(); // cerrar esta pantalla
-                    } else {
-                        Toast.makeText(ServiciosActivity.this, "Error al registrar servicio: " + response.code(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    Toast.makeText(ServiciosActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        } catch (NumberFormatException e) {
-            Toast.makeText(this, "Por favor ingresa un precio válido", Toast.LENGTH_SHORT).show();
-        }
+        btnVolverHome.setOnClickListener(v -> {
+            Intent intent = new Intent(ServiciosActivity.this, AdminHomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+        });
     }
 }

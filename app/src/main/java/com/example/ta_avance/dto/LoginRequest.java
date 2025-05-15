@@ -1,25 +1,24 @@
-package com.example.ta_avance.modelo;
+package com.example.ta_avance.dto;
 
 public class LoginRequest {
     private String username;
     private String password;
     private String nombre;
     private String apellido;
+    private String email;
 
-
-    public LoginRequest(String username, String password, String nombre, String apellido) {
+    public LoginRequest(String username, String password, String nombre, String apellido, String email) {
         this.username = username;
         this.password = password;
         this.nombre = nombre;
         this.apellido = apellido;
+        this.email  = email;
     }
 
     public LoginRequest(String username, String password) {
         this.username = username;
         this.password = password;
     }
-
-
 
     // Getters y Setters (opcional si quieres usarlos después)
     public String getUsername() {
@@ -52,5 +51,13 @@ public class LoginRequest {
 
     public void setApellido(String apellido) {
             this.apellido = apellido;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

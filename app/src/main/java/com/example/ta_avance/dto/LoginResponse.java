@@ -1,4 +1,4 @@
-package com.example.ta_avance.modelo;
+package com.example.ta_avance.dto;
 
 public class LoginResponse {
     private String status;
@@ -7,6 +7,11 @@ public class LoginResponse {
 
     public static class LoginData {
         private String token;
+        private String refreshToken;
+
+        public String getRefreshToken() { return refreshToken; }
+
+        public void setRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
 
         public String getToken() {
             return token;
