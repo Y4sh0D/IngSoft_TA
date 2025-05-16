@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".activitidades.RecuperarContraActivity">
+    tools:context=".actividades.RecuperarContraActivity">
 
     <ImageView
         android:id="@+id/diamondLogo"

@@ -25,7 +25,7 @@ public class TokenManager {
     }
 
     public synchronized String refreshToken() throws IOException {
-        String currentRefresh = prefs.obtenerRefresgToken();
+        String currentRefresh = prefs.obtenerRefreshToken();
         if (currentRefresh == null) return null;
 
         RefreshRequest request = new RefreshRequest(currentRefresh);

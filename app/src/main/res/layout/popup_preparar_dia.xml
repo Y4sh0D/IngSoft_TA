@@ -1,0 +1,32 @@
+<!-- res/layout/popup_preparar_dia.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@drawable/popup_background"
+    android:elevation="8dp">
+
+    <TextView
+        android:id="@+id/tituloDia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Preparación Lunes"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="12dp"/>
+
+    <LinearLayout
+        android:id="@+id/contenedorTurnos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+    <Button
+        android:id="@+id/btnGuardar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Guardar"
+        android:layout_marginTop="12dp"/>
+</LinearLayout>

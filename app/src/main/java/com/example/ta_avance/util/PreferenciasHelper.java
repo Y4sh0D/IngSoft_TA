@@ -23,7 +23,7 @@ public class PreferenciasHelper {
         preferences.edit().putString(REFRESH, refreshToken).apply();
     }
 
-    public String obtenerRefresgToken() {
+    public String obtenerRefreshToken() {
         return preferences.getString(REFRESH, null);
     }
 
