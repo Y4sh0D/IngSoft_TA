@@ -6,10 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,66 +16,87 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ta_avance.R;
+import com.example.ta_avance.dto.barbero.BarberoDto;
 import com.example.ta_avance.viewmodel.HorarioPrepararViewModel;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class HorarioPrepararActivity extends AppCompatActivity {
 
     private HorarioPrepararViewModel viewModel;
     private LinearLayout containerDias;
+    private static final Map<String, String> turnoIds = new HashMap<>();
+    static {
+        turnoIds.put("MAÑANA", "1");
+        turnoIds.put("TARDE", "2");
+        turnoIds.put("NOCHE", "3");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_horario_preparar);
 
-        viewModel = new ViewModelProvider(this).get(HorarioPrepararViewModel.class);
         containerDias = findViewById(R.id.containerDias);
+        viewModel = new ViewModelProvider(this).get(HorarioPrepararViewModel.class);
 
         viewModel.getDias().observe(this, dias -> {
+            containerDias.removeAllViews();
             for (String dia : dias) {
                 Button btnDia = new Button(this);
                 btnDia.setText(dia);
-                btnDia.setBackgroundResource(R.drawable.selector_boton); // Usa tu selector personalizado
-                btnDia.setPadding(16, 16, 16, 16);
-                btnDia.setTextSize(16);
-                btnDia.setAllCaps(false);
-
                 btnDia.setOnClickListener(v -> mostrarPopupDia(dia));
                 containerDias.addView(btnDia);
             }
         });
+
+        viewModel.cargarBarberos(this);
     }
 
     private void mostrarPopupDia(String dia) {
         View popupView = LayoutInflater.from(this).inflate(R.layout.popup_preparar_dia, null);
+
         TextView tituloDia = popupView.findViewById(R.id.tituloDia);
         LinearLayout contenedorTurnos = popupView.findViewById(R.id.contenedorTurnos);
         Button btnGuardar = popupView.findViewById(R.id.btnGuardar);
 
         tituloDia.setText("Preparación " + dia);
 
-        viewModel.getTurnos().observe(this, turnos -> {
-            viewModel.getBarberos().observe(this, barberos -> {
-                contenedorTurnos.removeAllViews();
-                for (String turno : turnos) {
-                    TextView label = new TextView(this);
-                    label.setText(turno + ":");
-                    label.setTextSize(16);
-                    label.setPadding(0, 12, 0, 4);
-                    contenedorTurnos.addView(label);
+        contenedorTurnos.removeAllViews();
 
-                    RadioGroup grupo = new RadioGroup(this);
-                    for (String barbero : barberos) {
-                        RadioButton radio = new RadioButton(this);
-                        radio.setText(barbero);
-                        grupo.addView(radio);
-                    }
-                    contenedorTurnos.addView(grupo);
-                }
-            });
-        });
+        List<String> turnos = viewModel.getTurnos().getValue();
+        List<BarberoDto> barberos = viewModel.getBarberos().getValue();
+
+        if (turnos == null || barberos == null) {
+            Toast.makeText(this, "Error cargando turnos o barberos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Por cada turno (ej: "Mañana", "Tarde"), crear sección con checkboxes de barberos
+        Map<String, LinearLayout> layoutsPorTurno = new HashMap<>();
+
+        for (String turno : turnos) {
+            TextView tvTurno = new TextView(this);
+            tvTurno.setText(turno);
+            tvTurno.setTextSize(18);
+            tvTurno.setPadding(0, 20, 0, 10);
+            contenedorTurnos.addView(tvTurno);
+
+            LinearLayout layoutBarberos = new LinearLayout(this);
+            layoutBarberos.setOrientation(LinearLayout.VERTICAL);
+
+            for (BarberoDto barbero : barberos) {
+                CheckBox checkBox = new CheckBox(this);
+                checkBox.setText(barbero.getNombre());
+                checkBox.setTag(barbero.getBarbero_id());
+                layoutBarberos.addView(checkBox);
+            }
+            contenedorTurnos.addView(layoutBarberos);
+            layoutsPorTurno.put(turno, layoutBarberos);
+        }
 
         PopupWindow popupWindow = new PopupWindow(popupView,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -85,9 +105,34 @@ public class HorarioPrepararActivity extends AppCompatActivity {
         popupWindow.showAtLocation(findViewById(android.R.id.content), Gravity.CENTER, 0, 0);
 
         btnGuardar.setOnClickListener(v -> {
-            popupWindow.dismiss();
-            Toast.makeText(this, "Guardado para " + dia, Toast.LENGTH_SHORT).show();
-            // Aquí luego podrás capturar selecciones y enviarlas al backend
+            Map<Long, List<Long>> turnosPorTipo = new HashMap<>();
+
+            for (String turno : turnos) {
+                LinearLayout layout = layoutsPorTurno.get(turno);
+                if (layout == null) continue;
+
+                List<Long> barberoIdsSeleccionados = layout.getTouchables().stream()
+                        .filter(view -> view instanceof CheckBox)
+                        .map(view -> (CheckBox) view)
+                        .filter(CheckBox::isChecked)
+                        .map(cb -> ((Integer) cb.getTag()).longValue())  // Convertir Integer a Long
+                        .collect(Collectors.toList());
+
+                String turnoIdStr = turnoIds.get(turno.toUpperCase());
+                if (turnoIdStr != null) {
+                    Long turnoId = Long.parseLong(turnoIdStr);   // Convertir String a Long
+                    turnosPorTipo.put(turnoId, barberoIdsSeleccionados);
+                }
+            }
+
+            viewModel.guardarTurnosDia(this, dia, turnosPorTipo,
+                    () -> {
+                        popupWindow.dismiss();
+                        Toast.makeText(this, "Turnos guardados para " + dia, Toast.LENGTH_SHORT).show();
+                    },
+                    () -> Toast.makeText(this, "Error al guardar", Toast.LENGTH_SHORT).show());
         });
+
+
     }
 }

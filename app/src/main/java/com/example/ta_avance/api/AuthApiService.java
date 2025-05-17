@@ -3,6 +3,9 @@ package com.example.ta_avance.api;
 import com.example.ta_avance.dto.barbero.BarberoRequest;
 import com.example.ta_avance.dto.barbero.BarberoResponse;
 import com.example.ta_avance.dto.barbero.BarberoSimpleResponse;
+import com.example.ta_avance.dto.horario.GenericResponse;
+import com.example.ta_avance.dto.horario.HorarioInstanciaResponse;
+import com.example.ta_avance.dto.horario.TurnosDiaRequest;
 import com.example.ta_avance.dto.login.LoginRequest;
 import com.example.ta_avance.dto.login.LoginResponse;
 import com.example.ta_avance.dto.recuperacion.RecuperacionRequest;
@@ -11,6 +14,9 @@ import com.example.ta_avance.dto.refresh.RefreshRequest;
 import com.example.ta_avance.dto.servicio.ServicioRequest;
 import com.example.ta_avance.dto.servicio.ServicioResponse;
 import com.example.ta_avance.dto.servicio.ServicioSimpleResponse;
+
+import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -59,5 +65,15 @@ public interface AuthApiService {
 
     @PUT("api/servicio/actualizar/{id}")
     Call<ServicioSimpleResponse> actualizarServicio(@Path("id") int id, @Body ServicioRequest request);
+
+    @GET("api/horarioInstancia/actual")
+    Call<Map<String, List<HorarioInstanciaResponse>>> obtenerHorarioActual();
+
+    @POST("api/horarioBarberoBase/actualizarTurnosDia")
+    Call<GenericResponse> actualizarTurnosDia(@Body TurnosDiaRequest request);
+
+    @POST("api/horarioBarberoBase/confirmarHorario")
+    Call<Void> confirmarHorario();
+
 
 }

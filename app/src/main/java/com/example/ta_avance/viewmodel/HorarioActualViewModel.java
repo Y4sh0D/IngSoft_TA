@@ -1,33 +1,61 @@
 package com.example.ta_avance.viewmodel;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.ta_avance.api.ApiClient;
+import com.example.ta_avance.api.AuthApiService;
+import com.example.ta_avance.dto.horario.HorarioInstanciaResponse;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HorarioActualViewModel extends ViewModel {
     private final MutableLiveData<Map<String, Map<String, String>>> horarios = new MutableLiveData<>();
 
-    public HorarioActualViewModel() {
-        // Datos simulados por ahora
-        Map<String, Map<String, String>> semana = new HashMap<>();
-        String[] dias = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
-        String[] turnos = {"Mañana", "Tarde", "Noche"};
-
-        for (String dia : dias) {
-            Map<String, String> turnosDia = new HashMap<>();
-            turnosDia.put("Mañana", "Juan, Pedro");
-            turnosDia.put("Tarde", "Luis");
-            turnosDia.put("Noche", "Carlos");
-            semana.put(dia, turnosDia);
-        }
-
-        horarios.setValue(semana);
-    }
-
     public LiveData<Map<String, Map<String, String>>> getHorarios() {
         return horarios;
+    }
+
+    public void cargarHorarios(Context context) {
+        AuthApiService api = ApiClient.getRetrofit(context, true).create(AuthApiService.class);
+
+        Call<Map<String, List<HorarioInstanciaResponse>>> call = api.obtenerHorarioActual();
+        call.enqueue(new Callback<Map<String, List<HorarioInstanciaResponse>>>() {
+            @Override
+            public void onResponse(Call<Map<String, List<HorarioInstanciaResponse>>> call, Response<Map<String, List<HorarioInstanciaResponse>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Map<String, Map<String, String>> semana = new HashMap<>();
+
+                    for (Map.Entry<String, List<HorarioInstanciaResponse>> entry : response.body().entrySet()) {
+                        String dia = entry.getKey();
+                        List<HorarioInstanciaResponse> turnosList = entry.getValue();
+
+                        Map<String, String> turnos = new HashMap<>();
+                        for (HorarioInstanciaResponse turno : turnosList) {
+                            turnos.put(turno.getTipoHorario(), turno.getBarbero());
+                        }
+
+                        semana.put(dia, turnos);
+                    }
+
+                    horarios.postValue(semana);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, List<HorarioInstanciaResponse>>> call, Throwable t) {
+                t.printStackTrace();
+                // Aquí podrías notificar un error si lo deseas
+            }
+        });
     }
 }
