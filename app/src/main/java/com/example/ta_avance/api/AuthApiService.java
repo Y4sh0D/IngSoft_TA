@@ -1,14 +1,16 @@
 package com.example.ta_avance.api;
 
-import com.example.ta_avance.dto.BarberoRequest;
-import com.example.ta_avance.dto.BarberoResponse;
-import com.example.ta_avance.dto.BarberoSimpleResponse;
-import com.example.ta_avance.dto.LoginRequest;
-import com.example.ta_avance.dto.LoginResponse;
-import com.example.ta_avance.dto.RecuperacionRequest;
-import com.example.ta_avance.dto.RecuperacionResponse;
-import com.example.ta_avance.dto.RefreshRequest;
-import com.example.ta_avance.dto.ServiciosRequest;
+import com.example.ta_avance.dto.barbero.BarberoRequest;
+import com.example.ta_avance.dto.barbero.BarberoResponse;
+import com.example.ta_avance.dto.barbero.BarberoSimpleResponse;
+import com.example.ta_avance.dto.login.LoginRequest;
+import com.example.ta_avance.dto.login.LoginResponse;
+import com.example.ta_avance.dto.recuperacion.RecuperacionRequest;
+import com.example.ta_avance.dto.recuperacion.RecuperacionResponse;
+import com.example.ta_avance.dto.refresh.RefreshRequest;
+import com.example.ta_avance.dto.servicio.ServicioRequest;
+import com.example.ta_avance.dto.servicio.ServicioResponse;
+import com.example.ta_avance.dto.servicio.ServicioSimpleResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -26,7 +28,7 @@ public interface AuthApiService {
     Call<Void> register(@Body LoginRequest registerRequest);
 
     @POST("api/servicio/crear")
-    Call<Void> crear(@Body ServiciosRequest serviciosRequest);
+    Call<Void> crear(@Body ServicioRequest serviciosRequest);
 
     @POST("api/auth/refreshToken")
     Call<LoginResponse> refresh(@Body RefreshRequest refreshRequest);
@@ -45,5 +47,17 @@ public interface AuthApiService {
 
     @PUT("api/barbero/actualizar/{id}")
     Call<BarberoSimpleResponse> actualizarBarbero(@Path("id") int id, @Body BarberoRequest barberoRequest);
+
+    @GET("api/servicio/listar")
+    Call<ServicioResponse> listarServicios();
+
+    @POST("api/servicio/crear")
+    Call<ServicioResponse> crearServicio(@Body ServicioRequest request);
+
+    @DELETE("api/servicio/eliminar/{id}")
+    Call<ServicioResponse> eliminarServicio(@Path("id") int id);
+
+    @PUT("api/servicio/actualizar/{id}")
+    Call<ServicioSimpleResponse> actualizarServicio(@Path("id") int id, @Body ServicioRequest request);
 
 }

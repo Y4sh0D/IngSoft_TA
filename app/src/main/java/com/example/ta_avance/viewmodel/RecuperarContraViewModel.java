@@ -8,8 +8,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.ta_avance.api.ApiClient;
 import com.example.ta_avance.api.AuthApiService;
-import com.example.ta_avance.dto.RecuperacionRequest;
-import com.example.ta_avance.dto.RecuperacionResponse;
+import com.example.ta_avance.dto.recuperacion.RecuperacionRequest;
+import com.example.ta_avance.dto.recuperacion.RecuperacionResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -4,10 +4,10 @@ import android.content.Context;
 
 import com.example.ta_avance.api.ApiClient;
 import com.example.ta_avance.api.AuthApiService;
-import com.example.ta_avance.dto.Barbero;
-import com.example.ta_avance.dto.BarberoRequest;
-import com.example.ta_avance.dto.BarberoResponse;
-import com.example.ta_avance.dto.BarberoSimpleResponse;
+import com.example.ta_avance.dto.barbero.BarberoDto;
+import com.example.ta_avance.dto.barbero.BarberoRequest;
+import com.example.ta_avance.dto.barbero.BarberoResponse;
+import com.example.ta_avance.dto.barbero.BarberoSimpleResponse;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import retrofit2.Response;
 public class GestionarBarberoViewModel {
 
     public interface BarberoCallback {
-        void onSuccess(List<Barbero> barberos);
+        void onSuccess(List<BarberoDto> barberos);
         void onError(String mensaje);
     }
 

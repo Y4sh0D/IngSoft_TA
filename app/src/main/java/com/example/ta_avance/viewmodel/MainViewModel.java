@@ -8,8 +8,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.auth0.android.jwt.JWT;
 import com.example.ta_avance.api.AuthApiService;
-import com.example.ta_avance.dto.LoginRequest;
-import com.example.ta_avance.dto.LoginResponse;
+import com.example.ta_avance.dto.login.LoginRequest;
+import com.example.ta_avance.dto.login.LoginResponse;
 import com.example.ta_avance.util.PreferenciasHelper;
 import com.example.ta_avance.api.ApiClient;
 
@@ -34,6 +34,7 @@ public class MainViewModel extends AndroidViewModel {
         Call<LoginResponse> call = authApiService.login(request);
 
         call.enqueue(new Callback<>() {
+
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {

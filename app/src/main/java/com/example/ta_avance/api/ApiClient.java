@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    private static final String BASE_URL = "http://localhost:8080/"; // Cambiar por IP si es dispositivo real
+    private static final String BASE_URL = "http://192.168.100.16:8080/"; // Cambiar por IP si es dispositivo real
 
     public static Retrofit getRetrofit(Context context, boolean withAuth) {
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()

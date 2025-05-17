@@ -1,12 +1,13 @@
-package com.example.ta_avance.dto;
+package com.example.ta_avance.dto.barbero;
 
+//USADO PARA EL ACTUALIZAR BARBERRO
 // BarberoSimpleResponse.java
 public class BarberoSimpleResponse {
     private int status;
     private String message;
-    private Barbero data;
+    private BarberoDto data;
 
     public int getStatus() { return status; }
     public String getMessage() { return message; }
-    public Barbero getData() { return data; }
+    public BarberoDto getData() { return data; }
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popupNuevoServicioLayout"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@drawable/popup_background"
+    android:elevation="10dp">
+
+    <EditText
+        android:id="@+id/etNombreServicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre del servicio"
+        android:inputType="textPersonName"
+        android:drawableStart="@android:drawable/ic_menu_edit"
+        android:drawablePadding="10dp"
+        android:padding="10dp"
+        android:background="@drawable/popup_background"
+        android:layout_marginBottom="20dp" />
+
+    <EditText
+        android:id="@+id/etPrecioServicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Precio"
+        android:inputType="numberDecimal"
+        android:drawableStart="@android:drawable/ic_menu_info_details"
+        android:drawablePadding="10dp"
+        android:padding="10dp"
+        android:background="@drawable/popup_background"
+        android:layout_marginBottom="20dp" />
+
+    <EditText
+        android:id="@+id/etDescripcionServicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Descripción"
+        android:inputType="textMultiLine"
+        android:minLines="2"
+        android:drawableStart="@android:drawable/ic_menu_edit"
+        android:drawablePadding="10dp"
+        android:padding="10dp"
+        android:background="@drawable/popup_background"
+        android:layout_marginBottom="20dp" />
+
+    <Spinner
+        android:id="@+id/spinnerTipoServicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp" />
+
+    <Button
+        android:id="@+id/btnCrearServicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Crear servicio"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#1E1E1E"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp" />
+
+    <Button
+        android:id="@+id/btnCancelarServicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancelar"
+        android:backgroundTint="#AAAAAA"
+        android:textStyle="bold" />
+
+</LinearLayout>

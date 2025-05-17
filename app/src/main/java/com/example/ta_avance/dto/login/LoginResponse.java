@@ -1,4 +1,4 @@
-package com.example.ta_avance.dto;
+package com.example.ta_avance.dto.login;
 
 public class LoginResponse {
     private String status;

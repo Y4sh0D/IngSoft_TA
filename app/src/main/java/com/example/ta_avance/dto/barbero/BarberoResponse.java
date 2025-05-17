@@ -1,12 +1,14 @@
 // BarberoResponse.java
-package com.example.ta_avance.dto;
+package com.example.ta_avance.dto.barbero;
 
 import java.util.List;
 
+
+//UTILIZADO PARA CREAR Y ELIMINAR
 public class BarberoResponse {
     private int status;
     private String message;
-    private List<Barbero> data;
+    private List<BarberoDto> data;
 
     public int getStatus() {
         return status;
@@ -16,7 +18,7 @@ public class BarberoResponse {
         return message;
     }
 
-    public List<Barbero> getData() {
+    public List<BarberoDto> getData() {
         return data;
     }
 }

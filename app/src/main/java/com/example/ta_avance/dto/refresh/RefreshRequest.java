@@ -1,4 +1,4 @@
-package com.example.ta_avance.dto;
+package com.example.ta_avance.dto.refresh;
 
 public class RefreshRequest {
     private String refreshToken;

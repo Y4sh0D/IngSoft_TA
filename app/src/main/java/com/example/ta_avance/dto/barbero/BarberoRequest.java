@@ -1,5 +1,4 @@
-// com.example.ta_avance.dto.BarberoRequest
-package com.example.ta_avance.dto;
+package com.example.ta_avance.dto.barbero;
 
 public class BarberoRequest {
     private String nombre;

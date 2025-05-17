@@ -49,7 +49,7 @@ public class AdminHomeActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ReservasPorConfirmarActivity.class)));
 
         findViewById(R.id.crearServicio).setOnClickListener(v ->
-                startActivity(new Intent(this, ServiciosActivity.class)));
+                startActivity(new Intent(this, GestionarServicioActivity.class)));
 
         findViewById(R.id.gestionHorarios).setOnClickListener(v -> {
             mostrarPopupHorarios(v);

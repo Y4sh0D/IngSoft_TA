@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.ta_avance.api.ApiClient;
 import com.example.ta_avance.api.AuthApiService;
-import com.example.ta_avance.dto.LoginRequest;
+import com.example.ta_avance.dto.login.LoginRequest;
 
 import retrofit2.Call;
 import retrofit2.Callback;

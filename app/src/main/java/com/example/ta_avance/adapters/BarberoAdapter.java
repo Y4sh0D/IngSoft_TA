@@ -10,21 +10,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ta_avance.R;
-import com.example.ta_avance.dto.Barbero;
+import com.example.ta_avance.dto.barbero.BarberoDto;
 
 import java.util.List;
 
 public class BarberoAdapter extends RecyclerView.Adapter<BarberoAdapter.BarberoViewHolder> {
 
     public interface OnBarberoClickListener {
-        void onActualizar(Barbero barbero);
-        void onEliminar(Barbero barbero);
+        void onActualizar(BarberoDto barbero);
+        void onEliminar(BarberoDto barbero);
     }
 
-    private final List<Barbero> barberos;
+    private final List<BarberoDto> barberos;
     private final OnBarberoClickListener listener;
 
-    public BarberoAdapter(List<Barbero> barberos, OnBarberoClickListener listener) {
+    public BarberoAdapter(List<BarberoDto> barberos, OnBarberoClickListener listener) {
         this.barberos = barberos;
         this.listener = listener;
     }
@@ -38,9 +38,8 @@ public class BarberoAdapter extends RecyclerView.Adapter<BarberoAdapter.BarberoV
 
     @Override
     public void onBindViewHolder(@NonNull BarberoViewHolder holder, int position) {
-        Barbero barbero = barberos.get(position);
+        BarberoDto barbero = barberos.get(position);
         holder.textNombre.setText(barbero.getNombre());
-        holder.textEstado.setText("Estado: " + (barbero.getEstado() == 0 ? "Activo" : "Inactivo"));
 
         holder.btnActualizar.setOnClickListener(v -> listener.onActualizar(barbero));
         holder.btnEliminar.setOnClickListener(v -> listener.onEliminar(barbero));

@@ -3,8 +3,8 @@ package com.example.ta_avance.api;
 
 import android.content.Context;
 
-import com.example.ta_avance.dto.LoginResponse;
-import com.example.ta_avance.dto.RefreshRequest;
+import com.example.ta_avance.dto.login.LoginResponse;
+import com.example.ta_avance.dto.refresh.RefreshRequest;
 import com.example.ta_avance.util.PreferenciasHelper;
 
 import java.io.IOException;

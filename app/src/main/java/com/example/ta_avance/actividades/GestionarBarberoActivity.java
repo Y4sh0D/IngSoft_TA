@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ta_avance.R;
 import com.example.ta_avance.adapters.BarberoAdapter;
-import com.example.ta_avance.dto.Barbero;
+import com.example.ta_avance.dto.barbero.BarberoDto;
 import com.example.ta_avance.viewmodel.GestionarBarberoViewModel;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class GestionarBarberoActivity extends AppCompatActivity {
     private GestionarBarberoViewModel viewModel;
     private RecyclerView recyclerView;
     private Button btnAgregarBarbero;
-    private List<Barbero> listaBarberos;
+    private List<BarberoDto> listaBarberos;
     private BarberoAdapter adapter;
 
     @Override
@@ -50,16 +50,16 @@ public class GestionarBarberoActivity extends AppCompatActivity {
     private void cargarLista() {
         viewModel.obtenerBarberos(this, new GestionarBarberoViewModel.BarberoCallback() {
             @Override
-            public void onSuccess(List<Barbero> barberos) {
+            public void onSuccess(List<BarberoDto> barberos) {
                 listaBarberos = barberos;
                 adapter = new BarberoAdapter(barberos, new BarberoAdapter.OnBarberoClickListener() {
                     @Override
-                    public void onActualizar(Barbero barbero) {
+                    public void onActualizar(BarberoDto barbero) {
                         mostrarPopupActualizarBarbero(barbero);
                     }
 
                     @Override
-                    public void onEliminar(Barbero barbero) {
+                    public void onEliminar(BarberoDto barbero) {
                         eliminarBarbero(barbero.getBarbero_id());
                     }
                 });
@@ -73,7 +73,7 @@ public class GestionarBarberoActivity extends AppCompatActivity {
         });
     }
 
-    private void mostrarPopupActualizarBarbero(Barbero barbero) {
+    private void mostrarPopupActualizarBarbero(BarberoDto barbero) {
         LayoutInflater inflater = LayoutInflater.from(this);
         View popupView = inflater.inflate(R.layout.popup_nuevo_barbero, null); // Reutilizamos el mismo layout
 
