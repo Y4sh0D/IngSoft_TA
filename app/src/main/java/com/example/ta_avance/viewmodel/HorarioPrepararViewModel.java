@@ -2,6 +2,7 @@ package com.example.ta_avance.viewmodel;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -68,7 +69,7 @@ public class HorarioPrepararViewModel extends ViewModel {
      * Convierte la selección a Map<String, List<Integer>> para TurnosDiaRequest
      * y envía la petición al backend
      */
-    public void guardarTurnosDia(Context context, String dia, Map<Long, List<Long>> turnosPorTipo, Runnable onSuccess, Runnable onError) {
+    public void guardarTurnosDia(Context context, String dia, Map<Long, List<Long>> turnosPorTipo) {
         Log.d("DEBUG_API", "Enviando para día: " + dia + ", turnos: " + new Gson().toJson(turnosPorTipo));
 
         TurnosDiaRequest request = new TurnosDiaRequest(dia, turnosPorTipo);
@@ -79,20 +80,53 @@ public class HorarioPrepararViewModel extends ViewModel {
             public void onResponse(Call<GenericResponse> call, Response<GenericResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d("DEBUG_API", "Mensaje: " + response.body().getMessage());
-                    onSuccess.run();
+                    Toast.makeText(context, response.body().getMessage() + " para el día " + dia.toLowerCase(), Toast.LENGTH_SHORT).show();
                 } else {
-                    Log.e("DEBUG_API", "Error al guardar: " + response.code());
-                    onError.run();
+                    try {
+                        String errorMsg = response.errorBody() != null ? response.errorBody().string() : "Error desconocido";
+                        Log.e("DEBUG_API", "Error: " + errorMsg);
+                        Toast.makeText(context, "Error al guardar turnos", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(context, "Error inesperado", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<GenericResponse> call, Throwable t) {
                 Log.e("DEBUG_API", "Falló conexión: ", t);
-                onError.run();
+                Toast.makeText(context, "Error de red al guardar turnos", Toast.LENGTH_SHORT).show();
             }
         });
 
     }
+
+    public void confirmarHorario(Context context) {
+        AuthApiService api = ApiClient.getRetrofit(context, true).create(AuthApiService.class);
+        api.confirmarHorario().enqueue(new Callback<GenericResponse>() {
+            @Override
+            public void onResponse(Call<GenericResponse> call, Response<GenericResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    try {
+                        // Intentar leer el mensaje del cuerpo si es un error controlado
+                        String errorMsg = response.errorBody() != null ? response.errorBody().string() : "Error desconocido";
+                        Log.e("DEBUG_API", "Error body: " + errorMsg);
+                        Toast.makeText(context, "Error al confirmar horario", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(context, "Error inesperado", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GenericResponse> call, Throwable t) {
+                Log.e("DEBUG_API", "Falló la conexión al confirmar: ", t);
+                Toast.makeText(context, "Error de red al confirmar", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
 }

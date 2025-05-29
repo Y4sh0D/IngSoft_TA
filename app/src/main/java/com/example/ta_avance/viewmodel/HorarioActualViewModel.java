@@ -10,6 +10,7 @@ import com.example.ta_avance.api.ApiClient;
 import com.example.ta_avance.api.AuthApiService;
 import com.example.ta_avance.dto.horario.HorarioInstanciaResponse;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +20,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HorarioActualViewModel extends ViewModel {
-    private final MutableLiveData<Map<String, Map<String, String>>> horarios = new MutableLiveData<>();
+    private final MutableLiveData<Map<String, Map<String, List<String>>>> horarios = new MutableLiveData<>();
 
-    public LiveData<Map<String, Map<String, String>>> getHorarios() {
+    public LiveData<Map<String, Map<String, List<String>>>> getHorarios() {
         return horarios;
     }
 
@@ -33,21 +34,29 @@ public class HorarioActualViewModel extends ViewModel {
             @Override
             public void onResponse(Call<Map<String, List<HorarioInstanciaResponse>>> call, Response<Map<String, List<HorarioInstanciaResponse>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Map<String, Map<String, String>> semana = new HashMap<>();
+                    Map<String, Map<String, List<String>>> semana = new HashMap<>();
 
                     for (Map.Entry<String, List<HorarioInstanciaResponse>> entry : response.body().entrySet()) {
                         String dia = entry.getKey();
                         List<HorarioInstanciaResponse> turnosList = entry.getValue();
 
-                        Map<String, String> turnos = new HashMap<>();
+                        Map<String, List<String>> turnos = new HashMap<>();
+
                         for (HorarioInstanciaResponse turno : turnosList) {
-                            turnos.put(turno.getTipoHorario(), turno.getBarbero());
+                            String tipo = turno.getTipoHorario();
+                            String barbero = turno.getBarbero();
+
+                            if (!turnos.containsKey(tipo)) {
+                                turnos.put(tipo, new ArrayList<>());
+                            }
+                            turnos.get(tipo).add(barbero);
                         }
 
                         semana.put(dia, turnos);
                     }
 
                     horarios.postValue(semana);
+
                 }
             }
 

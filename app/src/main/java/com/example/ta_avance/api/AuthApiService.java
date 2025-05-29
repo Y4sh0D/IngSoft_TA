@@ -69,11 +69,11 @@ public interface AuthApiService {
     @GET("api/horarioInstancia/actual")
     Call<Map<String, List<HorarioInstanciaResponse>>> obtenerHorarioActual();
 
-    @POST("api/horarioBarberoBase/actualizarTurnosDia")
+    @PUT("api/horarioBarberoBase/actualizarTurnosDia")
     Call<GenericResponse> actualizarTurnosDia(@Body TurnosDiaRequest request);
 
-    @POST("api/horarioBarberoBase/confirmarHorario")
-    Call<Void> confirmarHorario();
+    @PUT("api/horarioBarberoBase/confirmarHorario")
+    Call<GenericResponse> confirmarHorario();
 
 
 }

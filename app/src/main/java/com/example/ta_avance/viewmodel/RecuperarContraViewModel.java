@@ -48,7 +48,7 @@ public class RecuperarContraViewModel extends AndroidViewModel {
                         rawError = "error al leer errorBody";
                     }
 
-                    error.postValue("Error HTTP " + response.code() + ": " + rawError);
+                    error.postValue(rawError);
                 }
             }
 

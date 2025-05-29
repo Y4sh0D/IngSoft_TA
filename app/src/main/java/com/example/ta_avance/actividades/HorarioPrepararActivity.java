@@ -1,5 +1,7 @@
 package com.example.ta_avance.actividades;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ta_avance.R;
@@ -46,12 +50,31 @@ public class HorarioPrepararActivity extends AppCompatActivity {
         viewModel.getDias().observe(this, dias -> {
             containerDias.removeAllViews();
             for (String dia : dias) {
+                CardView card = new CardView(this);
+                card.setRadius(16);
+                card.setCardElevation(6);
+                card.setUseCompatPadding(true);
+                card.setContentPadding(16, 16, 16, 16);
+
                 Button btnDia = new Button(this);
                 btnDia.setText(dia);
+                btnDia.setBackgroundColor(ContextCompat.getColor(this, R.color.teal_700));
+                btnDia.setTextColor(Color.WHITE);
+                btnDia.setAllCaps(false);
+                btnDia.setTextSize(16);
                 btnDia.setOnClickListener(v -> mostrarPopupDia(dia));
-                containerDias.addView(btnDia);
+
+                card.addView(btnDia);
+                containerDias.addView(card);
+
             }
         });
+        Button btnConfirmar = findViewById(R.id.btnConfirmarHorario);
+        btnConfirmar.setOnClickListener(v -> {
+            viewModel.confirmarHorario(this);
+        });
+
+
 
         viewModel.cargarBarberos(this);
     }
@@ -82,6 +105,7 @@ public class HorarioPrepararActivity extends AppCompatActivity {
             TextView tvTurno = new TextView(this);
             tvTurno.setText(turno);
             tvTurno.setTextSize(18);
+            tvTurno.setTypeface(null, Typeface.BOLD);
             tvTurno.setPadding(0, 20, 0, 10);
             contenedorTurnos.addView(tvTurno);
 
@@ -125,12 +149,8 @@ public class HorarioPrepararActivity extends AppCompatActivity {
                 }
             }
 
-            viewModel.guardarTurnosDia(this, dia, turnosPorTipo,
-                    () -> {
-                        popupWindow.dismiss();
-                        Toast.makeText(this, "Turnos guardados para " + dia, Toast.LENGTH_SHORT).show();
-                    },
-                    () -> Toast.makeText(this, "Error al guardar", Toast.LENGTH_SHORT).show());
+            viewModel.guardarTurnosDia(this, dia, turnosPorTipo);
+            popupWindow.dismiss();
         });
 
 

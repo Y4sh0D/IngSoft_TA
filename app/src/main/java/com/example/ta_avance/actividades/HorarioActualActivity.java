@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.ta_avance.R;
 import com.example.ta_avance.viewmodel.HorarioActualViewModel;
 
+import java.util.List;
 import java.util.Map;
 
 public class HorarioActualActivity extends AppCompatActivity {
@@ -29,9 +30,8 @@ public class HorarioActualActivity extends AppCompatActivity {
 
         // 🔁 Observar LiveData
         viewModel.getHorarios().observe(this, semana -> {
-            container.removeAllViews(); // 🧹 Limpiar para evitar duplicados
+            container.removeAllViews();
 
-            // Orden fijo de días y turnos
             String[] ordenDias = {"LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO"};
             String[] ordenTurnos = {"MAÑANA", "TARDE", "NOCHE"};
 
@@ -48,17 +48,19 @@ public class HorarioActualActivity extends AppCompatActivity {
                     params.setMargins(0, 24, 0, 0);
                     diaButton.setLayoutParams(params);
 
-                    // Contenedor de turnos
                     LinearLayout turnosLayout = new LinearLayout(this);
                     turnosLayout.setOrientation(LinearLayout.VERTICAL);
                     turnosLayout.setVisibility(View.GONE);
                     turnosLayout.setPadding(32, 8, 8, 8);
 
-                    Map<String, String> turnos = semana.get(dia);
+                    Map<String, List<String>> turnos = semana.get(dia);
                     for (String turno : ordenTurnos) {
                         if (turnos.containsKey(turno)) {
+                            List<String> barberos = turnos.get(turno);
+                            String barberosTexto = String.join(", ", barberos);
+
                             TextView turnoView = new TextView(this);
-                            turnoView.setText(turno + ": " + turnos.get(turno));
+                            turnoView.setText(turno + ": " + barberosTexto);
                             turnoView.setTextSize(16);
                             turnoView.setPadding(8, 4, 8, 4);
                             turnosLayout.addView(turnoView);
@@ -75,8 +77,8 @@ public class HorarioActualActivity extends AppCompatActivity {
                     container.addView(turnosLayout);
                 }
             }
-
         });
+
 
         // 🚀 Llamada real a la API
         viewModel.cargarHorarios(this);
