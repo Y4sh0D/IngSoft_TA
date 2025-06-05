@@ -32,7 +32,7 @@ public class HorarioActualActivity extends AppCompatActivity {
         viewModel.getHorarios().observe(this, semana -> {
             container.removeAllViews();
 
-            String[] ordenDias = {"LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO"};
+            String[] ordenDias = {"LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES", "SÁBADO", "DOMINGO"};
             String[] ordenTurnos = {"MAÑANA", "TARDE", "NOCHE"};
 
             for (String dia : ordenDias) {

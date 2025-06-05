@@ -19,7 +19,7 @@
         android:layout_marginTop="40dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TableLayout
         android:id="@+id/reservasTable"
@@ -33,6 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <!-- Encabezado -->
         <TableRow
             android:background="#212121"
             android:padding="10dp"
@@ -44,7 +45,7 @@
                 android:text="Fecha y Hora"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
-                android:padding="8dp"/>
+                android:padding="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -52,7 +53,7 @@
                 android:text="Barbero"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
-                android:padding="8dp"/>
+                android:padding="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -60,7 +61,7 @@
                 android:text="Servicio"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
-                android:padding="8dp"/>
+                android:padding="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -68,112 +69,26 @@
                 android:text="Costo"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
-                android:padding="8dp"/>
-        </TableRow>
-
-        <!-- Primera fila -->
-        <TableRow
-            android:id="@+id/reservaRow1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="showDetails"
-            android:background="?android:attr/selectableItemBackground"
-            android:padding="10dp"
-            android:gravity="center">
+                android:padding="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10:00 - 10:30"
-                android:textColor="#555555"
-                android:padding="8dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Carlos"
-                android:textColor="#555555"
-                android:padding="8dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Corte de cabello"
-                android:textColor="#555555"
-                android:padding="8dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="S/ 30"
-                android:textColor="#555555"
-                android:padding="8dp"/>
-
-            <Button
-                android:id="@+id/confirmarButton1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ver"
-                android:backgroundTint="#1E88E5"
+                android:text="✔"
                 android:textColor="#FFFFFF"
-                android:padding="6dp"
-                android:layout_marginStart="8dp"
-                android:visibility="gone"/>
-        </TableRow>
-
-        <!-- Segunda fila -->
-        <TableRow
-            android:id="@+id/reservaRow2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="showDetails"
-            android:background="?android:attr/selectableItemBackground"
-            android:padding="10dp"
-            android:gravity="center">
+                android:textStyle="bold"
+                android:padding="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="11:00 - 11:30"
-                android:textColor="#555555"
-                android:padding="8dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Laura"
-                android:textColor="#555555"
-                android:padding="8dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Afeitado"
-                android:textColor="#555555"
-                android:padding="8dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="S/ 20"
-                android:textColor="#555555"
-                android:padding="8dp"/>
-
-            <Button
-                android:id="@+id/confirmarButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ver"
-                android:backgroundTint="#1E88E5"
+                android:text="✘"
                 android:textColor="#FFFFFF"
-                android:padding="6dp"
-                android:layout_marginStart="8dp"
-                android:visibility="gone"/>
+                android:textStyle="bold"
+                android:padding="8dp" />
         </TableRow>
+
+        <!-- Las filas dinámicas se agregarán desde Java -->
 
     </TableLayout>
 
@@ -189,6 +104,6 @@
         android:layout_marginTop="32dp"
         app:layout_constraintTop_toBottomOf="@id/reservasTable"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

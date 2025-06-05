@@ -52,6 +52,15 @@
         android:layout_marginBottom="20dp" />
 
     <Button
+        android:id="@+id/btnSeleccionarImagenServicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seleccionar Imagen"
+        android:backgroundTint="#3F51B5"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="12dp" />
+
+    <Button
         android:id="@+id/btnCrearServicio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

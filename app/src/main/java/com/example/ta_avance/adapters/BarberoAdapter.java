@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ta_avance.R;
 import com.example.ta_avance.dto.barbero.BarberoDto;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -40,6 +42,12 @@ public class BarberoAdapter extends RecyclerView.Adapter<BarberoAdapter.BarberoV
     public void onBindViewHolder(@NonNull BarberoViewHolder holder, int position) {
         BarberoDto barbero = barberos.get(position);
         holder.textNombre.setText(barbero.getNombre());
+        Glide.with(holder.itemView.getContext())
+                .load(barbero.getUrlBarbero()) // asegúrate que este método devuelva la URL completa
+                .placeholder(R.drawable.baseline_person_24)
+                .error(R.drawable.baseline_person_24)
+                .into(holder.ivFotoBarbero);
+
 
         holder.btnActualizar.setOnClickListener(v -> listener.onActualizar(barbero));
         holder.btnEliminar.setOnClickListener(v -> listener.onEliminar(barbero));
@@ -53,6 +61,7 @@ public class BarberoAdapter extends RecyclerView.Adapter<BarberoAdapter.BarberoV
     public static class BarberoViewHolder extends RecyclerView.ViewHolder {
         TextView textNombre, textEstado;
         Button btnActualizar, btnEliminar;
+        ImageView ivFotoBarbero;
 
         public BarberoViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,6 +69,7 @@ public class BarberoAdapter extends RecyclerView.Adapter<BarberoAdapter.BarberoV
             textEstado = itemView.findViewById(R.id.textEstado);
             btnActualizar = itemView.findViewById(R.id.btnActualizar);
             btnEliminar = itemView.findViewById(R.id.btnEliminar);
+            ivFotoBarbero = itemView.findViewById(R.id.ivFotoBarbero);
         }
     }
 }

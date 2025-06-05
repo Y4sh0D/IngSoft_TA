@@ -18,12 +18,16 @@ import com.example.ta_avance.dto.servicio.ServicioSimpleResponse;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface AuthApiService {
@@ -45,8 +49,12 @@ public interface AuthApiService {
     @GET("api/barbero/listar")
     Call<BarberoResponse> listarBarberos();
 
+    @Multipart
     @POST("api/barbero/crear")
-    Call<BarberoResponse> crearBarbero(@Body BarberoRequest request);
+    Call<BarberoResponse> crearBarbero(
+            @Part("dtoBarbero") RequestBody dtoBarbero,
+            @Part MultipartBody.Part imagen
+    );
 
     @DELETE("api/barbero/eliminar/{id}")
     Call<BarberoResponse> eliminarBarbero(@Path("id") int id);
@@ -57,8 +65,12 @@ public interface AuthApiService {
     @GET("api/servicio/listar")
     Call<ServicioResponse> listarServicios();
 
+    @Multipart
     @POST("api/servicio/crear")
-    Call<ServicioResponse> crearServicio(@Body ServicioRequest request);
+    Call<ServicioResponse> crearServicio(
+            @Part("dtoServicio") RequestBody dtoServicio,
+            @Part MultipartBody.Part imagen
+    );
 
     @DELETE("api/servicio/eliminar/{id}")
     Call<ServicioResponse> eliminarServicio(@Path("id") int id);

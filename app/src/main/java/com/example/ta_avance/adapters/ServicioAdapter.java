@@ -4,11 +4,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.ta_avance.R;
 import com.example.ta_avance.dto.servicio.ServicioDto;
 
@@ -45,6 +47,11 @@ public class ServicioAdapter extends RecyclerView.Adapter<ServicioAdapter.Servic
         holder.textPrecio.setText("S/ " + servicio.getPrecio());
         holder.textDescripcion.setText(servicio.getDescripcion());
         holder.textTipoServicio.setText(servicio.getNombre_tipoServicio());
+        Glide.with(holder.itemView.getContext())
+                .load(servicio.getUrlServicio()) // asegúrate que este método devuelva la URL completa
+                .placeholder(R.drawable.baseline_person_24)
+                .error(R.drawable.baseline_person_24)
+                .into(holder.ivFotoServicio);
 
         holder.btnActualizar.setOnClickListener(v -> listener.onActualizar(servicio));
         holder.btnEliminar.setOnClickListener(v -> listener.onEliminar(servicio));
@@ -58,6 +65,7 @@ public class ServicioAdapter extends RecyclerView.Adapter<ServicioAdapter.Servic
     public static class ServicioViewHolder extends RecyclerView.ViewHolder {
         TextView textNombre, textPrecio, textDescripcion, textTipoServicio;
         Button btnActualizar, btnEliminar;
+        ImageView ivFotoServicio;
 
         public ServicioViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,6 +75,7 @@ public class ServicioAdapter extends RecyclerView.Adapter<ServicioAdapter.Servic
             textTipoServicio = itemView.findViewById(R.id.textTipoServicio);
             btnActualizar = itemView.findViewById(R.id.btnActualizarServicio);
             btnEliminar = itemView.findViewById(R.id.btnEliminarServicio);
+            ivFotoServicio = itemView.findViewById(R.id.ivFotoServicio);
         }
     }
 

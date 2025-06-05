@@ -4,6 +4,7 @@ public class BarberoDto {
     private int barbero_id;
     private String nombre;
     private int estado;
+    private String urlBarbero;
 
     public int getBarbero_id() {
         return barbero_id;
@@ -13,9 +14,7 @@ public class BarberoDto {
         this.barbero_id = barbero_id;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public String getNombre() { return nombre; }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -28,4 +27,8 @@ public class BarberoDto {
     public void setEstado(int estado) {
         this.estado = estado;
     }
+
+    public String getUrlBarbero() { return urlBarbero; }
+
+    public void setUrlBarbero(String urlBarbero) { this.urlBarbero = urlBarbero; }
 }

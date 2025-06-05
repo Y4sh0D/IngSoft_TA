@@ -1,5 +1,7 @@
 package com.example.ta_avance.actividades;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -31,6 +34,8 @@ public class GestionarBarberoActivity extends AppCompatActivity {
     private Button btnAgregarBarbero;
     private List<BarberoDto> listaBarberos;
     private BarberoAdapter adapter;
+    private static final int REQUEST_SELECT_IMAGE = 1001;
+    private Uri imagenSeleccionadaUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,18 +134,16 @@ public class GestionarBarberoActivity extends AppCompatActivity {
         btnCancelar.setOnClickListener(v -> popupWindow.dismiss());
     }
 
-
     private void mostrarPopupNuevoBarbero(View anchorView) {
         LayoutInflater inflater = LayoutInflater.from(this);
         View popupView = inflater.inflate(R.layout.popup_nuevo_barbero, null);
 
-        // Aplica animación fade-in (asegúrate de tener fade_in.xml en res/anim)
+        // Animación fade-in y fondo opaco
         Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         popupView.startAnimation(fadeIn);
 
-        // Fondo opaco detrás
         View dimBehind = new View(this);
-        dimBehind.setBackgroundColor(0x88000000); // semi-transparente oscuro
+        dimBehind.setBackgroundColor(0x88000000);
         ViewGroup rootView = (ViewGroup) getWindow().getDecorView().getRootView();
         rootView.addView(dimBehind, new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -160,11 +163,19 @@ public class GestionarBarberoActivity extends AppCompatActivity {
         EditText etNombre = popupView.findViewById(R.id.etNombreNuevoBarbero);
         Button btnCrear = popupView.findViewById(R.id.btnCrearBarbero);
         Button btnCancelar = popupView.findViewById(R.id.btnCancelar);
+        Button btnSeleccionarImagen = popupView.findViewById(R.id.btnSeleccionarImagen);
+
+        // Selección de imagen
+        btnSeleccionarImagen.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            startActivityForResult(intent, REQUEST_SELECT_IMAGE);
+        });
 
         btnCrear.setOnClickListener(v -> {
             String nombre = etNombre.getText().toString().trim();
             if (!nombre.isEmpty()) {
-                crearNuevoBarbero(nombre); // ya definida en tu activity
+                crearNuevoBarbero(nombre); // Ahora usará imagenSeleccionadaUri
                 popupWindow.dismiss();
             } else {
                 etNombre.setError("Campo obligatorio");
@@ -174,20 +185,37 @@ public class GestionarBarberoActivity extends AppCompatActivity {
         btnCancelar.setOnClickListener(v -> popupWindow.dismiss());
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_SELECT_IMAGE && resultCode == RESULT_OK && data != null) {
+            imagenSeleccionadaUri = data.getData();
+
+            // Mostrar vista previa (si la imagenView del popup sigue activa)
+            ImageView ivImagen = findViewById(R.id.ivFotoBarbero);
+            if (ivImagen != null) {
+                ivImagen.setImageURI(imagenSeleccionadaUri);
+                ivImagen.setVisibility(View.VISIBLE);
+            }
+        }
+    }
 
     private void crearNuevoBarbero(String nombre) {
-        viewModel.crearBarbero(this, nombre, new GestionarBarberoViewModel.BarberoOperacionCallback() {
+        viewModel.crearBarbero(this, nombre, imagenSeleccionadaUri, new GestionarBarberoViewModel.BarberoOperacionCallback() {
             @Override
             public void onSuccess(String mensaje) {
+                imagenSeleccionadaUri = null;
                 Toast.makeText(GestionarBarberoActivity.this, mensaje, Toast.LENGTH_SHORT).show();
                 cargarLista();
             }
 
             @Override
             public void onError(String mensaje) {
-                Toast.makeText(GestionarBarberoActivity.this, "Error: " + mensaje, Toast.LENGTH_SHORT).show();
+                Toast.makeText(GestionarBarberoActivity.this, "En el onError: " + mensaje, Toast.LENGTH_SHORT).show();
             }
         });
+
+
     }
 
     private void eliminarBarbero(int id) {

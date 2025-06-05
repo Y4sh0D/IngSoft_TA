@@ -1,5 +1,7 @@
 package com.example.ta_avance.actividades;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
@@ -35,6 +38,8 @@ public class GestionarServicioActivity extends AppCompatActivity {
     private Button btnAgregarServicio;
     private List<ServicioDto> listaServicios;
     private ServicioAdapter adapter;
+    private static final int REQUEST_SELECT_IMAGE = 1001;
+    private Uri imagenSeleccionadaUri;
 
     private final Map<String, Integer> tipoServicioMap = new LinkedHashMap<String, Integer>() {{
         put("CORTES", 1);
@@ -127,6 +132,13 @@ public class GestionarServicioActivity extends AppCompatActivity {
         ViewGroup layout = (ViewGroup) popupView;
         Button btnCrear = popupView.findViewById(R.id.btnCrearServicio);
         Button btnCancelar = popupView.findViewById(R.id.btnCancelarServicio);
+        Button btnSeleccionarImagenServicio = popupView.findViewById(R.id.btnSeleccionarImagenServicio);
+
+        btnSeleccionarImagenServicio.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            startActivityForResult(intent, REQUEST_SELECT_IMAGE);
+        });
 
         btnCrear.setOnClickListener(v -> {
             String nombre = etNombre.getText().toString().trim();
@@ -145,6 +157,21 @@ public class GestionarServicioActivity extends AppCompatActivity {
         });
 
         btnCancelar.setOnClickListener(v -> popupWindow.dismiss());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_SELECT_IMAGE && resultCode == RESULT_OK && data != null) {
+            imagenSeleccionadaUri = data.getData();
+
+            // Mostrar vista previa (si la imagenView del popup sigue activa)
+            ImageView ivImagen = findViewById(R.id.ivFotoBarbero);
+            if (ivImagen != null) {
+                ivImagen.setImageURI(imagenSeleccionadaUri);
+                ivImagen.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     private void mostrarPopupActualizarServicio(ServicioDto servicio) {
@@ -233,10 +260,11 @@ public class GestionarServicioActivity extends AppCompatActivity {
 
     private void crearNuevoServicio(String nombre, double precio, String descripcion, int tipoServicioId) {
         ServicioRequest request = new ServicioRequest(nombre, precio, descripcion, tipoServicioId);
-        viewModel.crearServicio(this, request,
+        viewModel.crearServicio(this, request,imagenSeleccionadaUri,
                 new GestionarServicioViewModel.ServicioOperacionCallback() {
                     @Override
                     public void onSuccess(String mensaje) {
+                        imagenSeleccionadaUri = null;
                         Toast.makeText(GestionarServicioActivity.this, mensaje, Toast.LENGTH_SHORT).show();
                         cargarLista();
                     }

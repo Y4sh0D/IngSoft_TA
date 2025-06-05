@@ -7,6 +7,7 @@ public class ServicioDto {
     private String descripcion;
     private String nombre_tipoServicio;
     private int tipoServicio_id;
+    private String urlServicio;
 
     public int getServicio_id() {
         return servicio_id;
@@ -44,9 +45,7 @@ public class ServicioDto {
         return nombre_tipoServicio;
     }
 
-    public void setNombre_tipoServicio(String nombre_tipoServicio) {
-        this.nombre_tipoServicio = nombre_tipoServicio;
-    }
+    public void setNombre_tipoServicio(String nombre_tipoServicio) { this.nombre_tipoServicio = nombre_tipoServicio; }
 
     public int getTipoServicio_id() {
         return tipoServicio_id;
@@ -55,4 +54,8 @@ public class ServicioDto {
     public void setTipoServicio_id(int tipoServicio_id) {
         this.tipoServicio_id = tipoServicio_id;
     }
+
+    public String getUrlServicio() { return urlServicio; }
+
+    public void setUrlServicio(String urlServicio) { this.urlServicio = urlServicio; }
 }

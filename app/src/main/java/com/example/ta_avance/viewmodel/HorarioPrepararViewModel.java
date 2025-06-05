@@ -32,7 +32,7 @@ public class HorarioPrepararViewModel extends ViewModel {
     private final MutableLiveData<List<BarberoDto>> barberos = new MutableLiveData<>();
 
     public HorarioPrepararViewModel() {
-        dias.setValue(Arrays.asList("LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO"));
+        dias.setValue(Arrays.asList("LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES", "SÁBADO", "DOMINGO"));
         turnos.setValue(Arrays.asList("MAÑANA", "TARDE", "NOCHE")); // o ajusta a tus turnos reales
     }
 

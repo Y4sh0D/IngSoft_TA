@@ -16,7 +16,17 @@
         android:drawablePadding="10dp"
         android:padding="10dp"
         android:background="@drawable/popup_background"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="16dp" />
+
+    <!-- Botón para seleccionar imagen -->
+    <Button
+        android:id="@+id/btnSeleccionarImagen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seleccionar Imagen"
+        android:backgroundTint="#3F51B5"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="12dp" />
 
     <Button
         android:id="@+id/btnCrearBarbero"
