@@ -114,11 +114,41 @@ public class GestionarBarberoViewModel {
     }
 
 
-    public void actualizarBarbero(Context context, int id, String nuevoNombre, ActualizarCallback callback) {
+    public void actualizarBarbero(Context context, int id, String nuevoNombre, Uri imagenUri, ActualizarCallback callback) {
         AuthApiService api = ApiClient.getRetrofit(context, true).create(AuthApiService.class);
         BarberoRequest request = new BarberoRequest(nuevoNombre);
 
-        api.actualizarBarbero(id, request).enqueue(new Callback<BarberoSimpleResponse>() {
+        BarberoRequest nuevo = new BarberoRequest(nuevoNombre);
+        Gson gson = new Gson();
+        String json = gson.toJson(nuevo);
+        RequestBody dtoBody = RequestBody.create(MediaType.parse("application/json"), json);
+
+        // 2. Preparar imagen si existe
+        MultipartBody.Part imagenPart = null;
+        if (imagenUri != null) {
+            try {
+                ContentResolver resolver = context.getContentResolver();
+                InputStream inputStream = resolver.openInputStream(imagenUri);
+
+                byte[] imageBytes = new byte[inputStream.available()];
+                inputStream.read(imageBytes);
+                inputStream.close();
+
+                RequestBody imagenBody = RequestBody.create(
+                        MediaType.parse(resolver.getType(imagenUri)),
+                        imageBytes// Ej: "image/jpeg"
+                );
+
+                String fileName = "imagen.jpg"; // Puedes generar uno dinámico si deseas
+                imagenPart = MultipartBody.Part.createFormData("imagen", fileName, imagenBody);
+            } catch (IOException e) {
+                e.printStackTrace();
+                callback.onError("Error al procesar la imagen.");
+                return;
+            }
+        }
+
+        api.actualizarBarbero(id, dtoBody,imagenPart).enqueue(new Callback<BarberoSimpleResponse>() {
             @Override
             public void onResponse(Call<BarberoSimpleResponse> call, Response<BarberoSimpleResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {

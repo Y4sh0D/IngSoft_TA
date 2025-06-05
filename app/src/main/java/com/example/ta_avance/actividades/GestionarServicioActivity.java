@@ -224,6 +224,14 @@ public class GestionarServicioActivity extends AppCompatActivity {
 
         Button btnCrear = popupView.findViewById(R.id.btnCrearServicio);
         Button btnCancelar = popupView.findViewById(R.id.btnCancelarServicio);
+        Button btnSeleccionarImagenServicio = popupView.findViewById(R.id.btnSeleccionarImagenServicio);
+
+        btnSeleccionarImagenServicio.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            startActivityForResult(intent, REQUEST_SELECT_IMAGE);
+        });
+
         btnCrear.setText("Actualizar");
 
         btnCrear.setOnClickListener(v -> {
@@ -236,7 +244,7 @@ public class GestionarServicioActivity extends AppCompatActivity {
                 double precio = Double.parseDouble(precioStr);
                 int tipoId = tipoServicioMap.get(tipoSeleccionado);
                 ServicioRequest request = new ServicioRequest(nombre, precio, descripcion, tipoId);
-                viewModel.actualizarServicio(this, servicio.getServicio_id(), request,
+                viewModel.actualizarServicio(this, servicio.getServicio_id(), request, imagenSeleccionadaUri,
                         new GestionarServicioViewModel.ActualizarCallback() {
                             @Override
                             public void onSuccess(String mensaje) {

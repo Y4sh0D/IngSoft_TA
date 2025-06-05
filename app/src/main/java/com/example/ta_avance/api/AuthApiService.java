@@ -59,8 +59,13 @@ public interface AuthApiService {
     @DELETE("api/barbero/eliminar/{id}")
     Call<BarberoResponse> eliminarBarbero(@Path("id") int id);
 
+    @Multipart
     @PUT("api/barbero/actualizar/{id}")
-    Call<BarberoSimpleResponse> actualizarBarbero(@Path("id") int id, @Body BarberoRequest barberoRequest);
+    Call<BarberoSimpleResponse> actualizarBarbero(
+            @Path("id") int id,
+            @Part("dtoBarbero") RequestBody dtoBarbero,
+            @Part MultipartBody.Part imagen
+    );
 
     @GET("api/servicio/listar")
     Call<ServicioResponse> listarServicios();
@@ -75,8 +80,13 @@ public interface AuthApiService {
     @DELETE("api/servicio/eliminar/{id}")
     Call<ServicioResponse> eliminarServicio(@Path("id") int id);
 
+    @Multipart
     @PUT("api/servicio/actualizar/{id}")
-    Call<ServicioSimpleResponse> actualizarServicio(@Path("id") int id, @Body ServicioRequest request);
+    Call<ServicioSimpleResponse> actualizarServicio(
+            @Path("id") int id,
+            @Part("dtoServicio") RequestBody dtoServicio,
+            @Part MultipartBody.Part imagen
+    );
 
     @GET("api/horarioInstancia/actual")
     Call<Map<String, List<HorarioInstanciaResponse>>> obtenerHorarioActual();

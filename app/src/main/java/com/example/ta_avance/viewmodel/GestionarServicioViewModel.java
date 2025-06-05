@@ -109,9 +109,38 @@ public class GestionarServicioViewModel {
         });
     }
 
-    public void actualizarServicio(Context context, int id,ServicioRequest request , ActualizarCallback callback){
+    public void actualizarServicio(Context context, int id,ServicioRequest request, Uri imagenUri , ActualizarCallback callback){
         AuthApiService api = ApiClient.getRetrofit(context,true).create(AuthApiService.class);
-        api.actualizarServicio(id, request).enqueue(new Callback<ServicioSimpleResponse>() {
+
+        Gson gson = new Gson();
+        String json = gson.toJson(request);
+        RequestBody dtoServicio = RequestBody.create(MediaType.parse("application/json"),json);
+
+        MultipartBody.Part imagenPart = null;
+        if (imagenUri != null) {
+            try {
+                ContentResolver resolver = context.getContentResolver();
+                InputStream inputStream = resolver.openInputStream(imagenUri);
+
+                byte[] imageBytes = new byte[inputStream.available()];
+                inputStream.read(imageBytes);
+                inputStream.close();
+
+                RequestBody imagenBody = RequestBody.create(
+                        MediaType.parse(resolver.getType(imagenUri)),
+                        imageBytes// Ej: "image/jpeg"
+                );
+
+                String fileName = "imagen.jpg"; // Puedes generar uno dinámico si deseas
+                imagenPart = MultipartBody.Part.createFormData("imagen", fileName, imagenBody);
+            } catch (IOException e) {
+                e.printStackTrace();
+                callback.onError("Error al procesar la imagen.");
+                return;
+            }
+        }
+
+        api.actualizarServicio(id, dtoServicio,imagenPart).enqueue(new Callback<ServicioSimpleResponse>() {
             @Override
             public void onResponse(Call<ServicioSimpleResponse> call, Response<ServicioSimpleResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {

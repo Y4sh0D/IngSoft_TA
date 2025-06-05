@@ -85,6 +85,14 @@ public class GestionarBarberoActivity extends AppCompatActivity {
         EditText etNombre = popupView.findViewById(R.id.etNombreNuevoBarbero);
         Button btnCrear = popupView.findViewById(R.id.btnCrearBarbero);
         Button btnCancelar = popupView.findViewById(R.id.btnCancelar);
+        Button btnSeleccionarImagen = popupView.findViewById(R.id.btnSeleccionarImagen);
+
+        // Selección de imagen
+        btnSeleccionarImagen.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            startActivityForResult(intent, REQUEST_SELECT_IMAGE);
+        });
 
         etNombre.setText(barbero.getNombre());
         btnCrear.setText("Actualizar");
@@ -113,7 +121,7 @@ public class GestionarBarberoActivity extends AppCompatActivity {
             String nuevoNombre = etNombre.getText().toString().trim();
             if (!nuevoNombre.isEmpty()) {
                 GestionarBarberoViewModel viewModel = new GestionarBarberoViewModel();
-                viewModel.actualizarBarbero(this, barbero.getBarbero_id(), nuevoNombre, new GestionarBarberoViewModel.ActualizarCallback() {
+                viewModel.actualizarBarbero(this, barbero.getBarbero_id(), nuevoNombre, imagenSeleccionadaUri, new GestionarBarberoViewModel.ActualizarCallback() {
                     @Override
                     public void onSuccess(String mensaje) {
                         Toast.makeText(GestionarBarberoActivity.this, mensaje, Toast.LENGTH_SHORT).show();
