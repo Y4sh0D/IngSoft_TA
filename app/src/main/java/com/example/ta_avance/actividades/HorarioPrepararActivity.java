@@ -73,7 +73,10 @@ public class HorarioPrepararActivity extends AppCompatActivity {
         btnConfirmar.setOnClickListener(v -> {
             viewModel.confirmarHorario(this);
         });
-
+        Button btnExportarHorario = findViewById(R.id.btnExportarHorario);
+        btnExportarHorario.setOnClickListener(v -> {
+            viewModel.exportarHorario(this);
+        });
 
 
         viewModel.cargarBarberos(this);
@@ -152,7 +155,7 @@ public class HorarioPrepararActivity extends AppCompatActivity {
             viewModel.guardarTurnosDia(this, dia, turnosPorTipo);
             popupWindow.dismiss();
         });
-
-
     }
+
+
 }

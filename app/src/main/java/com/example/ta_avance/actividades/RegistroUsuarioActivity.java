@@ -14,7 +14,7 @@ import com.example.ta_avance.viewmodel.RegistroUsuarioViewModel;
 
 public class RegistroUsuarioActivity extends AppCompatActivity {
 
-    private EditText usuarioInput, contraseñaInput, nombreInput, apellidoInput, correoInput;
+    private EditText usuarioInput, contraseñaInput, nombreInput, apellidoInput, correoInput, celularInput;
     private RegistroUsuarioViewModel viewModel;
 
     @Override
@@ -27,6 +27,7 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
         nombreInput = findViewById(R.id.nombreInput);
         apellidoInput = findViewById(R.id.apellidoInput);
         correoInput = findViewById(R.id.correoInput);
+        celularInput = findViewById(R.id.celularInput);
         Button registrarButton = findViewById(R.id.registrarButton);
         Button btnVolverHome = findViewById(R.id.volverButton);
 
@@ -38,8 +39,9 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
             String nombre = nombreInput.getText().toString().trim();
             String apellido = apellidoInput.getText().toString().trim();
             String correo = correoInput.getText().toString().trim();
+            //String celular = celularInput.getText().toString().trim();
 
-            viewModel.registrarUsuario(username, password, nombre, apellido, correo);
+            viewModel.registrarUsuario(username, password, nombre, apellido, correo /*,celular*/);
         });
 
         btnVolverHome.setOnClickListener(v -> {
@@ -52,6 +54,23 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
         // Observadores del ViewModel
         viewModel.registroExitoso.observe(this, success -> {
             if (success != null && success) {
+                /*
+                String celular = celularInput.getText().toString().trim();
+                String username = usuarioInput.getText().toString().trim();
+                String password = contraseñaInput.getText().toString().trim();
+
+                String mensaje = "Hola, has sido registrado exitosamente en nuestra app.\n\n" +
+                "👤 Usuario: *" + username + "*\n" +
+                "🔒 Contraseña: *" + password + "*\n\n" +
+                "📲 Descarga la app aquí y cambia tu contraseña:\n" +
+                "https://tulanding.com/descargar-app";
+
+                String urlWhatsapp = "https://api.whatsapp.com/send?phone=51" + celular + "&text=" + Uri.encode(mensaje);
+
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(urlWhatsapp));
+                startActivity(intent);
+                */
                 Toast.makeText(this, "Usuario registrado exitosamente", Toast.LENGTH_SHORT).show();
                 finish();
             }

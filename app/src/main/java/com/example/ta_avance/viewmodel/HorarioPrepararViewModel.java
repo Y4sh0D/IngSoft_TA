@@ -1,9 +1,12 @@
 package com.example.ta_avance.viewmodel;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -16,11 +19,18 @@ import com.example.ta_avance.dto.horario.GenericResponse;
 import com.example.ta_avance.dto.horario.TurnosDiaRequest;
 import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -127,6 +137,42 @@ public class HorarioPrepararViewModel extends ViewModel {
             }
         });
     }
+
+    public void exportarHorario(Context context) {
+        LocalDate hoy = LocalDate.now();
+        LocalDate proximoLunes = hoy.with(TemporalAdjusters.next(DayOfWeek.MONDAY));
+        LocalDate proximoDomingo = proximoLunes.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+
+        AuthApiService apiService = ApiClient.getRetrofit(context, true).create(AuthApiService.class);
+        apiService.exportarHorario(proximoLunes, proximoDomingo).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    try {
+                        File file = new File(context.getExternalFilesDir(null), "horario_barbero.pdf");
+                        FileOutputStream fos = new FileOutputStream(file);
+                        fos.write(response.body().bytes());
+                        fos.close();
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(FileProvider.getUriForFile(context, context.getPackageName() + ".provider", file), "application/pdf");
+                        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        context.startActivity(intent);
+                    } catch (IOException e) {
+                        Toast.makeText(context, "Error al guardar el PDF", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(context, "No se pudo generar el PDF", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(context, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
 
 }

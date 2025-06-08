@@ -28,6 +28,15 @@
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/purple_700"
             android:textColor="#FFF"/>
+
+        <Button
+            android:id="@+id/btnExportarHorario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Exportar Horario"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/cardview_dark_background"
+            android:textColor="#FFF"/>
     </LinearLayout>
 
 </ScrollView>

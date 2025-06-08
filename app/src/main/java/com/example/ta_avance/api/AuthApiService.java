@@ -1,6 +1,5 @@
 package com.example.ta_avance.api;
 
-import com.example.ta_avance.dto.barbero.BarberoRequest;
 import com.example.ta_avance.dto.barbero.BarberoResponse;
 import com.example.ta_avance.dto.barbero.BarberoSimpleResponse;
 import com.example.ta_avance.dto.horario.GenericResponse;
@@ -8,6 +7,7 @@ import com.example.ta_avance.dto.horario.HorarioInstanciaResponse;
 import com.example.ta_avance.dto.horario.TurnosDiaRequest;
 import com.example.ta_avance.dto.login.LoginRequest;
 import com.example.ta_avance.dto.login.LoginResponse;
+import com.example.ta_avance.dto.rangos.RangoResponse;
 import com.example.ta_avance.dto.recuperacion.RecuperacionRequest;
 import com.example.ta_avance.dto.recuperacion.RecuperacionResponse;
 import com.example.ta_avance.dto.refresh.RefreshRequest;
@@ -15,11 +15,13 @@ import com.example.ta_avance.dto.servicio.ServicioRequest;
 import com.example.ta_avance.dto.servicio.ServicioResponse;
 import com.example.ta_avance.dto.servicio.ServicioSimpleResponse;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -29,6 +31,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface AuthApiService {
     @POST("api/auth/login")
@@ -97,5 +100,13 @@ public interface AuthApiService {
     @PUT("api/horarioBarberoBase/confirmarHorario")
     Call<GenericResponse> confirmarHorario();
 
+    @GET("api/rango/listar")
+    Call<RangoResponse> listarRangos();
+
+    @GET("api/reportes/horario")
+    Call<ResponseBody> exportarHorario(
+            @Query("fechaInicio") LocalDate fechaInicio,
+            @Query("fechaFin") LocalDate fechaFin
+    );
 
 }
