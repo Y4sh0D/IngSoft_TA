@@ -1,6 +1,7 @@
 package com.example.ta_avance.actividades;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,9 +40,9 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
             String nombre = nombreInput.getText().toString().trim();
             String apellido = apellidoInput.getText().toString().trim();
             String correo = correoInput.getText().toString().trim();
-            //String celular = celularInput.getText().toString().trim();
+            String celular = celularInput.getText().toString().trim();
 
-            viewModel.registrarUsuario(username, password, nombre, apellido, correo /*,celular*/);
+            viewModel.registrarUsuario(username, password, nombre, apellido, correo , celular);
         });
 
         btnVolverHome.setOnClickListener(v -> {
@@ -54,23 +55,22 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
         // Observadores del ViewModel
         viewModel.registroExitoso.observe(this, success -> {
             if (success != null && success) {
-                /*
+
                 String celular = celularInput.getText().toString().trim();
                 String username = usuarioInput.getText().toString().trim();
-                String password = contraseñaInput.getText().toString().trim();
 
                 String mensaje = "Hola, has sido registrado exitosamente en nuestra app.\n\n" +
                 "👤 Usuario: *" + username + "*\n" +
-                "🔒 Contraseña: *" + password + "*\n\n" +
+                "🔒 Contraseña: *123456789*\n\n" +
                 "📲 Descarga la app aquí y cambia tu contraseña:\n" +
-                "https://tulanding.com/descargar-app";
+                "https://pagina-barbershop.vercel.app/";
 
                 String urlWhatsapp = "https://api.whatsapp.com/send?phone=51" + celular + "&text=" + Uri.encode(mensaje);
 
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(urlWhatsapp));
                 startActivity(intent);
-                */
+
                 Toast.makeText(this, "Usuario registrado exitosamente", Toast.LENGTH_SHORT).show();
                 finish();
             }

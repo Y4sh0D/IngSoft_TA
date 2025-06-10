@@ -25,13 +25,13 @@ public class RegistroUsuarioViewModel extends AndroidViewModel {
         authApiService = ApiClient.getRetrofit(application, true).create(AuthApiService.class);
     }
 
-    public void registrarUsuario(String username, String password, String nombre, String apellido, String correo /*,int celular*/) {
-        if (username.isEmpty() || password.isEmpty() || nombre.isEmpty() || apellido.isEmpty() /* || celular.isEmpty()*/) {
+    public void registrarUsuario(String username, String password, String nombre, String apellido, String correo ,String celular) {
+        if (username.isEmpty() || password.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || correo.isEmpty()|| celular.isEmpty() ) {
             mensajeError.postValue("Por favor completa todos los campos");
             return;
         }
 
-        LoginRequest request = new LoginRequest(username, password, nombre, apellido, correo /*,celular*/);
+        LoginRequest request = new LoginRequest(username, password, nombre, apellido, correo ,celular);
 
         authApiService.register(request).enqueue(new Callback<Void>() {
             @Override

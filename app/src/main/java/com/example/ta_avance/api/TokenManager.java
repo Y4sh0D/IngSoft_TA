@@ -3,7 +3,7 @@ package com.example.ta_avance.api;
 
 import android.content.Context;
 
-import com.example.ta_avance.dto.login.LoginResponse;
+import com.example.ta_avance.dto.login.LoginSimpleResponse;
 import com.example.ta_avance.dto.refresh.RefreshRequest;
 import com.example.ta_avance.util.PreferenciasHelper;
 
@@ -29,8 +29,8 @@ public class TokenManager {
         if (currentRefresh == null) return null;
 
         RefreshRequest request = new RefreshRequest(currentRefresh);
-        Call<LoginResponse> call = authApi.refresh(request);
-        Response<LoginResponse> response = call.execute();
+        Call<LoginSimpleResponse> call = authApi.refresh(request);
+        Response<LoginSimpleResponse> response = call.execute();
 
         if (response.isSuccessful() && response.body() != null) {
             String newToken = response.body().getData().getToken();

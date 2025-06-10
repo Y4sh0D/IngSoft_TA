@@ -6,15 +6,15 @@ public class LoginRequest {
     private String nombre;
     private String apellido;
     private String email;
-    //private int celular
+    private String celular;
 
-    public LoginRequest(String username, String password, String nombre, String apellido, String email /*, int celular*/) {
+    public LoginRequest(String username, String password, String nombre, String apellido, String email , String celular) {
         this.username = username;
         this.password = password;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email  = email;
-        //this.celular = celular
+        this.celular = celular;
     }
 
     public LoginRequest(String username, String password) {
@@ -63,11 +63,11 @@ public class LoginRequest {
         this.email = email;
     }
 
-    /*public int getCelular() {
+    public String getCelular() {
         return celular;
     }
 
-    public void setCelular(int celular) {
+    public void setCelular(String celular) {
         this.celular = celular;
-    }*/
+    }
 }

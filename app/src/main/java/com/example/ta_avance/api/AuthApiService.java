@@ -6,7 +6,7 @@ import com.example.ta_avance.dto.horario.GenericResponse;
 import com.example.ta_avance.dto.horario.HorarioInstanciaResponse;
 import com.example.ta_avance.dto.horario.TurnosDiaRequest;
 import com.example.ta_avance.dto.login.LoginRequest;
-import com.example.ta_avance.dto.login.LoginResponse;
+import com.example.ta_avance.dto.login.LoginSimpleResponse;
 import com.example.ta_avance.dto.rangos.RangoResponse;
 import com.example.ta_avance.dto.recuperacion.RecuperacionRequest;
 import com.example.ta_avance.dto.recuperacion.RecuperacionResponse;
@@ -35,7 +35,7 @@ import retrofit2.http.Query;
 
 public interface AuthApiService {
     @POST("api/auth/login")
-    Call<LoginResponse> login(@Body LoginRequest loginRequest);
+    Call<LoginSimpleResponse> login(@Body LoginRequest loginRequest);
 
     @POST("api/auth/register")
     Call<Void> register(@Body LoginRequest registerRequest);
@@ -44,7 +44,7 @@ public interface AuthApiService {
     Call<Void> crear(@Body ServicioRequest serviciosRequest);
 
     @POST("api/auth/refreshToken")
-    Call<LoginResponse> refresh(@Body RefreshRequest refreshRequest);
+    Call<LoginSimpleResponse> refresh(@Body RefreshRequest refreshRequest);
 
     @POST("emailPassword/sendEmail")
     Call<RecuperacionResponse> recuperarContraseña(@Body RecuperacionRequest recuperacionRequest);
