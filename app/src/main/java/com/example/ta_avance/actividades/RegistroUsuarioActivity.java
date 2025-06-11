@@ -55,23 +55,10 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
         // Observadores del ViewModel
         viewModel.registroExitoso.observe(this, success -> {
             if (success != null && success) {
-
-                String celular = celularInput.getText().toString().trim();
-                String username = usuarioInput.getText().toString().trim();
-
-                String mensaje = "Hola, has sido registrado exitosamente en nuestra app.\n\n" +
-                "👤 Usuario: *" + username + "*\n" +
-                "🔒 Contraseña: *123456789*\n\n" +
-                "📲 Descarga la app aquí y cambia tu contraseña:\n" +
-                "https://pagina-barbershop.vercel.app/";
-
-                String urlWhatsapp = "https://api.whatsapp.com/send?phone=51" + celular + "&text=" + Uri.encode(mensaje);
-
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(urlWhatsapp));
-                startActivity(intent);
-
                 Toast.makeText(this, "Usuario registrado exitosamente", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(RegistroUsuarioActivity.this, ListarUsuarioActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 finish();
             }
         });

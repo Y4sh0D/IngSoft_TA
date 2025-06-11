@@ -42,8 +42,8 @@ public class AdminHomeActivity extends AppCompatActivity {
         findViewById(R.id.verReservasDelDia).setOnClickListener(v ->
                 startActivity(new Intent(this, ReservasActivity.class)));
 
-        findViewById(R.id.crearUsuario).setOnClickListener(v ->
-                startActivity(new Intent(this, RegistroUsuarioActivity.class)));
+        findViewById(R.id.listarUsuario).setOnClickListener(v ->
+                startActivity(new Intent(this, ListarUsuarioActivity.class)));
 
         findViewById(R.id.reservasPorConfirmar).setOnClickListener(v ->
                 startActivity(new Intent(this, ReservasPorConfirmarActivity.class)));

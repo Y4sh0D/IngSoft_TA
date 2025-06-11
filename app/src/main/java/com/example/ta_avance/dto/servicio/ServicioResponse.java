@@ -2,7 +2,7 @@ package com.example.ta_avance.dto.servicio;
 
 import java.util.List;
 
-public class ServicioResponse {
+public class   ServicioResponse {
     private int status;
     private String message;
     private List<ServicioDto> data;

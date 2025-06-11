@@ -6,6 +6,7 @@ import com.example.ta_avance.dto.horario.GenericResponse;
 import com.example.ta_avance.dto.horario.HorarioInstanciaResponse;
 import com.example.ta_avance.dto.horario.TurnosDiaRequest;
 import com.example.ta_avance.dto.login.LoginRequest;
+import com.example.ta_avance.dto.login.LoginResponse;
 import com.example.ta_avance.dto.login.LoginSimpleResponse;
 import com.example.ta_avance.dto.rangos.RangoResponse;
 import com.example.ta_avance.dto.recuperacion.RecuperacionRequest;
@@ -108,5 +109,8 @@ public interface AuthApiService {
             @Query("fechaInicio") LocalDate fechaInicio,
             @Query("fechaFin") LocalDate fechaFin
     );
+
+    @GET("api/usuario/listar")
+    Call<LoginResponse> listarUsuarios();
 
 }

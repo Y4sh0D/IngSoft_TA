@@ -31,6 +31,10 @@
 
         <!-- Actividad para Crear Usuario -->
         <activity
+            android:name=".actividades.ListarUsuarioActivity"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".actividades.RegistroUsuarioActivity"
             android:exported="true">
         </activity>
