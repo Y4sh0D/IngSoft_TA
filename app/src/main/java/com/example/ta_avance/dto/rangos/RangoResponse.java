@@ -1,9 +1,11 @@
 package com.example.ta_avance.dto.rangos;
 
+import java.util.List;
+
 public class RangoResponse {
     private int status;
     private String message;
-    private RangoDto data;
+    private List<RangoDto> data;
 
     public int getStatus() {
         return status;
@@ -21,11 +23,11 @@ public class RangoResponse {
         this.message = message;
     }
 
-    public RangoDto getData() {
+    public List<RangoDto> getData() {
         return data;
     }
 
-    public void setData(RangoDto data) {
+    public void setData(List<RangoDto> data) {
         this.data = data;
     }
 }

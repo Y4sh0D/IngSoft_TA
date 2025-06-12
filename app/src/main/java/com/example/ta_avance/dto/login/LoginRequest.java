@@ -7,6 +7,7 @@ public class LoginRequest {
     private String apellido;
     private String email;
     private String celular;
+    private String urlUsuario;
 
     public LoginRequest(String username, String password, String nombre, String apellido, String email , String celular) {
         this.username = username;
@@ -70,4 +71,8 @@ public class LoginRequest {
     public void setCelular(String celular) {
         this.celular = celular;
     }
+
+    public String getUrlUsuario() { return urlUsuario; }
+
+    public void setUrlUsuario(String urlUsuario) { this.urlUsuario = urlUsuario; }
 }

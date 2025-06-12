@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.ta_avance.R;
 import com.example.ta_avance.dto.login.LoginRequest;
 
@@ -44,6 +45,11 @@ public class UsuarioAdapter extends RecyclerView.Adapter<UsuarioAdapter.UsuarioV
         holder.textNombreCompleto.setText(usuario.getNombre() + " " + usuario.getApellido());
         holder.textNumero.setText(usuario.getCelular());
         holder.textEmail.setText(usuario.getEmail());
+        Glide.with(holder.itemView.getContext())
+                .load(usuario.getUrlUsuario()) // asegúrate que este método devuelva la URL completa
+                .placeholder(R.drawable.baseline_person_24)
+                .error(R.drawable.baseline_person_24)
+                .into(holder.ivFotoUsuario);
         holder.btnEnviarWspUsuarioCreado.setOnClickListener(V -> listener.onMessageWsp(usuario));
     }
 
