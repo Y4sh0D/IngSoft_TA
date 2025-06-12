@@ -3,7 +3,7 @@ package com.example.ta_avance.api;
 import com.example.ta_avance.dto.barbero.BarberoResponse;
 import com.example.ta_avance.dto.barbero.BarberoSimpleResponse;
 import com.example.ta_avance.dto.horario.GenericResponse;
-import com.example.ta_avance.dto.horario.HorarioInstanciaResponse;
+import com.example.ta_avance.dto.horario.HorarioResponseWrapper;
 import com.example.ta_avance.dto.horario.TurnosDiaRequest;
 import com.example.ta_avance.dto.login.LoginRequest;
 import com.example.ta_avance.dto.login.LoginResponse;
@@ -17,8 +17,6 @@ import com.example.ta_avance.dto.servicio.ServicioResponse;
 import com.example.ta_avance.dto.servicio.ServicioSimpleResponse;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -93,7 +91,7 @@ public interface AuthApiService {
     );
 
     @GET("api/horarioInstancia/actual")
-    Call<Map<String, List<HorarioInstanciaResponse>>> obtenerHorarioActual();
+    Call<HorarioResponseWrapper> obtenerHorarioActual();
 
     @PUT("api/horarioBarberoBase/actualizarTurnosDia")
     Call<GenericResponse> actualizarTurnosDia(@Body TurnosDiaRequest request);

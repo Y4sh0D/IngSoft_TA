@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.ta_avance.api.ApiClient;
 import com.example.ta_avance.api.AuthApiService;
 import com.example.ta_avance.dto.horario.HorarioInstanciaResponse;
+import com.example.ta_avance.dto.horario.HorarioResponseWrapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,14 +30,15 @@ public class HorarioActualViewModel extends ViewModel {
     public void cargarHorarios(Context context) {
         AuthApiService api = ApiClient.getRetrofit(context, true).create(AuthApiService.class);
 
-        Call<Map<String, List<HorarioInstanciaResponse>>> call = api.obtenerHorarioActual();
-        call.enqueue(new Callback<Map<String, List<HorarioInstanciaResponse>>>() {
+        Call<HorarioResponseWrapper> call = api.obtenerHorarioActual();
+        call.enqueue(new Callback<HorarioResponseWrapper>() {
             @Override
-            public void onResponse(Call<Map<String, List<HorarioInstanciaResponse>>> call, Response<Map<String, List<HorarioInstanciaResponse>>> response) {
+            public void onResponse(Call<HorarioResponseWrapper> call, Response<HorarioResponseWrapper> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    Map<String, List<HorarioInstanciaResponse>> datos = response.body().getData();
                     Map<String, Map<String, List<String>>> semana = new HashMap<>();
 
-                    for (Map.Entry<String, List<HorarioInstanciaResponse>> entry : response.body().entrySet()) {
+                    for (Map.Entry<String, List<HorarioInstanciaResponse>> entry : datos.entrySet()) {
                         String dia = entry.getKey();
                         List<HorarioInstanciaResponse> turnosList = entry.getValue();
 
@@ -61,7 +63,7 @@ public class HorarioActualViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<Map<String, List<HorarioInstanciaResponse>>> call, Throwable t) {
+            public void onFailure(Call<HorarioResponseWrapper> call, Throwable t) {
                 t.printStackTrace();
                 // Aquí podrías notificar un error si lo deseas
             }
