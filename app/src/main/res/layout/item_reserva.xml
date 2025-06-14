@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="8dp"
+    android:layout_marginHorizontal="12dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="10dp"
+    app:cardBackgroundColor="#2A2A2A">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/tvUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Usuario: Juan"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tvBarbero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Barbero: Andre"
+            android:textSize="14sp"
+            android:textColor="#CCCCCC"
+            android:layout_marginBottom="2dp"/>
+
+        <TextView
+            android:id="@+id/tvHorario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Horario: 12 AM - 1 PM"
+            android:textSize="14sp"
+            android:textColor="#CCCCCC"
+            android:layout_marginBottom="2dp"/>
+
+        <TextView
+            android:id="@+id/tvServicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Servicio: Corte"
+            android:textSize="14sp"
+            android:textColor="#CCCCCC"
+            android:layout_marginBottom="8dp"
+            android:maxLines="2"/>
+
+        <!-- ACCIONES -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnVerDetallesReserva"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="48dp"
+                android:text="Ver detalles"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#70a4e7"
+                app:cornerRadius="24dp"
+                app:icon="@drawable/baseline_add_24"
+                app:iconTint="@android:color/white"
+                app:iconPadding="12dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

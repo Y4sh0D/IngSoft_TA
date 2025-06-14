@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Motivo de cancelación"
+        android:text="Motivo de la acción"
         android:textStyle="bold"
         android:textSize="18sp"
         android:textColor="#212121"

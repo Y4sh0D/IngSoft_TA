@@ -12,11 +12,13 @@ import com.example.ta_avance.dto.rangos.RangoResponse;
 import com.example.ta_avance.dto.recuperacion.RecuperacionRequest;
 import com.example.ta_avance.dto.recuperacion.RecuperacionResponse;
 import com.example.ta_avance.dto.refresh.RefreshRequest;
+import com.example.ta_avance.dto.reserva.ReservaResponse;
 import com.example.ta_avance.dto.servicio.ServicioRequest;
 import com.example.ta_avance.dto.servicio.ServicioResponse;
 import com.example.ta_avance.dto.servicio.ServicioSimpleResponse;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -110,5 +112,19 @@ public interface AuthApiService {
 
     @GET("api/usuario/listar")
     Call<LoginResponse> listarUsuarios();
+
+    @GET("api/reserva/admin/listar")
+    Call<List<ReservaResponse>> listarReservas(
+            @Query("fecha") String fecha,
+            @Query("estado") String estado
+    );
+
+    @PUT("api/reserva/admin/cambiar-estado/{reservaId}")
+    Call<Void> cambiarEstadoReserva(
+            @Path("reservaId") Long reservaId,
+            @Query("estado") String estado,
+            @Query("motivoDescripcion") String motivoDescripcion
+    );
+
 
 }

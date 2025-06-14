@@ -1,7 +1,6 @@
 package com.example.ta_avance.viewmodel;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -9,8 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.ta_avance.api.ApiClient;
 import com.example.ta_avance.api.AuthApiService;
-import com.example.ta_avance.dto.rangos.RangoDto;
-import com.example.ta_avance.dto.rangos.RangoResponse;
+import com.example.ta_avance.dto.reserva.ReservaResponse;
 
 import java.util.List;
 
@@ -20,30 +18,62 @@ import retrofit2.Response;
 
 public class ReservasViewModel extends ViewModel {
 
-    private MutableLiveData<List<RangoDto>> rangosLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<ReservaResponse>> reservasLiveData = new MutableLiveData<>();
+    public MutableLiveData<String> mensajeError = new MutableLiveData<>();
+    public MutableLiveData<Boolean> cambioEstadoExitoso = new MutableLiveData<>();
+    public final MutableLiveData<String> NuevoTitulo = new MutableLiveData<>();
 
-    public LiveData<List<RangoDto>> getRangosLiveData(){
-        return rangosLiveData;
+    public LiveData<List<ReservaResponse>> getReservas() {
+        return reservasLiveData;
     }
 
-    public void obtenerRangos(Context context){
+    public void cargarReservas(Context context, String fecha, String estado) {
         AuthApiService api = ApiClient.getRetrofit(context, true).create(AuthApiService.class);
-        Call<RangoResponse> call = api.listarRangos();
+        Call<List<ReservaResponse>> call = api.listarReservas(fecha, estado);
 
-        call.enqueue(new Callback<RangoResponse>() {
+        call.enqueue(new Callback<List<ReservaResponse>>() {
             @Override
-            public void onResponse(Call<RangoResponse> call, Response<RangoResponse> response) {
-                if(response.isSuccessful() && response.body() != null){
-                    rangosLiveData.setValue(response.body().getData());
-                } else {
-                    Toast.makeText(context, "Error al obtener los rangos", Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<List<ReservaResponse>> call, Response<List<ReservaResponse>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    reservasLiveData.postValue(response.body());
+                }else {
+                    mensajeError.postValue("Error al mostrar las reservas: " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call<RangoResponse> call, Throwable t) {
-                Toast.makeText(context, "Fallo de conexión", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<List<ReservaResponse>> call, Throwable t) {
+                mensajeError.postValue("Error de conexión: " + t.getMessage());
             }
         });
     }
+
+    public void cambiarEstadoReserva(Context context, Long reservaId, String nuevoEstado, String motivoDescripcion) {
+        AuthApiService api = ApiClient.getRetrofit(context, true).create(AuthApiService.class);
+        Call<Void> call = api.cambiarEstadoReserva(reservaId, nuevoEstado, motivoDescripcion);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    cambioEstadoExitoso.postValue(true);
+                } else {
+                    mensajeError.postValue("Error al cambiar el estado: " + response.code());
+                    cambioEstadoExitoso.postValue(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                mensajeError.postValue("Error de conexión: " + t.getMessage());
+                cambioEstadoExitoso.postValue(false);
+            }
+        });
+    }
+
+    public void setNuevoTitulo() {
+        NuevoTitulo.setValue("Reservas");
+    }
+
 }
+

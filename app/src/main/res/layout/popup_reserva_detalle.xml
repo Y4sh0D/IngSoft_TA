@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="12dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="12dp"
+    app:cardBackgroundColor="#2A2A2A">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/tvDetalleUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Usuario: Juan"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvDetalleBarbero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Barbero: Andre"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvDetalleServicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Servicio: Corte regular"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvDetalleHorario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Horario: 12 AM - 1 PM"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvDetalleFechaReserva"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fecha de reserva: 2025-06-14"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvDetalleFechaCreacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Creado el: 2025-06-14 10:36"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvDetallePrecio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Precio: S/20.00"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF" />
+
+
+        <TextView
+            android:id="@+id/tvDetalleAdicionales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Adicionales: Pago por Yape"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="12dp" />
+
+        <ImageView
+            android:id="@+id/ivComprobante"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/baseline_app_blocking_24" />
+
+        <!-- Botones -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnConfirmarReserva"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="48dp"
+                android:text="Confirmar"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#4CAF50"
+                app:cornerRadius="24dp"
+                app:icon="@drawable/baseline_check_circle_24"
+                app:iconTint="@android:color/white"
+                app:iconPadding="12dp"
+                android:layout_marginEnd="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancelarReserva"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="48dp"
+                android:text="Eliminar"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#D32F2F"
+                app:cornerRadius="24dp"
+                app:icon="@drawable/baseline_cancel_24"
+                app:iconTint="@android:color/white"
+                app:iconPadding="12dp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
