@@ -5,7 +5,7 @@
     android:id="@+id/adminhome"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#212121"
     tools:context=".actividades.AdminHomeActivity">
 
     <!-- Título: ADMINISTRADOR -->
@@ -13,130 +13,64 @@
         android:id="@+id/adminTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="60dp"
         android:text="ADMINISTRADOR"
         android:textAlignment="center"
-        android:textColor="#333333"
-        android:textSize="30sp"
+        android:textColor="#FFD700"
+        android:textSize="32sp"
+        android:fontFamily="@font/oswald_bold"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Botón: Ver Reservas del Día -->
-    <Button
-        android:id="@+id/verReservasDelDia"
+    <!-- Contenedor de botones -->
+    <LinearLayout
+        android:id="@+id/buttonsContainer"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:backgroundTint="#1E1E1E"
-        android:text="VER RESERVAS DEL DIA"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:cornerRadius="12dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        android:padding="16dp"
         app:layout_constraintTop_toBottomOf="@id/adminTitle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Botón: Crear Usuario/Cliente -->
-    <Button
-        android:id="@+id/listarUsuario"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:backgroundTint="#1E1E1E"
-        android:text="LISTA DE USUARIOS"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:cornerRadius="12dp"
-        app:layout_constraintTop_toBottomOf="@id/verReservasDelDia"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/verReservasDelDia"
+            style="@style/AdminButtonStyle"
+            android:text="Ver Reservas del Día" />
 
-    <!-- Botón: Reservas por Confirmar -->
-    <Button
-        android:id="@+id/reservasPorConfirmar"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:backgroundTint="#1E1E1E"
-        android:text="RESERVAS POR CONFIRMAR"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:cornerRadius="12dp"
-        app:layout_constraintTop_toBottomOf="@id/listarUsuario"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/reservasPorConfirmar"
+            style="@style/AdminButtonStyle"
+            android:text="Reservas por Confirmar" />
 
-    <!-- Botón: Reservas por Confirmar -->
-    <Button
-        android:id="@+id/crearServicio"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:backgroundTint="#1E1E1E"
-        android:text="GESTIÓN DE SERVICIOS"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:cornerRadius="12dp"
-        app:layout_constraintTop_toBottomOf="@id/reservasPorConfirmar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/listarUsuario"
+            style="@style/AdminButtonStyle"
+            android:text="Lista de Usuarios" />
 
-    <Button
-        android:id="@+id/gestionHorarios"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:backgroundTint="#1E1E1E"
-        android:text="GESTIÓN DE HORARIOS"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:cornerRadius="12dp"
-        app:layout_constraintTop_toBottomOf="@id/crearServicio"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/crearServicio"
+            style="@style/AdminButtonStyle"
+            android:text="Gestión de Servicios" />
 
-    <Button
-        android:id="@+id/gestionBarbero"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:backgroundTint="#1E1E1E"
-        android:text="GESTIÓN DE BARBEROS"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:cornerRadius="12dp"
-        app:layout_constraintTop_toBottomOf="@id/gestionHorarios"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/gestionHorarios"
+            style="@style/AdminButtonStyle"
+            android:text="Gestión de Horarios" />
 
-    <Button
-        android:id="@+id/btnLogoutAdmin"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:backgroundTint="#E53935"
-        android:text="Cerrar Sesión"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:cornerRadius="12dp"
-        app:layout_constraintTop_toBottomOf="@id/gestionBarbero"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/gestionBarbero"
+            style="@style/AdminButtonStyle"
+            android:text="Gestión de Barberos" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogoutAdmin"
+            style="@style/LogoutButtonStyle"
+            android:text="Cerrar Sesión" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

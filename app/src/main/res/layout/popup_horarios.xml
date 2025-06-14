@@ -1,27 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="350dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/popup_background"
-    android:orientation="vertical"
-    android:padding="24dp">
+    app:cardCornerRadius="24dp"
+    app:cardElevation="10dp"
+    app:cardBackgroundColor="#2A2A2A"
+    android:layout_gravity="center">
 
-    <Button
-        android:id="@+id/btnVerHorario"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#1E1E1E"
-        android:text="Ver horario actual"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp" />
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/btnPrepararHorario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#1E1E1E"
-        android:text="Preparar horario"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/tituloPopup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gestión de Horarios"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/oswald_bold"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnVerHorario"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Ver Horario Actual"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FFA500"
+            android:textSize="13sp"
+            app:cornerRadius="24dp"
+            app:iconTint="@android:color/white"
+            app:iconPadding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPrepararHorario"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Preparar Horario"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FFA500"
+            android:textSize="13sp"
+            app:cornerRadius="24dp"
+            app:iconTint="@android:color/white"
+            app:iconPadding="12dp"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="12dp"
     app:cardCornerRadius="20dp"
-    app:cardElevation="8dp"
-    app:cardBackgroundColor="@android:color/white">
+    app:cardElevation="10dp"
+    app:cardBackgroundColor="#2A2A2A">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,8 +32,9 @@
             android:layout_height="wrap_content"
             android:text="Nombre completo"
             android:textStyle="bold"
+            android:fontFamily="@font/oswald_bold"
             android:textSize="18sp"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:layout_marginBottom="4dp" />
 
         <TextView
@@ -41,8 +42,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Número"
+            android:fontFamily="@font/oswald_regular"
             android:textSize="14sp"
-            android:textColor="#666666"
+            android:textColor="#CCCCCC"
             android:layout_marginBottom="2dp" />
 
         <TextView
@@ -50,8 +52,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email"
+            android:fontFamily="@font/oswald_regular"
             android:textSize="14sp"
-            android:textColor="#666666" />
+            android:textColor="#CCCCCC" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnEnviarWspUsuarioCreado"
@@ -61,7 +64,9 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:text="Enviar WhatsApp"
-            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:fontFamily="@font/oswald_regular"
+            android:textColor="#FFFFFF"
             android:textSize="14sp"
             app:cornerRadius="20dp"
             app:icon="@drawable/baseline_send_24"
