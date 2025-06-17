@@ -75,5 +75,9 @@ public class ReservasViewModel extends ViewModel {
         NuevoTitulo.setValue("Reservas");
     }
 
+    public void setNuevoTitulo2() {
+        NuevoTitulo.setValue("Reservas Realizadas");
+    }
+
 }
 

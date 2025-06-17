@@ -47,6 +47,11 @@
             android:text="Reservas por Confirmar" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/reservasRealizadas"
+            style="@style/AdminButtonStyle"
+            android:text="Reservas Realizadas" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/listarUsuario"
             style="@style/AdminButtonStyle"
             android:text="Lista de Usuarios" />

@@ -54,6 +54,8 @@ public class AdminHomeActivity extends AppCompatActivity {
         findViewById(R.id.gestionHorarios).setOnClickListener(v -> {
             mostrarPopupHorarios(v);
         });
+        findViewById(R.id.reservasRealizadas).setOnClickListener( V ->
+                startActivity(new Intent(this, ReservasRealizadasActivity.class)));
 
         findViewById(R.id.gestionBarbero).setOnClickListener(v ->{
                 startActivity(new Intent(this,GestionarBarberoActivity.class));

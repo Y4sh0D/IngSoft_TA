@@ -24,10 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".actividades.ReservasActivity"
-            android:exported="true">
-        </activity>
+
 
         <!-- Actividad para Crear Usuario -->
         <activity
@@ -41,7 +38,15 @@
 
         <!-- Actividad para Reservas por Confirmar -->
         <activity
+            android:name=".actividades.ReservasActivity"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".actividades.ReservasPorConfirmarActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".actividades.ReservasRealizadasActivity"
             android:exported="true">
         </activity>
 

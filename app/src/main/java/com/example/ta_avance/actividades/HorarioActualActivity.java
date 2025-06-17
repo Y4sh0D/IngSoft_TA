@@ -79,6 +79,10 @@ public class HorarioActualActivity extends AppCompatActivity {
             }
         });
 
+        Button btnExportarHorario = findViewById(R.id.btnExportarHorarioSemanal);
+        btnExportarHorario.setOnClickListener(v -> {
+            viewModel.exportarHorario(this);
+        });
 
         // 🚀 Llamada real a la API
         viewModel.cargarHorarios(this);

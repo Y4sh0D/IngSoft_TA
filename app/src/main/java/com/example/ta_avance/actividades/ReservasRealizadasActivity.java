@@ -26,8 +26,7 @@ import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Locale;
 
-
-public class ReservasActivity extends AppCompatActivity {
+public class ReservasRealizadasActivity extends AppCompatActivity {
 
     private ReservasViewModel viewModel;
     private RecyclerView recyclerView;
@@ -50,7 +49,7 @@ public class ReservasActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(ReservasViewModel.class);
         tituloReservasPorConfirmar = findViewById(R.id.tituloReservasPorConfirmar);
-        viewModel.setNuevoTitulo();
+        viewModel.setNuevoTitulo2();
         viewModel.NuevoTitulo.observe(this,texto -> tituloReservasPorConfirmar.setText(texto));
 
         viewModel.getReservas().observe(this, reservas -> {
@@ -59,7 +58,7 @@ public class ReservasActivity extends AppCompatActivity {
         });
 
         String fechaActual = LocalDate.now().toString();
-        viewModel.cargarReservas(this, fechaActual, "CONFIRMADA");
+        viewModel.cargarReservas(this, fechaActual, "REALIZADA");
 
 
         etFechaSeleccionada = findViewById(R.id.etFechaSeleccionada);
@@ -69,11 +68,12 @@ public class ReservasActivity extends AppCompatActivity {
     private void mostrarDatePicker() {
         LocalDate hoy = LocalDate.now();
 
-        LocalDate inicioSemana = hoy.with(DayOfWeek.MONDAY);
-        LocalDate finSemana = hoy.with(DayOfWeek.SUNDAY);
+        // La fecha máxima es hoy (no se puede seleccionar el futuro)
+        long fechaMax = hoy.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
-        long fechaMin = hoy.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        long fechaMax = finSemana.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        // Puedes ponerle un mínimo opcional (por ejemplo, 50 años atrás), o dejarlo abierto
+        LocalDate fechaMinima = hoy.minusYears(50); // Ajusta si lo deseas
+        long fechaMin = fechaMinima.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
         CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder()
                 .setStart(fechaMin)
@@ -81,7 +81,6 @@ public class ReservasActivity extends AppCompatActivity {
                 .setValidator(
                         CompositeDateValidator.allOf(
                                 Arrays.asList(
-                                        DateValidatorPointForward.from(fechaMin),
                                         DateValidatorPointBackward.before(fechaMax)
                                 )
                         )
@@ -89,7 +88,7 @@ public class ReservasActivity extends AppCompatActivity {
 
         MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Selecciona una fecha")
-                .setSelection(fechaMin)
+                .setSelection(fechaMax) // Por defecto selecciona hoy
                 .setCalendarConstraints(constraintsBuilder.build());
 
         MaterialDatePicker<Long> datePicker = builder.build();
@@ -100,10 +99,11 @@ public class ReservasActivity extends AppCompatActivity {
                     .toLocalDate();
 
             etFechaSeleccionada.setText(fechaSeleccionada.toString());
-            viewModel.cargarReservas(this, fechaSeleccionada.toString(), "CONFIRMADA");
+            viewModel.cargarReservas(this, fechaSeleccionada.toString(), "REALIZADA");
         });
 
         datePicker.show(getSupportFragmentManager(), "DATE_PICKER");
     }
+
 
 }

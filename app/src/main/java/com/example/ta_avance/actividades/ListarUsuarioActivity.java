@@ -65,7 +65,7 @@ public class ListarUsuarioActivity extends AppCompatActivity {
                 "Por favor, cambia tu contraseña después de ingresar.";
 
         try {
-            String uri = "https://wa.me/" + numero + "?text=" + java.net.URLEncoder.encode(mensaje, "UTF-8");
+            String uri = "https://wa.me/51" + numero + "?text=" + java.net.URLEncoder.encode(mensaje, "UTF-8");
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(android.net.Uri.parse(uri));
             startActivity(intent);

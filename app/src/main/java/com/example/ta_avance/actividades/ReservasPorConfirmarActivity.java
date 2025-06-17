@@ -174,7 +174,7 @@ public class ReservasPorConfirmarActivity extends AppCompatActivity {
 
         datePicker.addOnPositiveButtonClickListener(selection -> {
             LocalDate fechaSeleccionada = Instant.ofEpochMilli(selection)
-                    .atZone(ZoneId.systemDefault())
+                    .atZone(ZoneId.of("UTC"))
                     .toLocalDate();
 
             etFechaSeleccionada.setText(fechaSeleccionada.toString());
