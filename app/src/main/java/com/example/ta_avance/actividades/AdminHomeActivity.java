@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,6 +71,8 @@ public class AdminHomeActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+
+        ajustarBotonesGrid();
     }
 
     private void mostrarPopupHorarios(View anchorView) {
@@ -114,5 +117,34 @@ public class AdminHomeActivity extends AppCompatActivity {
             startActivity(new Intent(this, HorarioPrepararActivity.class));
         });
     }
+
+    private void ajustarBotonesGrid() {
+        GridLayout gridLayout = findViewById(R.id.btnGrid);
+
+        int totalBotones = gridLayout.getChildCount();
+
+        // Asegura que todos los botones llenen la columna
+        for (int i = 0; i < totalBotones; i++) {
+            View child = gridLayout.getChildAt(i);
+            if (child instanceof com.google.android.material.button.MaterialButton) {
+                GridLayout.LayoutParams params = (GridLayout.LayoutParams) child.getLayoutParams();
+                params.width = 0;
+                params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1, 1f); // 1 columna por defecto
+                params.setGravity(Gravity.FILL_HORIZONTAL);
+                child.setLayoutParams(params);
+            }
+        }
+
+        // Si la cantidad es impar, el último botón ocupa 2 columnas
+        if (totalBotones % 2 != 0) {
+            View ultimo = gridLayout.getChildAt(totalBotones - 1);
+            GridLayout.LayoutParams params = (GridLayout.LayoutParams) ultimo.getLayoutParams();
+            params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 2); // Ocupa 2 columnas
+            params.setGravity(Gravity.FILL_HORIZONTAL);
+            ultimo.setLayoutParams(params);
+        }
+    }
+
+
 
 }

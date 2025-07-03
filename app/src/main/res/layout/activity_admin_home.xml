@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/adminhome"
@@ -8,74 +9,156 @@
     android:background="#212121"
     tools:context=".actividades.AdminHomeActivity">
 
-    <!-- Título: ADMINISTRADOR -->
-    <TextView
-        android:id="@+id/adminTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="ADMINISTRADOR"
-        android:textAlignment="center"
-        android:textColor="#FFD700"
-        android:textSize="32sp"
-        android:fontFamily="@font/oswald_bold"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <!-- Contenedor de botones -->
-    <LinearLayout
-        android:id="@+id/buttonsContainer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:orientation="vertical"
-        android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/adminTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/verReservasDelDia"
-            style="@style/AdminButtonStyle"
-            android:text="Ver Reservas del Día" />
+            <!-- Título Principal -->
+            <TextView
+                android:id="@+id/adminTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="ADMINISTRADOR"
+                android:gravity="center"
+                android:textColor="#FFD700"
+                android:textSize="28sp"
+                android:fontFamily="@font/oswald_bold"
+                android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/reservasPorConfirmar"
-            style="@style/AdminButtonStyle"
-            android:text="Reservas por Confirmar" />
+            <!-- Grid de Botones -->
+            <GridLayout
+                android:id="@+id/btnGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:alignmentMode="alignMargins"
+                android:useDefaultMargins="true"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/reservasRealizadas"
-            style="@style/AdminButtonStyle"
-            android:text="Reservas Realizadas" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/verReservasDelDia"
+                    style="@style/AdminButtonStyleSquare"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnSpan="1"
+                    android:layout_gravity="fill"
+                    android:text="Reservas del Día"
+                    app:icon="@drawable/ic_event"
+                    app:iconGravity="top"
+                    app:iconPadding="8dp"
+                    app:cornerRadius="16dp"
+                    app:elevation="4dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/listarUsuario"
-            style="@style/AdminButtonStyle"
-            android:text="Lista de Usuarios" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/reservasPorConfirmar"
+                    style="@style/AdminButtonStyleSquare"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnSpan="1"
+                    android:layout_gravity="fill"
+                    android:text="Por Confirmar"
+                    app:icon="@drawable/ic_event"
+                    app:iconGravity="top"
+                    app:iconPadding="8dp"
+                    app:cornerRadius="16dp"
+                    app:elevation="4dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/crearServicio"
-            style="@style/AdminButtonStyle"
-            android:text="Gestión de Servicios" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/reservasRealizadas"
+                    style="@style/AdminButtonStyleSquare"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnSpan="1"
+                    android:layout_gravity="fill"
+                    android:text="Realizadas"
+                    app:icon="@drawable/ic_event"
+                    app:iconGravity="top"
+                    app:iconPadding="8dp"
+                    app:cornerRadius="16dp"
+                    app:elevation="4dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/gestionHorarios"
-            style="@style/AdminButtonStyle"
-            android:text="Gestión de Horarios" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/listarUsuario"
+                    style="@style/AdminButtonStyleSquare"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnSpan="1"
+                    android:layout_gravity="fill"
+                    android:text="Usuarios"
+                    app:icon="@drawable/baseline_person_24"
+                    app:iconGravity="top"
+                    app:iconPadding="8dp"
+                    app:cornerRadius="16dp"
+                    app:elevation="4dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/gestionBarbero"
-            style="@style/AdminButtonStyle"
-            android:text="Gestión de Barberos" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/crearServicio"
+                    style="@style/AdminButtonStyleSquare"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnSpan="1"
+                    android:layout_gravity="fill"
+                    android:text="Servicios"
+                    app:icon="@drawable/ic_scissors"
+                    app:iconGravity="top"
+                    app:iconPadding="8dp"
+                    app:cornerRadius="16dp"
+                    app:elevation="4dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnLogoutAdmin"
-            style="@style/LogoutButtonStyle"
-            android:text="Cerrar Sesión" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/gestionHorarios"
+                    style="@style/AdminButtonStyleSquare"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnSpan="1"
+                    android:layout_gravity="fill"
+                    android:text="Horarios"
+                    app:icon="@drawable/ic_schedule"
+                    app:iconGravity="top"
+                    app:iconPadding="8dp"
+                    app:cornerRadius="16dp"
+                    app:elevation="4dp" />
 
-    </LinearLayout>
+                <!-- BOTÓN NÚMERO 7: se expande a 2 columnas -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/gestionBarbero"
+                    style="@style/AdminButtonStyleSquare"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnSpan="2"
+                    android:layout_gravity="fill"
+                    android:text="Barberos"
+                    app:icon="@drawable/ic_face"
+                    app:iconGravity="top"
+                    app:iconPadding="8dp"
+                    app:cornerRadius="16dp"
+                    app:elevation="4dp" />
+            </GridLayout>
+
+
+            <!-- Botón de Logout -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogoutAdmin"
+                style="@style/LogoutButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="Cerrar Sesión"
+                app:cornerRadius="12dp"
+                app:elevation="4dp" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

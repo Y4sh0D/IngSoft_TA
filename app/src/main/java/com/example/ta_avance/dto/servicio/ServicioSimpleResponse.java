@@ -1,6 +1,6 @@
 package com.example.ta_avance.dto.servicio;
 
-//USADO PARA EL ACTUALIZAR BARBERRO
+//USADO PARA EL ACTUALIZAR SERVICIO
 // BarberoSimpleResponse.java
 public class ServicioSimpleResponse {
     private int status;

@@ -57,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Anima el logo, los campos y botones
         findViewById(R.id.diamondLogo).startAnimation(fadeIn);
-        findViewById(R.id.layoutUsuario).startAnimation(fadeIn); // si usas TextInputLayout
-        findViewById(R.id.layoutContraseña).startAnimation(fadeIn);
         btnIngresarApp.startAnimation(fadeIn);
         btnOlvideContrasena.startAnimation(fadeIn);
 

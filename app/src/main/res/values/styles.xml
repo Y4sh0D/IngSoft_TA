@@ -33,4 +33,20 @@
         <item name="android:fontFamily">@font/oswald_bold</item>
     </style>
 
+    <style name="AdminButtonStyleSquare" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">120dp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:backgroundTint">#424242</item>
+        <item name="android:fontFamily">@font/oswald_bold</item>
+        <item name="iconGravity">top</item>
+        <item name="iconPadding">8dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="iconSize">40dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+
 </resources>
