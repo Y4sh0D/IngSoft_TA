@@ -76,5 +76,28 @@
                 app:iconPadding="12dp" />
 
         </LinearLayout>
+
+        <!-- ACCIONES -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEstadoARealizada"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="48dp"
+                android:text="Reserva Realizada"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="@color/green"
+                app:cornerRadius="24dp"
+                app:icon="@drawable/baseline_check_circle_24"
+                app:iconTint="@android:color/white"
+                app:iconPadding="12dp" />
+
+        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

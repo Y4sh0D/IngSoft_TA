@@ -47,35 +47,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/verReservasDelDia"
-                    style="@style/AdminButtonStyleSquare"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnSpan="1"
-                    android:layout_gravity="fill"
-                    android:text="Reservas del Día"
-                    app:icon="@drawable/ic_event"
-                    app:iconGravity="top"
-                    app:iconPadding="8dp"
-                    app:cornerRadius="16dp"
-                    app:elevation="4dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/reservasPorConfirmar"
-                    style="@style/AdminButtonStyleSquare"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnSpan="1"
-                    android:layout_gravity="fill"
-                    android:text="Por Confirmar"
-                    app:icon="@drawable/ic_event"
-                    app:iconGravity="top"
-                    app:iconPadding="8dp"
-                    app:cornerRadius="16dp"
-                    app:elevation="4dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/reservasRealizadas"
+                    android:id="@+id/gestionReservas"
                     style="@style/AdminButtonStyleSquare"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

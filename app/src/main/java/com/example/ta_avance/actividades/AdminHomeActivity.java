@@ -39,15 +39,9 @@ public class AdminHomeActivity extends AppCompatActivity {
 
         viewModel.nombreCompleto.observe(this, texto -> adminTitle.setText(texto));
 
-        // Botones de navegación
-        findViewById(R.id.verReservasDelDia).setOnClickListener(v ->
-                startActivity(new Intent(this, ReservasActivity.class)));
-
         findViewById(R.id.listarUsuario).setOnClickListener(v ->
                 startActivity(new Intent(this, ListarUsuarioActivity.class)));
 
-        findViewById(R.id.reservasPorConfirmar).setOnClickListener(v ->
-                startActivity(new Intent(this, ReservasPorConfirmarActivity.class)));
 
         findViewById(R.id.crearServicio).setOnClickListener(v ->
                 startActivity(new Intent(this, GestionarServicioActivity.class)));
@@ -55,8 +49,8 @@ public class AdminHomeActivity extends AppCompatActivity {
         findViewById(R.id.gestionHorarios).setOnClickListener(v -> {
             mostrarPopupHorarios(v);
         });
-        findViewById(R.id.reservasRealizadas).setOnClickListener( V ->
-                startActivity(new Intent(this, ReservasRealizadasActivity.class)));
+        findViewById(R.id.gestionReservas).setOnClickListener( V ->
+                startActivity(new Intent(this, ReservasActivity.class)));
 
         findViewById(R.id.gestionBarbero).setOnClickListener(v ->{
                 startActivity(new Intent(this,GestionarBarberoActivity.class));

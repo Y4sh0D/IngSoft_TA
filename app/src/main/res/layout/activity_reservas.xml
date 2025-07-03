@@ -5,15 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212"
-    tools:context=".actividades.GestionarBarberoActivity">
+    android:background="#FFFFFF"
+    tools:context=".actividades.ReservasActivity">
 
     <!-- Título -->
     <TextView
-        android:id="@+id/tituloReservasPorConfirmar"
+        android:id="@+id/tituloReservas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reservas por Confirmar"
+        android:text="Reservas"
         android:textSize="26sp"
         android:textStyle="bold"
         android:fontFamily="@font/oswald_bold"
@@ -23,12 +23,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Spinner Estado -->
+    <Spinner
+        android:id="@+id/spinnerEstado"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FFD700"
+        android:popupBackground="#AFAFAF"
+        android:spinnerMode="dropdown"
+        app:layout_constraintTop_toBottomOf="@id/tituloReservas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp" />
+
+    <!-- Fecha -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilFecha"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         app:boxCornerRadiusTopStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
@@ -36,7 +51,7 @@
         app:boxStrokeColor="#FFD700"
         app:boxBackgroundColor="#1E1E1E"
         app:hintTextColor="#FFD700"
-        app:layout_constraintTop_toBottomOf="@id/tituloReservasPorConfirmar"
+        app:layout_constraintTop_toBottomOf="@id/spinnerEstado"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="16dp">
@@ -47,20 +62,32 @@
             android:layout_height="wrap_content"
             android:focusable="false"
             android:inputType="none"
-            android:textColor="#FFFFFF"/>
+            android:textColor="#FFFFFF" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Lista de barberos -->
+    <!-- Botón Filtrar -->
+    <Button
+        android:id="@+id/btnFiltrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filtrar"
+        android:textColor="#000000"
+        android:backgroundTint="#FFD700"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/tilFecha"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewReservasPorConfirmar"
+        android:id="@+id/recyclerViewReservas"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:paddingHorizontal="16dp"
+        app:layout_constraintTop_toBottomOf="@id/btnFiltrar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tilFecha" />
-
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

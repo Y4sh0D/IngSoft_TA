@@ -1,46 +1,56 @@
 package com.example.ta_avance.actividades;
 
 import android.content.res.Configuration;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Toast;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.ta_avance.R;
 import com.example.ta_avance.adapters.ReservaAdapter;
+import com.example.ta_avance.dto.reserva.ReservaResponse;
 import com.example.ta_avance.viewmodel.ReservasViewModel;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.CompositeDateValidator;
 import com.google.android.material.datepicker.DateValidatorPointBackward;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
-
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Locale;
-
+import android.view.View;
+import android.widget.Button;
 
 public class ReservasActivity extends AppCompatActivity {
 
     private ReservasViewModel viewModel;
     private RecyclerView recyclerView;
-    EditText etFechaSeleccionada;
-    private TextView tituloReservasPorConfirmar;
+    private TextInputEditText etFechaSeleccionada;
+    private Spinner spinnerEstado;
+    private Button btnFiltrar;
+    private TextView tituloReservas;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservas);
-
-        recyclerView = findViewById(R.id.recyclerViewReservasPorConfirmar);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         Locale nuevoLocale = new Locale("es", "ES");
         Locale.setDefault(nuevoLocale);
@@ -48,62 +58,182 @@ public class ReservasActivity extends AppCompatActivity {
         config.setLocale(nuevoLocale);
         getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 
+        recyclerView = findViewById(R.id.recyclerViewReservas);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        spinnerEstado = findViewById(R.id.spinnerEstado);
+        etFechaSeleccionada = findViewById(R.id.etFechaSeleccionada);
+        btnFiltrar = findViewById(R.id.btnFiltrar);
+        tituloReservas = findViewById(R.id.tituloReservas);
+
+        String[] estados = {"CREADA", "CONFIRMADA", "REALIZADA"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, estados);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerEstado.setAdapter(adapter);
+
         viewModel = new ViewModelProvider(this).get(ReservasViewModel.class);
-        tituloReservasPorConfirmar = findViewById(R.id.tituloReservasPorConfirmar);
-        viewModel.setNuevoTitulo();
-        viewModel.NuevoTitulo.observe(this,texto -> tituloReservasPorConfirmar.setText(texto));
 
         viewModel.getReservas().observe(this, reservas -> {
-            ReservaAdapter adapter = new ReservaAdapter(reservas, reserva -> {},false);
-            recyclerView.setAdapter(adapter);
+            String estado = spinnerEstado.getSelectedItem().toString();
+
+            ReservaAdapter adapterRv = new ReservaAdapter(reservas, new ReservaAdapter.OnReservaClickListener() {
+                @Override
+                public void onVerDetallesClick(ReservaResponse reserva) {
+                    mostrarPopupDetalle(reserva);
+                }
+
+                @Override
+                public void onReservaRealizadaClick(ReservaResponse reserva) {
+                    // Aquí puedes llamar a cambiarEstadoReserva o lo que corresponda
+                    viewModel.cambiarEstadoReserva(ReservasActivity.this, reserva.getReservaId(), "REALIZADA", "Reserva completada correctamente");
+                }
+            }, estado);
+
+            recyclerView.setAdapter(adapterRv);
         });
 
-        String fechaActual = LocalDate.now().toString();
-        viewModel.cargarReservas(this, fechaActual, "CONFIRMADA");
 
+        viewModel.mensajeError.observe(this, error ->
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+        );
 
-        etFechaSeleccionada = findViewById(R.id.etFechaSeleccionada);
+        viewModel.cambioEstadoExitoso.observe(this, exitoso -> {
+            if (Boolean.TRUE.equals(exitoso)) {
+                Toast.makeText(this, "Estado actualizado", Toast.LENGTH_SHORT).show();
+                cargarReservas();
+            }
+        });
+
+        spinnerEstado.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(android.widget.AdapterView<?> parent, View view, int position, long id) {
+                etFechaSeleccionada.setText("");
+            }
+
+            @Override
+            public void onNothingSelected(android.widget.AdapterView<?> parent) { }
+        });
+
         etFechaSeleccionada.setOnClickListener(v -> mostrarDatePicker());
+        btnFiltrar.setOnClickListener(v -> cargarReservas());
     }
 
     private void mostrarDatePicker() {
+        String estadoSeleccionado = spinnerEstado.getSelectedItem().toString();
         LocalDate hoy = LocalDate.now();
-
-        LocalDate inicioSemana = hoy.with(DayOfWeek.MONDAY);
-        LocalDate finSemana = hoy.with(DayOfWeek.SUNDAY);
-
-        long fechaMin = hoy.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        long fechaMax = finSemana.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
-
-        CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder()
-                .setStart(fechaMin)
-                .setEnd(fechaMax)
-                .setValidator(
-                        CompositeDateValidator.allOf(
-                                Arrays.asList(
-                                        DateValidatorPointForward.from(fechaMin),
-                                        DateValidatorPointBackward.before(fechaMax)
-                                )
-                        )
-                );
-
         MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Selecciona una fecha")
-                .setSelection(fechaMin)
-                .setCalendarConstraints(constraintsBuilder.build());
+                .setTitleText("Selecciona una fecha");
+
+        if (estadoSeleccionado.equals("CREADA") || estadoSeleccionado.equals("CONFIRMADA")) {
+            LocalDate finSemana = hoy.with(DayOfWeek.SUNDAY);
+            long fechaMin = hoy.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
+            long fechaMax = finSemana.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
+
+            CalendarConstraints constraints = new CalendarConstraints.Builder()
+                    .setStart(fechaMin)
+                    .setEnd(fechaMax)
+                    .setValidator(
+                            CompositeDateValidator.allOf(Arrays.asList(
+                                    DateValidatorPointForward.from(fechaMin),
+                                    DateValidatorPointBackward.before(fechaMax)
+                            ))
+                    )
+                    .build();
+            builder.setSelection(fechaMin).setCalendarConstraints(constraints);
+
+        } else if (estadoSeleccionado.equals("REALIZADA")) {
+            long fechaMax = hoy.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
+            CalendarConstraints constraints = new CalendarConstraints.Builder()
+                    .setEnd(fechaMax)
+                    .setValidator(DateValidatorPointBackward.before(fechaMax))
+                    .build();
+            builder.setSelection(fechaMax).setCalendarConstraints(constraints);
+        }
 
         MaterialDatePicker<Long> datePicker = builder.build();
-
         datePicker.addOnPositiveButtonClickListener(selection -> {
             LocalDate fechaSeleccionada = Instant.ofEpochMilli(selection)
-                    .atZone(ZoneId.of("UTC"))
+                    .atZone(ZoneId.systemDefault())
                     .toLocalDate();
-
             etFechaSeleccionada.setText(fechaSeleccionada.toString());
-            viewModel.cargarReservas(this, fechaSeleccionada.toString(), "CONFIRMADA");
         });
-
         datePicker.show(getSupportFragmentManager(), "DATE_PICKER");
     }
 
+    private void cargarReservas() {
+        String fecha = etFechaSeleccionada.getText().toString();
+        String estado = spinnerEstado.getSelectedItem().toString();
+
+        if (fecha.isEmpty()) {
+            Toast.makeText(this, "Selecciona una fecha", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        tituloReservas.setText("Reservas - " + estado);
+        viewModel.cargarReservas(this, fecha, estado);
+    }
+
+    private void mostrarPopupDetalle(ReservaResponse reserva) {
+        View popupView = LayoutInflater.from(this).inflate(R.layout.popup_reserva_detalle, null);
+        AlertDialog dialog = new AlertDialog.Builder(this).setView(popupView).create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        }
+
+        TextView tvUsuario = popupView.findViewById(R.id.tvDetalleUsuario);
+        TextView tvBarbero = popupView.findViewById(R.id.tvDetalleBarbero);
+        TextView tvHorario = popupView.findViewById(R.id.tvDetalleHorario);
+        TextView tvServicio = popupView.findViewById(R.id.tvDetalleServicio);
+        TextView tvFechaReserva = popupView.findViewById(R.id.tvDetalleFechaReserva);
+        TextView tvFechaCreacion = popupView.findViewById(R.id.tvDetalleFechaCreacion);
+        TextView tvPrecio = popupView.findViewById(R.id.tvDetallePrecio);
+        TextView tvAdicionales = popupView.findViewById(R.id.tvDetalleAdicionales);
+        ImageView ivComprobante = popupView.findViewById(R.id.ivComprobante);
+        MaterialButton btnConfirmar = popupView.findViewById(R.id.btnConfirmarReserva);
+        MaterialButton btnCancelar = popupView.findViewById(R.id.btnCancelarReserva);
+
+        tvUsuario.setText("Usuario: " + reserva.getUsuarioNombre());
+        tvBarbero.setText("Barbero: " + reserva.getBarberoNombre());
+        tvHorario.setText("Horario: " + reserva.getHorarioRango());
+        tvServicio.setText("Servicio: " + reserva.getServicioNombre());
+        tvFechaReserva.setText("Fecha reserva: " + reserva.getFechaReserva());
+        tvFechaCreacion.setText("Creado el: " + reserva.getFechaCreacion());
+        tvPrecio.setText("Precio: s/" + reserva.getPrecioServicio());
+        tvAdicionales.setText("Adicionales: " + reserva.getAdicionales());
+
+        if (reserva.getUrlPago() != null && !reserva.getUrlPago().isEmpty()) {
+            Glide.with(this).load(reserva.getUrlPago()).into(ivComprobante);
+        } else {
+            ivComprobante.setVisibility(View.GONE);
+        }
+
+        btnConfirmar.setOnClickListener(v -> {
+            dialog.dismiss();
+            mostrarPopupMotivo(reserva.getReservaId(), "CONFIRMADA");
+        });
+
+        btnCancelar.setOnClickListener(v -> {
+            dialog.dismiss();
+            mostrarPopupMotivo(reserva.getReservaId(), "CANCELADA");
+        });
+
+        dialog.show();
+    }
+
+    private void mostrarPopupMotivo(Long reservaId, String nuevoEstado) {
+        View motivoView = LayoutInflater.from(this).inflate(R.layout.popup_motivo_cancelacion, null);
+        AlertDialog motivoDialog = new AlertDialog.Builder(this).setView(motivoView).create();
+
+        EditText etMotivoCancelacion = motivoView.findViewById(R.id.etMotivoCancelacion);
+        MaterialButton btnEnviarMotivo = motivoView.findViewById(R.id.btnEnviarMotivo);
+
+        btnEnviarMotivo.setOnClickListener(v -> {
+            String motivo = etMotivoCancelacion.getText().toString().trim();
+            viewModel.cambiarEstadoReserva(this, reservaId, nuevoEstado, motivo);
+            motivoDialog.dismiss();
+        });
+
+        motivoDialog.show();
+    }
 }

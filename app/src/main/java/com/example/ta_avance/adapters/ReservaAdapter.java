@@ -1,17 +1,13 @@
 package com.example.ta_avance.adapters;
 
-import android.app.AlertDialog;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.ta_avance.R;
 import com.example.ta_avance.dto.reserva.ReservaResponse;
 import com.google.android.material.button.MaterialButton;
@@ -22,16 +18,17 @@ public class ReservaAdapter extends RecyclerView.Adapter<ReservaAdapter.ReservaV
 
     private final List<ReservaResponse> listaReservas;
     private final OnReservaClickListener listener;
-    private boolean mostrarBoton;
+    private String estadoActual;
 
     public interface OnReservaClickListener {
         void onVerDetallesClick(ReservaResponse reserva);
+        void onReservaRealizadaClick(ReservaResponse reserva);
     }
 
-    public ReservaAdapter(List<ReservaResponse> listaReservas, OnReservaClickListener listener, boolean mostrarBoton) {
+    public ReservaAdapter(List<ReservaResponse> listaReservas, OnReservaClickListener listener, String estadoActual) {
         this.listaReservas = listaReservas;
         this.listener = listener;
-        this.mostrarBoton = mostrarBoton;
+        this.estadoActual = estadoActual;
     }
 
     @NonNull
@@ -50,11 +47,21 @@ public class ReservaAdapter extends RecyclerView.Adapter<ReservaAdapter.ReservaV
         holder.tvHorario.setText("Horario: " + reserva.getHorarioRango());
         holder.tvServicio.setText("Servicio: " + reserva.getServicioNombre());
 
-        if (mostrarBoton) {
+        if ("CREADA".equals(estadoActual)) {
             holder.btnVerDetalles.setVisibility(View.VISIBLE);
+            holder.btnEstadoARealizada.setVisibility(View.GONE);
+
             holder.btnVerDetalles.setOnClickListener(v -> listener.onVerDetallesClick(reserva));
-        } else {
+
+        } else if ("CONFIRMADA".equals(estadoActual)) {
             holder.btnVerDetalles.setVisibility(View.GONE);
+            holder.btnEstadoARealizada.setVisibility(View.VISIBLE);
+
+            holder.btnEstadoARealizada.setOnClickListener(v -> listener.onReservaRealizadaClick(reserva));
+
+        } else if ("REALIZADA".equals(estadoActual)) {
+            holder.btnVerDetalles.setVisibility(View.GONE);
+            holder.btnEstadoARealizada.setVisibility(View.GONE);
         }
     }
 
@@ -65,7 +72,7 @@ public class ReservaAdapter extends RecyclerView.Adapter<ReservaAdapter.ReservaV
 
     public static class ReservaViewHolder extends RecyclerView.ViewHolder {
         TextView tvUsuario, tvBarbero, tvHorario, tvServicio;
-        MaterialButton btnVerDetalles;
+        MaterialButton btnVerDetalles,btnEstadoARealizada;
 
         public ReservaViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,6 +81,7 @@ public class ReservaAdapter extends RecyclerView.Adapter<ReservaAdapter.ReservaV
             tvHorario = itemView.findViewById(R.id.tvHorario);
             tvServicio = itemView.findViewById(R.id.tvServicio);
             btnVerDetalles = itemView.findViewById(R.id.btnVerDetallesReserva);
+            btnEstadoARealizada = itemView.findViewById(R.id.btnEstadoARealizada);
         }
     }
 
