@@ -1,6 +1,7 @@
 package com.example.ta_avance.dto.login;
 
 public class LoginRequest {
+    private long usuario_id;
     private String username;
     private String password;
     private String nombre;
@@ -24,6 +25,10 @@ public class LoginRequest {
     }
 
     // Getters y Setters (opcional si quieres usarlos después)
+    public long getUsuario_id() { return usuario_id; }
+
+    public void setUsuario_id(long usuario_id) { this.usuario_id = usuario_id; }
+
     public String getUsername() {
         return username;
     }

@@ -1,5 +1,6 @@
 package com.example.ta_avance.actividades;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.ta_avance.R;
 import com.example.ta_avance.adapters.ReservaAdapter;
+import com.example.ta_avance.dto.login.LoginRequest;
 import com.example.ta_avance.dto.reserva.ReservaResponse;
 import com.example.ta_avance.viewmodel.ReservasViewModel;
 import com.google.android.material.button.MaterialButton;
@@ -164,9 +166,11 @@ public class ReservasActivity extends AppCompatActivity {
         String fecha = etFechaSeleccionada.getText().toString();
         String estado = spinnerEstado.getSelectedItem().toString();
 
-        if (fecha.isEmpty()) {
-            Toast.makeText(this, "Selecciona una fecha", Toast.LENGTH_SHORT).show();
-            return;
+        if (estado.equals("CREADA") || estado.equals("CONFIRMADA")) {
+            if(fecha.isEmpty()){
+                Toast.makeText(this, "Selecciona un fecha", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
         tituloReservas.setText("Reservas - " + estado);
@@ -210,8 +214,18 @@ public class ReservasActivity extends AppCompatActivity {
 
         btnConfirmar.setOnClickListener(v -> {
             dialog.dismiss();
-            mostrarPopupMotivo(reserva.getReservaId(), "CONFIRMADA");
+
+            // Traer usuario por ID primero
+            viewModel.obtenerUsuarioPorId(this, reserva.getUsuarioId());
+
+            viewModel.usuarioPorIdLiveData.observe(this, usuario -> {
+                if (usuario != null) {
+                    enviarWsp(usuario, reserva);
+                    viewModel.cambiarEstadoReserva(this, reserva.getReservaId(), "CONFIRMADA", "Reserva confirmada por el administrador.");
+                }
+            });
         });
+
 
         btnCancelar.setOnClickListener(v -> {
             dialog.dismiss();
@@ -236,4 +250,23 @@ public class ReservasActivity extends AppCompatActivity {
 
         motivoDialog.show();
     }
+
+    private void enviarWsp(LoginRequest usuario, ReservaResponse reserva){
+        String numero = usuario.getCelular();
+        String mensaje = "Hola *" + usuario.getNombre() + "*, tu reserva ha sido confirmada 🎉\n\n" +
+                "📅 Fecha: *" + reserva.getFechaReserva() + "*\n" +
+                "🕒 Horario: *" + reserva.getHorarioRango() + "*\n" +
+                "💇 Servicio: *" + reserva.getServicioNombre() + "*\n\n" +
+                "Por favor, acude puntual a tu cita. ¡Gracias por elegirnos! 💈";
+
+        try {
+            String uri = "https://wa.me/51" + numero + "?text=" + java.net.URLEncoder.encode(mensaje, "UTF-8");
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(android.net.Uri.parse(uri));
+            startActivity(intent);
+        } catch (Exception e){
+            Toast.makeText(this, "No se pudo abrir WhatsApp", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

@@ -7,7 +7,8 @@ import com.example.ta_avance.dto.horario.HorarioResponseWrapper;
 import com.example.ta_avance.dto.horario.TurnosDiaRequest;
 import com.example.ta_avance.dto.login.LoginRequest;
 import com.example.ta_avance.dto.login.LoginResponse;
-import com.example.ta_avance.dto.login.LoginSimpleResponse;
+import com.example.ta_avance.dto.login.LoginDataSimpleResponse;
+import com.example.ta_avance.dto.login.LoginResponseSimple;
 import com.example.ta_avance.dto.rangos.RangoResponse;
 import com.example.ta_avance.dto.recuperacion.RecuperacionRequest;
 import com.example.ta_avance.dto.recuperacion.RecuperacionResponse;
@@ -36,7 +37,7 @@ import retrofit2.http.Query;
 
 public interface AuthApiService {
     @POST("api/auth/login")
-    Call<LoginSimpleResponse> login(@Body LoginRequest loginRequest);
+    Call<LoginDataSimpleResponse> login(@Body LoginRequest loginRequest);
 
     @POST("api/auth/register")
     Call<Void> register(@Body LoginRequest registerRequest);
@@ -45,11 +46,12 @@ public interface AuthApiService {
     Call<Void> crear(@Body ServicioRequest serviciosRequest);
 
     @POST("api/auth/refreshToken")
-    Call<LoginSimpleResponse> refresh(@Body RefreshRequest refreshRequest);
+    Call<LoginDataSimpleResponse> refresh(@Body RefreshRequest refreshRequest);
 
     @POST("emailPassword/sendEmail")
     Call<RecuperacionResponse> recuperarContraseña(@Body RecuperacionRequest recuperacionRequest);
 
+    //PARA VERIFICAR LOS BARBEROS
     @GET("api/barbero/listar")
     Call<BarberoResponse> listarBarberos();
 
@@ -71,6 +73,7 @@ public interface AuthApiService {
             @Part MultipartBody.Part imagen
     );
 
+    //PARA VERIFICAR LOS SERVICIOS
     @GET("api/servicio/listar")
     Call<ServicioResponse> listarServicios();
 
@@ -92,6 +95,7 @@ public interface AuthApiService {
             @Part MultipartBody.Part imagen
     );
 
+    //PARA VERIFICAR LOS HORARIOS
     @GET("api/horarioInstancia/actual")
     Call<HorarioResponseWrapper> obtenerHorarioActual();
 
@@ -101,18 +105,20 @@ public interface AuthApiService {
     @PUT("api/horarioBarberoBase/confirmarHorario")
     Call<GenericResponse> confirmarHorario();
 
-    @GET("api/rango/listar")
-    Call<RangoResponse> listarRangos();
-
     @GET("api/reportes/horario")
     Call<ResponseBody> exportarHorario(
             @Query("fechaInicio") LocalDate fechaInicio,
             @Query("fechaFin") LocalDate fechaFin
     );
 
+    //PARA VERIFICAR USUARIOS
     @GET("api/usuario/listar")
     Call<LoginResponse> listarUsuarios();
 
+    @GET("api/usuario/listarId/{id}")
+    Call<LoginResponseSimple> obtenerUsuarioPorId(@Path("id") long id);
+
+    //PARA VERIFICAR RESERVAS
     @GET("api/reserva/admin/listar")
     Call<List<ReservaResponse>> listarReservas(
             @Query("fecha") String fecha,

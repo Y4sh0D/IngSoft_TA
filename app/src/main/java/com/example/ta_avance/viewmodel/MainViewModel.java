@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.auth0.android.jwt.JWT;
 import com.example.ta_avance.api.AuthApiService;
 import com.example.ta_avance.dto.login.LoginRequest;
-import com.example.ta_avance.dto.login.LoginSimpleResponse;
+import com.example.ta_avance.dto.login.LoginDataSimpleResponse;
 import com.example.ta_avance.util.PreferenciasHelper;
 import com.example.ta_avance.api.ApiClient;
 
@@ -31,12 +31,12 @@ public class MainViewModel extends AndroidViewModel {
 
     public void login(String usuario, String contraseña) {
         LoginRequest request = new LoginRequest(usuario, contraseña);
-        Call<LoginSimpleResponse> call = authApiService.login(request);
+        Call<LoginDataSimpleResponse> call = authApiService.login(request);
 
         call.enqueue(new Callback<>() {
 
             @Override
-            public void onResponse(Call<LoginSimpleResponse> call, Response<LoginSimpleResponse> response) {
+            public void onResponse(Call<LoginDataSimpleResponse> call, Response<LoginDataSimpleResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String token = response.body().getData().getToken();
                     String refreshToken = response.body().getData().getRefreshToken();
@@ -65,7 +65,7 @@ public class MainViewModel extends AndroidViewModel {
             }
 
             @Override
-            public void onFailure(Call<LoginSimpleResponse> call, Throwable t) {
+            public void onFailure(Call<LoginDataSimpleResponse> call, Throwable t) {
                 loginStatus.postValue("FAILURE: " + t.getMessage());
             }
         });

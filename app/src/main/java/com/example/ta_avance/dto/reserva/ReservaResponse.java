@@ -4,6 +4,7 @@ public class ReservaResponse {
     private long reservaId;
     private String barberoNombre;
     private String usuarioNombre;
+    private long usuarioId;
     private String horarioRango;
     private String estado;
     private String motivoDescripcion;
@@ -25,6 +26,10 @@ public class ReservaResponse {
     public String getUsuarioNombre() { return usuarioNombre; }
 
     public void setUsuarioNombre(String usuarioNombre) { this.usuarioNombre = usuarioNombre; }
+
+    public long getUsuarioId() { return usuarioId; }
+
+    public void setUsuarioId(long usuarioId) { this.usuarioId = usuarioId; }
 
     public String getHorarioRango() { return horarioRango; }
 

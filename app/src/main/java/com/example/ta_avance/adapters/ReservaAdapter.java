@@ -59,7 +59,7 @@ public class ReservaAdapter extends RecyclerView.Adapter<ReservaAdapter.ReservaV
 
             holder.btnEstadoARealizada.setOnClickListener(v -> listener.onReservaRealizadaClick(reserva));
 
-        } else if ("REALIZADA".equals(estadoActual)) {
+        } else if ("REALIZADA".equals(estadoActual) || "CANCELADA".equals(estadoActual)) {
             holder.btnVerDetalles.setVisibility(View.GONE);
             holder.btnEstadoARealizada.setVisibility(View.GONE);
         }

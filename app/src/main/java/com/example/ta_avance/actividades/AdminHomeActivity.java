@@ -42,7 +42,6 @@ public class AdminHomeActivity extends AppCompatActivity {
         findViewById(R.id.listarUsuario).setOnClickListener(v ->
                 startActivity(new Intent(this, ListarUsuarioActivity.class)));
 
-
         findViewById(R.id.crearServicio).setOnClickListener(v ->
                 startActivity(new Intent(this, GestionarServicioActivity.class)));
 

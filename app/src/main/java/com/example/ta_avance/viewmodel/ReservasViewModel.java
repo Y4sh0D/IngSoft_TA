@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.ta_avance.api.ApiClient;
 import com.example.ta_avance.api.AuthApiService;
+import com.example.ta_avance.dto.login.LoginRequest;
+import com.example.ta_avance.dto.login.LoginResponseSimple;
 import com.example.ta_avance.dto.reserva.ReservaResponse;
 
 import java.util.List;
@@ -21,7 +23,7 @@ public class ReservasViewModel extends ViewModel {
     private final MutableLiveData<List<ReservaResponse>> reservasLiveData = new MutableLiveData<>();
     public MutableLiveData<String> mensajeError = new MutableLiveData<>();
     public MutableLiveData<Boolean> cambioEstadoExitoso = new MutableLiveData<>();
-    public final MutableLiveData<String> NuevoTitulo = new MutableLiveData<>();
+    public final MutableLiveData<LoginRequest> usuarioPorIdLiveData = new MutableLiveData<>();
 
     public LiveData<List<ReservaResponse>> getReservas() {
         return reservasLiveData;
@@ -71,12 +73,25 @@ public class ReservasViewModel extends ViewModel {
         });
     }
 
-    public void setNuevoTitulo() {
-        NuevoTitulo.setValue("Reservas");
-    }
+    public void obtenerUsuarioPorId(Context context, long usuarioId) {
+        AuthApiService api = ApiClient.getRetrofit(context, true).create(AuthApiService.class);
+        Call<LoginResponseSimple> call = api.obtenerUsuarioPorId(usuarioId);
 
-    public void setNuevoTitulo2() {
-        NuevoTitulo.setValue("Reservas Realizadas");
+        call.enqueue(new Callback<LoginResponseSimple>() {
+            @Override
+            public void onResponse(Call<LoginResponseSimple> call, Response<LoginResponseSimple> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+                    usuarioPorIdLiveData.postValue(response.body().getData());
+                } else {
+                    mensajeError.postValue("Error al obtener datos del usuario: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponseSimple> call, Throwable t) {
+                mensajeError.postValue("Error de conexión: " + t.getMessage());
+            }
+        });
     }
 
 }

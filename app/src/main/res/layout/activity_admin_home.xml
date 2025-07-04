@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnSpan="1"
                     android:layout_gravity="fill"
-                    android:text="Realizadas"
+                    android:text="Reservas"
                     app:icon="@drawable/ic_event"
                     app:iconGravity="top"
                     app:iconPadding="8dp"
