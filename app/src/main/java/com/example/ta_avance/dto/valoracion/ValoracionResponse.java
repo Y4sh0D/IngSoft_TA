@@ -1,17 +1,17 @@
-package com.example.ta_avance.dto.rangos;
+package com.example.ta_avance.dto.valoracion;
 
 import java.util.List;
 
-public class RangoResponse {
-    private int status;
+public class ValoracionResponse {
+    private long status;
     private String message;
-    private List<RangoDto> data;
+    private List<ValoracionDto> data;
 
-    public int getStatus() {
+    public long getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(long status) {
         this.status = status;
     }
 
@@ -23,11 +23,11 @@ public class RangoResponse {
         this.message = message;
     }
 
-    public List<RangoDto> getData() {
+    public List<ValoracionDto> getData() {
         return data;
     }
 
-    public void setData(List<RangoDto> data) {
+    public void setData(List<ValoracionDto> data) {
         this.data = data;
     }
 }

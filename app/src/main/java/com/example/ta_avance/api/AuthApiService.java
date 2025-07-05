@@ -9,7 +9,6 @@ import com.example.ta_avance.dto.login.LoginRequest;
 import com.example.ta_avance.dto.login.LoginResponse;
 import com.example.ta_avance.dto.login.LoginDataSimpleResponse;
 import com.example.ta_avance.dto.login.LoginResponseSimple;
-import com.example.ta_avance.dto.rangos.RangoResponse;
 import com.example.ta_avance.dto.recuperacion.RecuperacionRequest;
 import com.example.ta_avance.dto.recuperacion.RecuperacionResponse;
 import com.example.ta_avance.dto.refresh.RefreshRequest;
@@ -17,6 +16,7 @@ import com.example.ta_avance.dto.reserva.ReservaResponse;
 import com.example.ta_avance.dto.servicio.ServicioRequest;
 import com.example.ta_avance.dto.servicio.ServicioResponse;
 import com.example.ta_avance.dto.servicio.ServicioSimpleResponse;
+import com.example.ta_avance.dto.valoracion.ValoracionResponse;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -132,5 +132,7 @@ public interface AuthApiService {
             @Query("motivoDescripcion") String motivoDescripcion
     );
 
-
+    //PARA LISTAR LAS VALORACIONES DE LOS CLIENTES
+    @GET("api/valoracion/listar")
+    Call<ValoracionResponse> listarValoraciones();
 }

@@ -45,15 +45,17 @@ public class AdminHomeActivity extends AppCompatActivity {
         findViewById(R.id.crearServicio).setOnClickListener(v ->
                 startActivity(new Intent(this, GestionarServicioActivity.class)));
 
-        findViewById(R.id.gestionHorarios).setOnClickListener(v -> {
-            mostrarPopupHorarios(v);
-        });
+        findViewById(R.id.gestionHorarios).setOnClickListener(v ->
+            mostrarPopupHorarios(v));
+
         findViewById(R.id.gestionReservas).setOnClickListener( V ->
                 startActivity(new Intent(this, ReservasActivity.class)));
 
-        findViewById(R.id.gestionBarbero).setOnClickListener(v ->{
-                startActivity(new Intent(this,GestionarBarberoActivity.class));
-        });
+        findViewById(R.id.gestionBarbero).setOnClickListener(v ->
+                startActivity(new Intent(this,GestionarBarberoActivity.class)));
+
+        findViewById(R.id.listarValoracion).setOnClickListener(v ->
+                startActivity(new Intent(this,ListarValoracionActivity.class)));
 
         // Cierre de sesión
         findViewById(R.id.btnLogoutAdmin).setOnClickListener(v -> {
