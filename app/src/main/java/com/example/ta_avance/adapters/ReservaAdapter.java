@@ -50,18 +50,22 @@ public class ReservaAdapter extends RecyclerView.Adapter<ReservaAdapter.ReservaV
         if ("CREADA".equals(estadoActual)) {
             holder.btnVerDetalles.setVisibility(View.VISIBLE);
             holder.btnEstadoARealizada.setVisibility(View.GONE);
+            holder.tvFecha.setVisibility(View.GONE);
 
             holder.btnVerDetalles.setOnClickListener(v -> listener.onVerDetallesClick(reserva));
 
         } else if ("CONFIRMADA".equals(estadoActual)) {
             holder.btnVerDetalles.setVisibility(View.GONE);
             holder.btnEstadoARealizada.setVisibility(View.VISIBLE);
+            holder.tvFecha.setVisibility(View.GONE);
 
             holder.btnEstadoARealizada.setOnClickListener(v -> listener.onReservaRealizadaClick(reserva));
 
         } else if ("REALIZADA".equals(estadoActual) || "CANCELADA".equals(estadoActual)) {
             holder.btnVerDetalles.setVisibility(View.GONE);
             holder.btnEstadoARealizada.setVisibility(View.GONE);
+            holder.tvFecha.setVisibility(View.VISIBLE);
+            holder.tvFecha.setText("Fecha: " + reserva.getFechaReserva());
         }
     }
 
@@ -71,7 +75,7 @@ public class ReservaAdapter extends RecyclerView.Adapter<ReservaAdapter.ReservaV
     }
 
     public static class ReservaViewHolder extends RecyclerView.ViewHolder {
-        TextView tvUsuario, tvBarbero, tvHorario, tvServicio;
+        TextView tvUsuario, tvBarbero, tvHorario, tvServicio,tvFecha;
         MaterialButton btnVerDetalles,btnEstadoARealizada;
 
         public ReservaViewHolder(@NonNull View itemView) {
@@ -80,6 +84,7 @@ public class ReservaAdapter extends RecyclerView.Adapter<ReservaAdapter.ReservaV
             tvBarbero = itemView.findViewById(R.id.tvBarbero);
             tvHorario = itemView.findViewById(R.id.tvHorario);
             tvServicio = itemView.findViewById(R.id.tvServicio);
+            tvFecha = itemView.findViewById(R.id.tvFecha);
             btnVerDetalles = itemView.findViewById(R.id.btnVerDetallesReserva);
             btnEstadoARealizada = itemView.findViewById(R.id.btnEstadoARealizada);
         }

@@ -17,6 +17,7 @@ import com.example.ta_avance.dto.servicio.ServicioRequest;
 import com.example.ta_avance.dto.servicio.ServicioResponse;
 import com.example.ta_avance.dto.servicio.ServicioSimpleResponse;
 import com.example.ta_avance.dto.valoracion.ValoracionResponse;
+import com.example.ta_avance.dto.valoracion.ValoracionSimpleResponse;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -125,6 +126,13 @@ public interface AuthApiService {
             @Query("estado") String estado
     );
 
+    @GET("api/reserva/admin/listar")
+    Call<List<ReservaResponse>> listarReservasConId(
+            @Query("fecha") String fecha,
+            @Query("estado") String estado,
+            @Query("usuarioId") long usuarioId
+    );
+
     @PUT("api/reserva/admin/cambiar-estado/{reservaId}")
     Call<Void> cambiarEstadoReserva(
             @Path("reservaId") Long reservaId,
@@ -135,4 +143,7 @@ public interface AuthApiService {
     //PARA LISTAR LAS VALORACIONES DE LOS CLIENTES
     @GET("api/valoracion/listar")
     Call<ValoracionResponse> listarValoraciones();
+
+    @GET("api/valoracion/responder/{valoracionId}")
+    Call<ValoracionSimpleResponse> responderValoracion(@Path("valoracionId") long valoracionId);
 }

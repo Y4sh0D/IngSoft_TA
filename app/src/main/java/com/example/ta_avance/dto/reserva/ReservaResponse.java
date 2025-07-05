@@ -14,6 +14,7 @@ public class ReservaResponse {
     private long precioServicio;
     private String fechaReserva;
     private String urlPago;
+    private long montoTotal;
 
     public long getReservaId() { return reservaId; }
 
@@ -66,4 +67,8 @@ public class ReservaResponse {
     public String getUrlPago() { return urlPago; }
 
     public void setUrlPago(String urlPago) { this.urlPago = urlPago; }
+
+    public long getMontoTotal() { return montoTotal; }
+
+    public void setMontoTotal(long montoTotal) { this.montoTotal = montoTotal; }
 }

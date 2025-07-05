@@ -53,7 +53,9 @@ public class ListarUsuarioActivity extends AppCompatActivity {
 
                     @Override
                     public void onVerReservas(LoginRequest usuario) {
-
+                        Intent intent = new Intent(ListarUsuarioActivity.this, ReservasIdActivity.class);
+                        intent.putExtra("usuarioId", usuario.getUsuario_id()); // asegúrate que ese getter exista
+                        startActivity(intent);
                     }
                 });
                 recyclerView.setAdapter(adapter);
