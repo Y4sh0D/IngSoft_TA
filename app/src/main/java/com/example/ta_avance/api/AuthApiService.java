@@ -12,6 +12,7 @@ import com.example.ta_avance.dto.login.LoginResponseSimple;
 import com.example.ta_avance.dto.recuperacion.RecuperacionRequest;
 import com.example.ta_avance.dto.recuperacion.RecuperacionResponse;
 import com.example.ta_avance.dto.refresh.RefreshRequest;
+import com.example.ta_avance.dto.reporte.DtoReporteResponse;
 import com.example.ta_avance.dto.reserva.ReservaResponse;
 import com.example.ta_avance.dto.servicio.ServicioRequest;
 import com.example.ta_avance.dto.servicio.ServicioResponse;
@@ -146,4 +147,12 @@ public interface AuthApiService {
 
     @GET("api/valoracion/responder/{valoracionId}")
     Call<ValoracionSimpleResponse> responderValoracion(@Path("valoracionId") long valoracionId);
+
+    //PARA OBTENER LOS REPORTES
+    @GET("api/reserva/obtenerReportes")
+    Call<DtoReporteResponse> obtenerReporte(
+            @Query("fechaInicio") LocalDate fechaInicio,
+            @Query("fechaFin") LocalDate fechaFin,
+            @Query("servicio") String servicio
+    );
 }

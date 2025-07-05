@@ -57,6 +57,9 @@ public class AdminHomeActivity extends AppCompatActivity {
         findViewById(R.id.listarValoracion).setOnClickListener(v ->
                 startActivity(new Intent(this,ListarValoracionActivity.class)));
 
+        findViewById(R.id.reportes).setOnClickListener(v ->
+                startActivity(new Intent(this, ReporteActivity.class)));
+
         // Cierre de sesión
         findViewById(R.id.btnLogoutAdmin).setOnClickListener(v -> {
             viewModel.cerrarSesion();

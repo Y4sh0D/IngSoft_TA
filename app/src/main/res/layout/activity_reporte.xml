@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/barber_white_off"
+    tools:context=".actividades.ReporteActivity">
+
+    <!-- Título -->
+    <TextView
+        android:id="@+id/tvTituloReporte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reporte de Reservas"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/oswald_bold"
+        android:textColor="@color/barber_blue_navy"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Label Fecha Inicio -->
+    <TextView
+        android:id="@+id/tvLabelFechaInicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha de Inicio"
+        android:textColor="@color/barber_blue_navy"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvTituloReporte"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Fecha Inicio -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilFechaInicio"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxBackgroundColor="@color/barber_black_deep"
+        app:boxStrokeColor="@color/barber_blue_navy"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelFechaInicio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="4dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etFechaInicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:inputType="none"
+            android:textColor="@color/white"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Label Fecha Fin -->
+    <TextView
+        android:id="@+id/tvLabelFechaFin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha de Fin"
+        android:textColor="@color/barber_blue_navy"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tilFechaInicio"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Fecha Fin -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilFechaFin"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxBackgroundColor="@color/barber_black_deep"
+        app:boxStrokeColor="@color/barber_blue_navy"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelFechaFin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="4dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etFechaFin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:inputType="none"
+            android:textColor="@color/white"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Label Servicio -->
+    <TextView
+        android:id="@+id/tvLabelServicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Servicio"
+        android:textColor="@color/barber_blue_navy"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tilFechaFin"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Spinner Servicio -->
+    <Spinner
+        android:id="@+id/spinnerServicio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:backgroundTint="@color/barber_gray"
+        android:popupBackground="@color/barber_gray_steel"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelServicio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp" />
+
+    <!-- Botón Filtrar -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnFiltrarReporte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filtrar"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/barber_blue_navy"
+        app:cornerRadius="16dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/spinnerServicio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- CardView Resultado (con tabla) -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardResultado"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="6dp"
+        app:layout_constraintTop_toBottomOf="@id/btnFiltrarReporte"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp"
+        android:visibility="gone">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1"
+            android:padding="16dp">
+
+            <TableRow>
+                <TextView
+                    android:text="Servicio:"
+                    android:textStyle="bold"
+                    android:textColor="@color/barber_blue_navy"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/tvServicioNombre"
+                    android:text="-"
+                    android:textColor="@color/barber_blue_navy"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:layout_marginTop="8dp">
+                <TextView
+                    android:text="Monto Total:"
+                    android:textStyle="bold"
+                    android:textColor="@color/barber_blue_navy"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/tvMontoTotal"
+                    android:text="S/ 0.00"
+                    android:textColor="@color/barber_blue_navy"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:layout_marginTop="8dp">
+                <TextView
+                    android:text="Cantidad de Reservas:"
+                    android:textStyle="bold"
+                    android:textColor="@color/barber_blue_navy"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/tvCantidadReservas"
+                    android:text="0"
+                    android:textColor="@color/barber_blue_navy"
+                    android:textSize="16sp" />
+            </TableRow>
+        </TableLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
