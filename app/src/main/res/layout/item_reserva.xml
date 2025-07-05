@@ -8,7 +8,7 @@
     android:layout_marginHorizontal="12dp"
     app:cardCornerRadius="20dp"
     app:cardElevation="10dp"
-    app:cardBackgroundColor="#2A2A2A">
+    app:cardBackgroundColor="@color/barber_black_deep">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:text="Usuario: Juan"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:layout_marginBottom="4dp"/>
 
         <TextView
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:text="Barbero: Andre"
             android:textSize="14sp"
-            android:textColor="#CCCCCC"
+            android:textColor="@color/barber_gray_steel"
             android:layout_marginBottom="2dp"/>
 
         <TextView
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:text="Horario: 12 AM - 1 PM"
             android:textSize="14sp"
-            android:textColor="#CCCCCC"
+            android:textColor="@color/barber_gray_steel"
             android:layout_marginBottom="2dp"/>
 
         <TextView
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:text="Servicio: Corte"
             android:textSize="14sp"
-            android:textColor="#CCCCCC"
+            android:textColor="@color/barber_gray_steel"
             android:layout_marginBottom="8dp"
             android:maxLines="2"/>
 
@@ -68,8 +68,8 @@
                 android:layout_height="48dp"
                 android:text="Ver detalles"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
-                android:backgroundTint="#70a4e7"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/barber_blue_navy"
                 app:cornerRadius="24dp"
                 app:icon="@drawable/baseline_add_24"
                 app:iconTint="@android:color/white"
@@ -82,7 +82,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="end">
+            android:gravity="end"
+            android:layout_marginTop="8dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnEstadoARealizada"
@@ -91,8 +92,8 @@
                 android:layout_height="48dp"
                 android:text="Reserva Realizada"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
-                android:backgroundTint="@color/green"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/green"
                 app:cornerRadius="24dp"
                 app:icon="@drawable/baseline_check_circle_24"
                 app:iconTint="@android:color/white"

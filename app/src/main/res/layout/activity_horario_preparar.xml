@@ -1,14 +1,26 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="#F9F9F9">
+    android:padding="24dp"
+    android:background="@color/barber_white_off">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:paddingBottom="24dp">
+
+        <TextView
+            android:id="@+id/tituloHorarioPreparar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Preparar Horario Semanal"
+            android:textSize="22sp"
+            android:textColor="@color/barber_black_deep"
+            android:fontFamily="@font/oswald_bold"
+            android:layout_marginBottom="24dp" />
 
         <LinearLayout
             android:id="@+id/containerDias"
@@ -18,25 +30,32 @@
             android:divider="?android:attr/dividerHorizontal"
             android:showDividers="middle"
             android:dividerPadding="8dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="24dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnConfirmarHorario"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:text="Confirmar Horario"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/purple_700"
-            android:textColor="#FFF"/>
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/barber_blue_navy"
+            app:cornerRadius="12dp"
+            android:fontFamily="@font/oswald_bold"
+            android:layout_marginBottom="16dp"
+            android:elevation="4dp"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnExportarHorario"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:text="Exportar Horario"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/cardview_dark_background"
-            android:textColor="#FFF"/>
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/barber_gray"
+            app:cornerRadius="12dp"
+            android:fontFamily="@font/oswald_bold"
+            android:elevation="4dp"/>
     </LinearLayout>
 
 </ScrollView>

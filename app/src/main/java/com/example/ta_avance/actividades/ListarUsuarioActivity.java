@@ -45,7 +45,17 @@ public class ListarUsuarioActivity extends AppCompatActivity {
             @Override
             public void onSuccess(List<LoginRequest> usuarios) {
                 listaUsuarios = usuarios;
-                adapter = new UsuarioAdapter(usuarios, usuario -> enviarWsp(usuario));
+                adapter = new UsuarioAdapter(usuarios, new UsuarioAdapter.OnUsuarioClickListener() {
+                    @Override
+                    public void onMessageWsp(LoginRequest usuario) {
+                        enviarWsp(usuario);
+                    }
+
+                    @Override
+                    public void onVerReservas(LoginRequest usuario) {
+
+                    }
+                });
                 recyclerView.setAdapter(adapter);
             }
 

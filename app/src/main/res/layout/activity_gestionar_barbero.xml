@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212"
+    android:background="@color/barber_white_off"
     tools:context=".actividades.GestionarBarberoActivity">
 
     <!-- Título -->
@@ -17,7 +17,7 @@
         android:textSize="26sp"
         android:textStyle="bold"
         android:fontFamily="@font/oswald_bold"
-        android:textColor="#FFD700"
+        android:textColor="@color/barber_blue_navy"
         android:layout_marginTop="32dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,10 +42,10 @@
         android:layout_width="0dp"
         android:layout_height="55dp"
         android:text="Agregar Barbero"
-        android:textColor="#000000"
+        android:textColor="@color/white"
         android:textStyle="bold"
         android:fontFamily="@font/oswald_bold"
-        android:backgroundTint="#FFA500"
+        android:backgroundTint="@color/barber_gray"
         app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

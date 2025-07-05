@@ -6,7 +6,7 @@
     android:id="@+id/adminhome"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#212121"
+    android:background="@color/barber_white_off"
     tools:context=".actividades.AdminHomeActivity">
 
     <ScrollView
@@ -30,7 +30,7 @@
                 android:layout_marginTop="32dp"
                 android:text="ADMINISTRADOR"
                 android:gravity="center"
-                android:textColor="#FFD700"
+                android:textColor="@color/barber_blue_navy"
                 android:textSize="28sp"
                 android:fontFamily="@font/oswald_bold"
                 android:textStyle="bold" />

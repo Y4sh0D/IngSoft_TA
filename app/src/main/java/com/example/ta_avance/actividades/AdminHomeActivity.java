@@ -86,12 +86,14 @@ public class AdminHomeActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
 
+        int popupWidth = (int) (getResources().getDisplayMetrics().widthPixels * 0.85); // 85% de la pantalla
         final PopupWindow popupWindow = new PopupWindow(
                 popupView,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
+                popupWidth,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 true
         );
+
 
         popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0);
 

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="24dp"
     app:cardElevation="10dp"
-    app:cardBackgroundColor="#2A2A2A"
+    app:cardBackgroundColor="@color/barber_black_deep"
     android:layout_gravity="center">
 
     <LinearLayout
@@ -23,7 +23,7 @@
             android:text="Gestión de Horarios"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:layout_marginBottom="20dp"
             android:fontFamily="@font/oswald_bold"/>
 
@@ -33,8 +33,8 @@
             android:layout_height="48dp"
             android:text="Ver Horario Actual"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#FFA500"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/barber_blue_navy"
             android:textSize="13sp"
             app:cornerRadius="24dp"
             app:iconTint="@android:color/white"
@@ -47,8 +47,8 @@
             android:layout_height="48dp"
             android:text="Preparar Horario"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#FFA500"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/barber_blue_navy"
             android:textSize="13sp"
             app:cornerRadius="24dp"
             app:iconTint="@android:color/white"

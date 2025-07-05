@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/barber_white_off"
     tools:context=".actividades.ReservasActivity">
 
     <!-- Título -->
@@ -17,7 +17,7 @@
         android:textSize="26sp"
         android:textStyle="bold"
         android:fontFamily="@font/oswald_bold"
-        android:textColor="#FFD700"
+        android:textColor="@color/barber_blue_navy"
         android:layout_marginTop="32dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,8 +29,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:backgroundTint="#FFD700"
-        android:popupBackground="#AFAFAF"
+        android:backgroundTint="@color/barber_gray"
+        android:popupBackground="@color/barber_gray_steel"
         android:spinnerMode="dropdown"
         app:layout_constraintTop_toBottomOf="@id/tituloReservas"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,9 +48,9 @@
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusBottomEnd="12dp"
-        app:boxStrokeColor="#FFD700"
-        app:boxBackgroundColor="#1E1E1E"
-        app:hintTextColor="#FFD700"
+        app:boxStrokeColor="@color/barber_blue_navy"
+        app:boxBackgroundColor="@color/barber_black_deep"
+        app:hintTextColor="@color/barber_gray_steel"
         app:layout_constraintTop_toBottomOf="@id/spinnerEstado"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,17 +62,18 @@
             android:layout_height="wrap_content"
             android:focusable="false"
             android:inputType="none"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Botón Filtrar -->
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnFiltrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Filtrar"
-        android:textColor="#000000"
-        android:backgroundTint="#FFD700"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/barber_blue_navy"
+        app:cornerRadius="16dp"
         android:layout_marginTop="12dp"
         app:layout_constraintTop_toBottomOf="@id/tilFecha"
         app:layout_constraintStart_toStartOf="parent"

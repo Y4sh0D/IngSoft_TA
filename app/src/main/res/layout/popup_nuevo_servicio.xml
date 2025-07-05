@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/popupNuevoServicioLayout"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
@@ -16,8 +16,11 @@
         android:inputType="textPersonName"
         android:drawableStart="@android:drawable/ic_menu_edit"
         android:drawablePadding="10dp"
-        android:padding="10dp"
-        android:background="@drawable/popup_background"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_background"
+        android:textColor="@color/barber_black_deep"
+        android:textColorHint="@color/barber_gray"
+        android:fontFamily="@font/oswald_regular"
         android:layout_marginBottom="20dp" />
 
     <EditText
@@ -28,8 +31,11 @@
         android:inputType="numberDecimal"
         android:drawableStart="@android:drawable/ic_menu_info_details"
         android:drawablePadding="10dp"
-        android:padding="10dp"
-        android:background="@drawable/popup_background"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_background"
+        android:textColor="@color/barber_black_deep"
+        android:textColorHint="@color/barber_gray"
+        android:fontFamily="@font/oswald_regular"
         android:layout_marginBottom="20dp" />
 
     <EditText
@@ -41,8 +47,11 @@
         android:minLines="2"
         android:drawableStart="@android:drawable/ic_menu_edit"
         android:drawablePadding="10dp"
-        android:padding="10dp"
-        android:background="@drawable/popup_background"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_background"
+        android:textColor="@color/barber_black_deep"
+        android:textColorHint="@color/barber_gray"
+        android:fontFamily="@font/oswald_regular"
         android:layout_marginBottom="20dp" />
 
     <Spinner
@@ -51,31 +60,36 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSeleccionarImagenServicio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Seleccionar Imagen"
-        android:backgroundTint="#3F51B5"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/barber_blue_navy"
+        app:cornerRadius="12dp"
+        android:fontFamily="@font/oswald_bold"
         android:layout_marginBottom="12dp" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCrearServicio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Crear servicio"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#1E1E1E"
-        android:textStyle="bold"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/barber_black_deep"
+        app:cornerRadius="12dp"
+        android:fontFamily="@font/oswald_bold"
         android:layout_marginBottom="10dp" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCancelarServicio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cancelar"
-        android:backgroundTint="#AAAAAA"
-        android:textStyle="bold" />
+        android:textColor="@color/white"
+        app:backgroundTint="@color/barber_gray"
+        app:cornerRadius="12dp"
+        android:fontFamily="@font/oswald_bold" />
 
 </LinearLayout>

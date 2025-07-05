@@ -61,7 +61,7 @@
                 android:textColor="#FFFFFF"
                 android:backgroundTint="@color/green"
                 app:cornerRadius="24dp"
-                app:icon="@drawable/baseline_check_circle_24"
+                app:icon="@drawable/baseline_send_24"
                 app:iconTint="@android:color/white"
                 app:iconPadding="12dp" />
 

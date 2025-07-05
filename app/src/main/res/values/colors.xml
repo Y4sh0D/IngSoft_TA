@@ -2,7 +2,15 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="green">#45CE42</color>
+    <color name="green">#52B351</color>
     <color name="teal_700">#018786</color>
     <color name="purple_700">#3700B3</color>
+
+    <!-- Paleta personalizada para barbería -->
+    <color name="barber_blue_navy">#1B3E5F</color> <!-- Azul marino -->
+    <color name="barber_red_dark">#B22222</color> <!-- Rojo oscuro -->
+    <color name="barber_gray_steel">#D3D3D3</color> <!-- Gris acero -->
+    <color name="barber_white_off">#FAFAFA</color> <!-- Blanco hueso -->
+    <color name="barber_black_deep">#262626</color>
+    <color name="barber_gray">#757575</color><!-- Negro profundo -->
 </resources>

@@ -20,6 +20,7 @@ public class UsuarioAdapter extends RecyclerView.Adapter<UsuarioAdapter.UsuarioV
 
     public interface OnUsuarioClickListener {
         void onMessageWsp(LoginRequest usuario);
+        void onVerReservas(LoginRequest usuario);
     }
 
     private final List<LoginRequest> usuarios;
@@ -51,6 +52,7 @@ public class UsuarioAdapter extends RecyclerView.Adapter<UsuarioAdapter.UsuarioV
                 .error(R.drawable.baseline_person_24)
                 .into(holder.ivFotoUsuario);
         holder.btnEnviarWspUsuarioCreado.setOnClickListener(V -> listener.onMessageWsp(usuario));
+        holder.btnReservaPorUsuario.setOnClickListener(V -> listener.onVerReservas(usuario));
     }
 
     @Override
@@ -60,7 +62,7 @@ public class UsuarioAdapter extends RecyclerView.Adapter<UsuarioAdapter.UsuarioV
 
     public static class UsuarioViewHolder extends RecyclerView.ViewHolder{
         TextView textNombreCompleto, textNumero, textEmail;
-        Button btnEnviarWspUsuarioCreado;
+        Button btnEnviarWspUsuarioCreado,btnReservaPorUsuario;
         ImageView ivFotoUsuario;
         public UsuarioViewHolder(@NonNull View itemView){
             super(itemView);
@@ -68,6 +70,7 @@ public class UsuarioAdapter extends RecyclerView.Adapter<UsuarioAdapter.UsuarioV
             textNumero = itemView.findViewById(R.id.textNumero);
             textEmail = itemView.findViewById(R.id.textEmail);
             btnEnviarWspUsuarioCreado = itemView.findViewById(R.id.btnEnviarWspUsuarioCreado);
+            btnReservaPorUsuario = itemView.findViewById(R.id.btnReservaPorUsuario);
             ivFotoUsuario = itemView.findViewById(R.id.ivFotoUsuario);
         }
     }

@@ -7,7 +7,7 @@
     android:layout_margin="12dp"
     app:cardCornerRadius="20dp"
     app:cardElevation="10dp"
-    app:cardBackgroundColor="#2A2A2A">
+    app:cardBackgroundColor="@color/barber_black_deep">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,62 +16,93 @@
         android:padding="20dp"
         android:gravity="center_horizontal">
 
+        <!-- Imagen del usuario -->
         <ImageView
             android:id="@+id/ivFotoUsuario"
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:scaleType="centerCrop"
             android:layout_marginBottom="16dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/baseline_person_24"
             android:background="@drawable/circle_background"
             android:padding="8dp" />
 
+        <!-- Nombre completo -->
         <TextView
             android:id="@+id/textNombreCompleto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="Nombre completo"
-            android:textStyle="bold"
-            android:fontFamily="@font/oswald_bold"
             android:textSize="18sp"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="4dp" />
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:fontFamily="@font/oswald_bold" />
 
+        <!-- Número -->
         <TextView
             android:id="@+id/textNumero"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
             android:text="Número"
-            android:fontFamily="@font/oswald_regular"
             android:textSize="14sp"
-            android:textColor="#CCCCCC"
-            android:layout_marginBottom="2dp" />
+            android:textColor="@color/barber_gray_steel"
+            android:fontFamily="@font/oswald_regular" />
 
+        <!-- Email -->
         <TextView
             android:id="@+id/textEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email"
-            android:fontFamily="@font/oswald_regular"
             android:textSize="14sp"
-            android:textColor="#CCCCCC" />
+            android:textColor="@color/barber_gray_steel"
+            android:fontFamily="@font/oswald_regular" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnEnviarWspUsuarioCreado"
-            android:layout_width="wrap_content"
+        <!-- Botones -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="Enviar WhatsApp"
-            android:textStyle="bold"
-            android:fontFamily="@font/oswald_regular"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            app:cornerRadius="20dp"
-            app:icon="@drawable/baseline_send_24"
-            app:iconTint="@android:color/white"
-            app:iconPadding="8dp"
-            app:backgroundTint="#4CAF50" />
+            android:gravity="center">
+
+            <!-- Botón WhatsApp -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEnviarWspUsuarioCreado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="21dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="Enviar WhatsApp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:fontFamily="@font/oswald_regular"
+                app:backgroundTint="@color/green"
+                app:cornerRadius="20dp"
+                app:icon="@drawable/baseline_send_24"
+                app:iconPadding="8dp"
+                app:iconTint="@android:color/white" />
+
+            <!-- Botón Reservas -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnReservaPorUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="Reservas hechas"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:fontFamily="@font/oswald_regular"
+                app:backgroundTint="@color/barber_gray"
+                app:cornerRadius="20dp"
+                app:icon="@drawable/ic_event"
+                app:iconPadding="8dp"
+                app:iconTint="@android:color/white" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

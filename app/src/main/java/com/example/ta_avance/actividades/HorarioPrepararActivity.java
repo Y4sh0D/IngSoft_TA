@@ -17,11 +17,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ta_avance.R;
 import com.example.ta_avance.dto.barbero.BarberoDto;
 import com.example.ta_avance.viewmodel.HorarioPrepararViewModel;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.HashMap;
 import java.util.List;
@@ -49,26 +51,32 @@ public class HorarioPrepararActivity extends AppCompatActivity {
 
         viewModel.getDias().observe(this, dias -> {
             containerDias.removeAllViews();
+
             for (String dia : dias) {
-                CardView card = new CardView(this);
-                card.setRadius(16);
-                card.setCardElevation(6);
-                card.setUseCompatPadding(true);
-                card.setContentPadding(16, 16, 16, 16);
+                MaterialButton diaButton = new MaterialButton(this);
+                diaButton.setText(dia);
+                diaButton.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_calendar_day));
+                diaButton.setIconTintResource(android.R.color.white);
+                diaButton.setIconPadding(16);
+                diaButton.setTextColor(ContextCompat.getColor(this, android.R.color.white));
+                diaButton.setAllCaps(false);
+                diaButton.setTypeface(ResourcesCompat.getFont(this, R.font.oswald_bold));
+                diaButton.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.barber_black_deep));
+                diaButton.setCornerRadius(24);
 
-                Button btnDia = new Button(this);
-                btnDia.setText(dia);
-                btnDia.setBackgroundColor(ContextCompat.getColor(this, R.color.teal_700));
-                btnDia.setTextColor(Color.WHITE);
-                btnDia.setAllCaps(false);
-                btnDia.setTextSize(16);
-                btnDia.setOnClickListener(v -> mostrarPopupDia(dia));
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.setMargins(0, 16, 0, 0);
+                diaButton.setLayoutParams(params);
 
-                card.addView(btnDia);
-                containerDias.addView(card);
+                diaButton.setOnClickListener(v -> mostrarPopupDia(dia));
 
+                containerDias.addView(diaButton);
             }
+
         });
+
         Button btnConfirmar = findViewById(R.id.btnConfirmarHorario);
         btnConfirmar.setOnClickListener(v -> {
             viewModel.confirmarHorario(this);
@@ -126,9 +134,17 @@ public class HorarioPrepararActivity extends AppCompatActivity {
         }
 
         PopupWindow popupWindow = new PopupWindow(popupView,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
+                (int) (getResources().getDisplayMetrics().widthPixels * 0.85), // 85% del ancho de pantalla
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 true);
+        ViewGroup rootView = (ViewGroup) getWindow().getDecorView().getRootView();
+        View fondoOscuro = new View(this);
+        fondoOscuro.setBackgroundColor(0x88000000); // fondo semi-transparente
+        rootView.addView(fondoOscuro, new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        popupWindow.setOnDismissListener(() -> rootView.removeView(fondoOscuro));
+
         popupWindow.showAtLocation(findViewById(android.R.id.content), Gravity.CENTER, 0, 0);
 
         btnGuardar.setOnClickListener(v -> {

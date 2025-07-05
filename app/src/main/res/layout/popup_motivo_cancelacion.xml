@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="24dp"
     android:background="@drawable/popup_background"
+    android:elevation="8dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -12,8 +13,9 @@
         android:text="Motivo de la acción"
         android:textStyle="bold"
         android:textSize="18sp"
-        android:textColor="#212121"
-        android:layout_marginBottom="12dp" />
+        android:textColor="@color/barber_blue_navy"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/oswald_bold"/>
 
     <EditText
         android:id="@+id/etMotivoCancelacion"
@@ -22,16 +24,20 @@
         android:hint="Escribe el motivo aquí"
         android:minLines="3"
         android:maxLines="5"
-        android:padding="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#888888" />
+        android:padding="12dp"
+        android:textColor="@color/barber_black_deep"
+        android:textColorHint="@color/barber_gray"
+        android:fontFamily="@font/oswald_regular"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnEnviarMotivo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:text="Enviar"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#D32F2F"
-        android:layout_marginTop="16dp" />
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/barber_blue_navy"
+        app:cornerRadius="12dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/oswald_bold"/>
 </LinearLayout>

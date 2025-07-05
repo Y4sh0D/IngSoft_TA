@@ -8,7 +8,7 @@
     android:layout_marginVertical="12dp"
     app:cardCornerRadius="20dp"
     app:cardElevation="12dp"
-    app:cardBackgroundColor="#2A2A2A">
+    app:cardBackgroundColor="@color/barber_black_deep">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
             android:textStyle="bold"
             android:fontFamily="@font/oswald_bold"
             android:textSize="20sp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="8dp" />
 
@@ -47,9 +47,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="S/ 00.00"
-            android:fontFamily="@font/oswald_regular"
+            android:fontFamily="@font/oswald_bold"
             android:textSize="18sp"
-            android:textColor="#FFD700"
+            android:textColor="@color/barber_red_dark"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="12dp" />
 
@@ -61,7 +61,7 @@
             android:text="Descripción del servicio"
             android:fontFamily="@font/oswald_regular"
             android:textSize="15sp"
-            android:textColor="#CCCCCC"
+            android:textColor="@color/barber_gray_steel"
             android:layout_marginBottom="4dp" />
 
         <!-- Tipo de Servicio -->
@@ -72,7 +72,7 @@
             android:text="Tipo de servicio"
             android:fontFamily="@font/oswald_regular"
             android:textSize="15sp"
-            android:textColor="#CCCCCC"
+            android:textColor="@color/barber_gray_steel"
             android:layout_marginBottom="12dp" />
 
         <!-- Botones de acción -->
@@ -90,8 +90,8 @@
                 android:layout_height="48dp"
                 android:text="Editar"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
-                android:backgroundTint="#FFA500"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/barber_blue_navy"
                 app:cornerRadius="24dp"
                 app:icon="@android:drawable/ic_menu_edit"
                 app:iconTint="@android:color/white"
@@ -105,8 +105,8 @@
                 android:layout_height="48dp"
                 android:text="Eliminar"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
-                android:backgroundTint="#D32F2F"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/barber_red_dark"
                 app:cornerRadius="24dp"
                 app:icon="@android:drawable/ic_menu_delete"
                 app:iconTint="@android:color/white"

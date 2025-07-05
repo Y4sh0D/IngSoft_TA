@@ -8,10 +8,12 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ta_avance.R;
 import com.example.ta_avance.viewmodel.HorarioActualViewModel;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 import java.util.Map;
@@ -37,21 +39,29 @@ public class HorarioActualActivity extends AppCompatActivity {
 
             for (String dia : ordenDias) {
                 if (semana.containsKey(dia)) {
-                    Button diaButton = new Button(this);
+                    MaterialButton diaButton = new MaterialButton(this);
                     diaButton.setText(dia);
-                    diaButton.setBackgroundResource(R.drawable.btn_black_background);
+                    diaButton.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_calendar_day));
+                    diaButton.setIconTintResource(android.R.color.white);
+                    diaButton.setIconPadding(16);
                     diaButton.setTextColor(ContextCompat.getColor(this, android.R.color.white));
+                    diaButton.setAllCaps(false);
+                    diaButton.setTypeface(ResourcesCompat.getFont(this, R.font.oswald_bold));
+                    diaButton.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.barber_black_deep));
+                    diaButton.setCornerRadius(24);
 
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT);
-                    params.setMargins(0, 24, 0, 0);
+                    params.setMargins(0, 16, 0, 0);
                     diaButton.setLayoutParams(params);
 
                     LinearLayout turnosLayout = new LinearLayout(this);
                     turnosLayout.setOrientation(LinearLayout.VERTICAL);
                     turnosLayout.setVisibility(View.GONE);
-                    turnosLayout.setPadding(32, 8, 8, 8);
+                    turnosLayout.setPadding(32, 12, 12, 12);
+                    turnosLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_turno_card));
+                    turnosLayout.setElevation(4f);
 
                     Map<String, List<String>> turnos = semana.get(dia);
                     for (String turno : ordenTurnos) {
@@ -61,8 +71,11 @@ public class HorarioActualActivity extends AppCompatActivity {
 
                             TextView turnoView = new TextView(this);
                             turnoView.setText(turno + ": " + barberosTexto);
-                            turnoView.setTextSize(16);
-                            turnoView.setPadding(8, 4, 8, 4);
+                            turnoView.setTextSize(15);
+                            turnoView.setTextColor(ContextCompat.getColor(this, R.color.barber_black_deep));
+                            turnoView.setTypeface(ResourcesCompat.getFont(this, R.font.oswald_regular));
+                            turnoView.setPadding(12, 8, 12, 8);
+
                             turnosLayout.addView(turnoView);
                         }
                     }
@@ -77,6 +90,7 @@ public class HorarioActualActivity extends AppCompatActivity {
                     container.addView(turnosLayout);
                 }
             }
+
         });
 
         Button btnExportarHorario = findViewById(R.id.btnExportarHorarioSemanal);
