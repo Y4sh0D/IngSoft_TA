@@ -8,7 +8,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.ta_avance.api.ApiClient;
 import com.example.ta_avance.api.AuthApiService;
+import com.example.ta_avance.dto.horario.GenericResponse;
 import com.example.ta_avance.dto.login.LoginRequest;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,18 +36,34 @@ public class RegistroUsuarioViewModel extends AndroidViewModel {
 
         LoginRequest request = new LoginRequest(username, password, nombre, apellido, correo ,celular);
 
-        authApiService.register(request).enqueue(new Callback<Void>() {
+        authApiService.register(request).enqueue(new Callback<GenericResponse>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    registroExitoso.postValue(true);
+            public void onResponse(Call<GenericResponse> call, Response<GenericResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    GenericResponse resp = response.body();
+                    if (resp.getStatus() == 200) {
+                        registroExitoso.postValue(true);
+                    } else {
+                        mensajeError.postValue("Error en registro: " + resp.getMessage());
+                    }
                 } else {
-                    mensajeError.postValue("Error al registrar usuario: " + response.code());
+                    try {
+                        String errorBody = response.errorBody().string();
+
+                        // Parsear solo el mensaje
+                        JsonObject jsonObject = new Gson().fromJson(errorBody, JsonObject.class);
+                        String msg = jsonObject.has("message") ? jsonObject.get("message").getAsString() : "Error desconocido";
+
+                        mensajeError.postValue(msg);
+
+                    } catch (Exception e) {
+                        mensajeError.postValue("Error al procesar la respuesta. Código: " + response.code());
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<GenericResponse> call, Throwable t) {
                 mensajeError.postValue("Error de conexión: " + t.getMessage());
             }
         });

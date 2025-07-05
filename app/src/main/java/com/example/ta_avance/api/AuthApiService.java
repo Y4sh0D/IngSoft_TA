@@ -43,7 +43,7 @@ public interface AuthApiService {
     Call<LoginDataSimpleResponse> login(@Body LoginRequest loginRequest);
 
     @POST("api/auth/register")
-    Call<Void> register(@Body LoginRequest registerRequest);
+    Call<GenericResponse> register(@Body LoginRequest registerRequest);
 
     @POST("api/servicio/crear")
     Call<Void> crear(@Body ServicioRequest serviciosRequest);
