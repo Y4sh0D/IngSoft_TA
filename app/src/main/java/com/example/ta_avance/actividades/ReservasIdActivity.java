@@ -6,16 +6,13 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ta_avance.R;
 import com.example.ta_avance.adapters.ReservaAdapter;
-import com.example.ta_avance.dto.reserva.ReservaResponse;
+import com.example.ta_avance.dto.reserva.DtoReserva;
 import com.example.ta_avance.viewmodel.ReservasViewModel;
 
 public class ReservasIdActivity extends AppCompatActivity {
@@ -55,11 +52,11 @@ public class ReservasIdActivity extends AppCompatActivity {
         viewModel.getReservas().observe(this, reservas -> {
             ReservaAdapter adapter = new ReservaAdapter(reservas, new ReservaAdapter.OnReservaClickListener() {
                 @Override
-                public void onVerDetallesClick(ReservaResponse reserva) {
+                public void onVerDetallesClick(DtoReserva reserva) {
                 }
 
                 @Override
-                public void onReservaRealizadaClick(ReservaResponse reserva) {
+                public void onReservaRealizadaClick(DtoReserva reserva) {
                 }
             }, estado);
             recyclerView.setAdapter(adapter);

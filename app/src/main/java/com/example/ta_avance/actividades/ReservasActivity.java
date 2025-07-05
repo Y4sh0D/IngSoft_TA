@@ -22,7 +22,7 @@ import com.bumptech.glide.Glide;
 import com.example.ta_avance.R;
 import com.example.ta_avance.adapters.ReservaAdapter;
 import com.example.ta_avance.dto.login.LoginRequest;
-import com.example.ta_avance.dto.reserva.ReservaResponse;
+import com.example.ta_avance.dto.reserva.DtoReserva;
 import com.example.ta_avance.viewmodel.ReservasViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -80,12 +80,12 @@ public class ReservasActivity extends AppCompatActivity {
 
             ReservaAdapter adapterRv = new ReservaAdapter(reservas, new ReservaAdapter.OnReservaClickListener() {
                 @Override
-                public void onVerDetallesClick(ReservaResponse reserva) {
+                public void onVerDetallesClick(DtoReserva reserva) {
                     mostrarPopupDetalle(reserva);
                 }
 
                 @Override
-                public void onReservaRealizadaClick(ReservaResponse reserva) {
+                public void onReservaRealizadaClick(DtoReserva reserva) {
                     // Aquí puedes llamar a cambiarEstadoReserva o lo que corresponda
                     viewModel.cambiarEstadoReserva(ReservasActivity.this, reserva.getReservaId(), "REALIZADA", "Reserva completada correctamente");
                 }
@@ -177,7 +177,7 @@ public class ReservasActivity extends AppCompatActivity {
         viewModel.cargarReservas(this, fecha, estado);
     }
 
-    private void mostrarPopupDetalle(ReservaResponse reserva) {
+    private void mostrarPopupDetalle(DtoReserva reserva) {
         View popupView = LayoutInflater.from(this).inflate(R.layout.popup_reserva_detalle, null);
         AlertDialog dialog = new AlertDialog.Builder(this).setView(popupView).create();
 
@@ -251,7 +251,7 @@ public class ReservasActivity extends AppCompatActivity {
         motivoDialog.show();
     }
 
-    private void enviarWsp(LoginRequest usuario, ReservaResponse reserva){
+    private void enviarWsp(LoginRequest usuario, DtoReserva reserva){
         String numero = usuario.getCelular();
         String mensaje = "Hola *" + usuario.getNombre() + "*, tu reserva ha sido confirmada 🎉\n\n" +
                 "📅 Fecha: *" + reserva.getFechaReserva() + "*\n" +

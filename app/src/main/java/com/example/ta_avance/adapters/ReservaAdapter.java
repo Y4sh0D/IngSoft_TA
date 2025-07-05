@@ -9,23 +9,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ta_avance.R;
-import com.example.ta_avance.dto.reserva.ReservaResponse;
+import com.example.ta_avance.dto.reserva.DtoReserva;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 
 public class ReservaAdapter extends RecyclerView.Adapter<ReservaAdapter.ReservaViewHolder> {
 
-    private final List<ReservaResponse> listaReservas;
+    private final List<DtoReserva> listaReservas;
     private final OnReservaClickListener listener;
     private String estadoActual;
 
     public interface OnReservaClickListener {
-        void onVerDetallesClick(ReservaResponse reserva);
-        void onReservaRealizadaClick(ReservaResponse reserva);
+        void onVerDetallesClick(DtoReserva reserva);
+        void onReservaRealizadaClick(DtoReserva reserva);
     }
 
-    public ReservaAdapter(List<ReservaResponse> listaReservas, OnReservaClickListener listener, String estadoActual) {
+    public ReservaAdapter(List<DtoReserva> listaReservas, OnReservaClickListener listener, String estadoActual) {
         this.listaReservas = listaReservas;
         this.listener = listener;
         this.estadoActual = estadoActual;
@@ -40,7 +40,7 @@ public class ReservaAdapter extends RecyclerView.Adapter<ReservaAdapter.ReservaV
 
     @Override
     public void onBindViewHolder(@NonNull ReservaViewHolder holder, int position) {
-        ReservaResponse reserva = listaReservas.get(position);
+        DtoReserva reserva = listaReservas.get(position);
 
         holder.tvUsuario.setText("Usuario: " + reserva.getUsuarioNombre());
         holder.tvBarbero.setText("Barbero: " + reserva.getBarberoNombre());

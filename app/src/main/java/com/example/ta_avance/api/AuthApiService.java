@@ -13,7 +13,8 @@ import com.example.ta_avance.dto.recuperacion.RecuperacionRequest;
 import com.example.ta_avance.dto.recuperacion.RecuperacionResponse;
 import com.example.ta_avance.dto.refresh.RefreshRequest;
 import com.example.ta_avance.dto.reporte.DtoReporteResponse;
-import com.example.ta_avance.dto.reserva.ReservaResponse;
+import com.example.ta_avance.dto.reserva.DtoReserva;
+import com.example.ta_avance.dto.reserva.DtoReservaResponse;
 import com.example.ta_avance.dto.servicio.ServicioRequest;
 import com.example.ta_avance.dto.servicio.ServicioResponse;
 import com.example.ta_avance.dto.servicio.ServicioSimpleResponse;
@@ -122,13 +123,13 @@ public interface AuthApiService {
 
     //PARA VERIFICAR RESERVAS
     @GET("api/reserva/admin/listar")
-    Call<List<ReservaResponse>> listarReservas(
+    Call<DtoReservaResponse> listarReservas(
             @Query("fecha") String fecha,
             @Query("estado") String estado
     );
 
     @GET("api/reserva/admin/listar")
-    Call<List<ReservaResponse>> listarReservasConId(
+    Call<DtoReservaResponse> listarReservasConId(
             @Query("fecha") String fecha,
             @Query("estado") String estado,
             @Query("usuarioId") long usuarioId

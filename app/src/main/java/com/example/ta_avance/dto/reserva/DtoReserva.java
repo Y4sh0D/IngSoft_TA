@@ -1,6 +1,6 @@
 package com.example.ta_avance.dto.reserva;
 
-public class ReservaResponse {
+public class DtoReserva {
     private long reservaId;
     private String barberoNombre;
     private String usuarioNombre;
